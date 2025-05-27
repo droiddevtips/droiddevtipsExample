@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.ui.theme
+package com.droiddevtips.typography
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -6,8 +6,15 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.droiddevtips.typography.typography.DroidDevTipsTypography
 
-private val DarkColorScheme = darkColorScheme(
+/**
+ * This is the custom Droid Dev Tips theme
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
+
+val DarkColorScheme = darkColorScheme(
     primary = Color(0xCCA4C639),
     secondary = Color(0xFFE9F6BF),
     tertiary = Color(0x99A4C639),
@@ -17,7 +24,7 @@ private val DarkColorScheme = darkColorScheme(
     inversePrimary = Color.Red,
 )
 
-private val LightColorScheme = lightColorScheme(
+val LightColorScheme = lightColorScheme(
     primary = Color(0xFFA4C639),
     secondary = Color(0xFF769A04),
     tertiary = Color(0xFFD3E892),
@@ -37,10 +44,11 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun DroidDevTipsExamplesTheme(
+fun DroidDevTipsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+
     val colorScheme = when {
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
@@ -48,7 +56,7 @@ fun DroidDevTipsExamplesTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = DroidDevTipsTypography,
         content = content
     )
 }

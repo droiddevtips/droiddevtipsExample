@@ -16,14 +16,14 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.droiddevtips.admobnextgenads.ui.theme.DroidDevTipsExamplesTheme
+import com.droiddevtips.typography.DroidDevTipsTheme
 
 class AdMobNextGenExample : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            DroidDevTipsExamplesTheme {
+            DroidDevTipsTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
                     val scrollable = rememberScrollState()

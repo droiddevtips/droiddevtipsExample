@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "DroidDevTipsExamples"
 include(":app")
 include(":admobnextgenads")
+include(":typoGraphy")
