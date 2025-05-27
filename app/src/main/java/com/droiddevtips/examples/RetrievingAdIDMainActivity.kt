@@ -28,7 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.droiddevtips.examples.ui.theme.RetrievingAdIDTheme
+import com.droiddevtips.typography.DroidDevTipsTheme
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +40,7 @@ class RetrievingAdIDMainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RetrievingAdIDTheme {
+            DroidDevTipsTheme {
                 RetrieveAdID()
             }
         }
