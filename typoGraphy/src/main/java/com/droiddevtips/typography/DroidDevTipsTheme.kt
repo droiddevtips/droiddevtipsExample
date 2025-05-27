@@ -6,7 +6,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.droiddevtips.typography.typography.DroidDevTipsTypography
+import com.droiddevtips.typography.typography.droidDevTipsTypography
 
 /**
  * This is the custom Droid Dev Tips theme
@@ -21,7 +21,7 @@ val DarkColorScheme = darkColorScheme(
     primaryContainer = Color(0xFF2A2A2A),
     surfaceContainer = Color(0xFF2A2A2A),
     background = Color(0xFF2A2A2A),
-    inversePrimary = Color.Red,
+    inversePrimary = Color.White,
 )
 
 val LightColorScheme = lightColorScheme(
@@ -30,7 +30,8 @@ val LightColorScheme = lightColorScheme(
     tertiary = Color(0xFFD3E892),
     primaryContainer = Color.White,
     surfaceContainer = Color.White,
-    background = Color.White
+    background = Color.White,
+    inversePrimary = Color.Black,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -56,7 +57,7 @@ fun DroidDevTipsTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = DroidDevTipsTypography,
+        typography = droidDevTipsTypography(isInDarkTheme = darkTheme),
         content = content
     )
 }

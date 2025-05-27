@@ -4,18 +4,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.droiddevtips.admobnextgenads.feature.main.Route
+import com.droiddevtips.admobnextgenads.core.domain.navigateToView
+import com.droiddevtips.admobnextgenads.feature.collapsible.CollapsibleAds
+import com.droiddevtips.admobnextgenads.feature.fixedSize.FixedSizeAds
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.InlineAdaptive
+import com.droiddevtips.admobnextgenads.feature.interstitialAds.InterstitialAds
+import com.droiddevtips.admobnextgenads.feature.main.MainView
+import com.droiddevtips.admobnextgenads.feature.nativeAds.NativeAds
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.RewardedAds
+import com.droiddevtips.admobnextgenads.feature.rewardedInterstitialAds.RewardedInterstitialAds
 import com.droiddevtips.typography.DroidDevTipsTheme
 
 class AdMobNextGenExample : ComponentActivity() {
@@ -24,61 +29,49 @@ class AdMobNextGenExample : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DroidDevTipsTheme {
+
+                val navController = rememberNavController()
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-                    val scrollable = rememberScrollState()
-
-                    Column(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize()
-                            .verticalScroll(scrollable),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(
-                            16.dp,
-                            Alignment.CenterVertically
-                        )
+                    NavHost(
+                        navController = navController,
+                        startDestination = Route.InlineAdaptive.route,
+                        modifier = Modifier.padding(innerPadding)
                     ) {
-                        Button(onClick = {
 
-                        }) {
-                            Text(text = "Inline Adaptive banner ad")
+                        composable(route = Route.Home.route) {
+                            MainView { route ->
+                                navController.navigateToView(route = route)
+                            }
                         }
 
-                        Button(onClick = {
-
-                        }) {
-                            Text("Collapsible banner ad")
+                        composable(route = Route.InlineAdaptive.route) {
+                            InlineAdaptive()
                         }
 
-                        Button(onClick = {
-
-                        }) {
-                            Text("Fixed size banner ad")
+                        composable(route = Route.Collapsible.route) {
+                            CollapsibleAds()
                         }
 
-                        Button(onClick = {
-
-                        }) {
-                            Text("Interstitial ad")
+                        composable(route = Route.FixedSize.route) {
+                            FixedSizeAds()
                         }
 
-                        Button(onClick = {
-
-                        }) {
-                            Text("Native ad")
+                        composable(route = Route.InterstitialAds.route) {
+                            InterstitialAds()
                         }
 
-                        Button(onClick = {
-
-                        }) {
-                            Text("Rewarded ad")
+                        composable(route = Route.NativeAds.route) {
+                            NativeAds()
                         }
 
-                        Button(onClick = {
+                        composable(route = Route.RewardedAds.route) {
+                            RewardedAds()
+                        }
 
-                        }) {
-                            Text("Rewarded interstitial ads")
+                        composable(route = Route.RewardedInterstitialAds.route) {
+                            RewardedInterstitialAds()
                         }
                     }
                 }

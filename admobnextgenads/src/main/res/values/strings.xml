@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AdMobNextGenAds</string>
+    <string name="inline_static">Inline Static</string>
+    <string name="inline_list">Inline List</string>
 </resources>

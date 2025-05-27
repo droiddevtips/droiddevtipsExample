@@ -1,16 +1,17 @@
 package com.droiddevtips.admobnextgenads
 
 import android.app.Application
+import com.droiddevtips.admobnextgenads.common.MobileAdsManager
 
 /**
  * Created by Melchior Vrolijk
  * Copyright (c) 2025. All rights reserved.
  */
-class App: Application() {
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
+        MobileAdsManager.init(context = applicationContext)
     }
-
 }
