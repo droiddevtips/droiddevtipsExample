@@ -2,8 +2,8 @@ package com.droiddevtips.admobnextgenads.common.ads
 
 import android.content.Context
 import android.widget.Toast
-import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.BannerAdFetcher
-import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.BannerAdFetcherImp
+import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.AdFetcher
+import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.AdFetcherImp
 import com.google.android.libraries.ads.mobile.sdk.MobileAds
 import com.google.android.libraries.ads.mobile.sdk.initialization.AdapterStatus
 import com.google.android.libraries.ads.mobile.sdk.initialization.InitializationConfig
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-object MobileAdsManager: BannerAdFetcher by BannerAdFetcherImp() {
+object MobileAdsManager: AdFetcher by AdFetcherImp() {
 
     var initialized = false
         private set

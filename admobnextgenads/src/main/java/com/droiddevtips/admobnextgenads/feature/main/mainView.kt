@@ -42,18 +42,6 @@ fun MainView(
         }
 
         Button(onClick = {
-            navigate(Route.Collapsible.route)
-        }) {
-            Text("Collapsible banner ad")
-        }
-
-        Button(onClick = {
-            navigate(Route.FixedSize.route)
-        }) {
-            Text("Fixed size banner ad")
-        }
-
-        Button(onClick = {
             navigate(Route.InterstitialAds.route)
         }) {
             Text("Interstitial ad")
