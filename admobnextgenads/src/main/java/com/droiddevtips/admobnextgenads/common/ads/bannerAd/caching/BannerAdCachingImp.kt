@@ -23,4 +23,8 @@ class BannerAdCachingImp : BannerAdCaching {
     override fun removeCacheBannerAds(key: String) {
         bannerAdCache.remove(key = key)
     }
+
+    override fun flushCache() {
+        bannerAdCache.clear()
+    }
 }

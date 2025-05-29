@@ -12,4 +12,5 @@ interface BannerAdCaching {
     fun getBannerAd(id: String): BannerAd?
     fun cacheBannerAds(id:String, bannerAds:BannerAd)
     fun removeCacheBannerAds(key:String)
+    fun flushCache()
 }
