@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.accompanist.pager)
+    implementation(libs.androidx.constraintlayout.compose)
     implementation(project(":typoGraphy"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,5 +1,6 @@
 package com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher
 
+import android.content.Context
 import android.os.Bundle
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
@@ -73,7 +74,9 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
     }
 
     override fun fetchCollapsibleBannerAd(
+        context: Context,
         adUnit: NextGenAdUnit,
+        collapsibleType: CollapsibleType,
         bannerAdView: (BannerAd?) -> Unit
     ) {
         if (adUnit.id.isBlank()) {
@@ -81,15 +84,12 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
             return
         }
 
-        val adSize = AdSize.getInlineAdaptiveBannerAdSize(
-            MobileAdsManager.deviceScreenWidth,
-            maxHeight = 600
-        )
+        val adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context = context, width = 360)
 
         val googleExtraBundle = Bundle()
         googleExtraBundle.putString(
             "collapsible",
-            "bottom"
+            collapsibleType.toString().lowercase()
         ) // Must be provided in order to get an collapsible ads
 
         val adRequest = BannerAdRequest.Builder(adUnit.id, adSize)

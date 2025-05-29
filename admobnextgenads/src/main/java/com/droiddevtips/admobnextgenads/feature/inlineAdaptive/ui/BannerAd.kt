@@ -30,11 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.InlineAdaptiveTab
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.anchoredRoute
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.collapsibleRoute
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.collapsibleBottomRoute
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.collapsibleTopRoute
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.listRoute
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.staticRoute
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.anchored.BannerAdAnchored
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.collapsible.BannerAdCollapsible
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.collapsible.BannerAdCollapsibleBottom
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.collapsible.BannerAdCollapsibleTop
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui.InlineAdaptiveListView
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui.InlineAdaptiveViewModel
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.staticView.InlineAdaptiveStatic
@@ -55,7 +57,8 @@ fun BannerAd(modifier: Modifier = Modifier) {
     val tabs = listOf(
         InlineAdaptiveTab.Static,
         InlineAdaptiveTab.Inline,
-        InlineAdaptiveTab.Collapsible,
+        InlineAdaptiveTab.CollapsibleTop,
+        InlineAdaptiveTab.CollapsibleBottom,
         InlineAdaptiveTab.Anchored
     )
 
@@ -131,7 +134,8 @@ fun BannerAd(modifier: Modifier = Modifier) {
                 when (tabs[pageIndex].route) {
                     staticRoute -> BannerAdStaticView()
                     listRoute -> BannerAdListView()
-                    collapsibleRoute -> BannerAdCollapsible()
+                    collapsibleTopRoute -> BannerAdCollapsibleTop()
+                    collapsibleBottomRoute -> BannerAdCollapsibleBottom()
                     anchoredRoute -> BannerAdAnchored()
                 }
             }
