@@ -22,6 +22,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.droiddevtips.admobnextgenads.common.adsLoadingView.AdLoadingView
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdEventCallback
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRefreshCallback
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
@@ -51,6 +52,7 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
     val isLoadingAds = remember { mutableStateOf(true) }
     var parent by remember { mutableStateOf<FrameLayout?>(null) }
     var banner_Ad_View by remember { mutableStateOf<View?>(null) }
+    var banner_Ad by remember { mutableStateOf<BannerAd?>(null) }
 
     Box(
         modifier = Modifier
@@ -83,6 +85,7 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
                             } else {
 
                                 bannerAdView.apply {
+                                    banner_Ad = this
                                     initialViewHeight.value = getAdSize().height.dp
 
                                     // Banner Ad refresh callback
@@ -183,6 +186,7 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
                 }
                 parent?.removeAllViews()
             }
+            banner_Ad?.destroy()
         }
     }
 }
