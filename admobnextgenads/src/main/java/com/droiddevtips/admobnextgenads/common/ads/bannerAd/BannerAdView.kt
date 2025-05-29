@@ -5,7 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -18,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.common.adsLoadingView.AdLoadingView
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdEventCallback
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRefreshCallback
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
@@ -39,101 +42,119 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
     if (initialViewHeight.value == 0.dp)
         return
 
+    val loadingViewHeight = remember {
+        mutableStateOf(300.dp)
+    }
+
+    val isLoadingAds = remember { mutableStateOf(true) }
     var parent by remember { mutableStateOf<FrameLayout?>(null) }
     var banner_Ad_View by remember { mutableStateOf<View?>(null) }
 
-    AndroidView(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .animateContentSize(),
-        update = {
-            it.requestLayout()
-        },
-        factory = { context ->
+            .animateContentSize()
+    ) {
 
-            FrameLayout(context).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-            }.also { adLayout ->
-                parent = adLayout
-                MobileAdsManager.fetchBannerAd(adUnit = bannerAdUnit) { bannerAdView ->
+        AndroidView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .animateContentSize(),
+            update = {
+                it.requestLayout()
+            },
+            factory = { context ->
 
-                    if (bannerAdView == null) {
-                        initialViewHeight.value = 0.dp
-                    } else {
+                FrameLayout(context).apply {
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                }.also { adLayout ->
+                    parent = adLayout
+                    MobileAdsManager.fetchBannerAd(adUnit = bannerAdUnit) { bannerAdView ->
 
-                        bannerAdView.apply {
-                            initialViewHeight.value = getAdSize().height.dp
+                        isLoadingAds.value = false
 
-                            // Banner Ad refresh callback
-                            bannerAdRefreshCallback = object : BannerAdRefreshCallback {
+                        if (bannerAdView == null) {
+                            initialViewHeight.value = 0.dp
+                        } else {
 
-                                override fun onAdRefreshed() {
-                                    super.onAdRefreshed()
-                                    println("[Banner Ad View] - onAdRefreshed")
+                            bannerAdView.apply {
+                                initialViewHeight.value = getAdSize().height.dp
+
+                                // Banner Ad refresh callback
+                                bannerAdRefreshCallback = object : BannerAdRefreshCallback {
+
+                                    override fun onAdRefreshed() {
+                                        super.onAdRefreshed()
+                                        println("[Banner Ad View] - onAdRefreshed")
+                                    }
+
+                                    override fun onAdFailedToRefresh(adError: LoadAdError) {
+                                        super.onAdFailedToRefresh(adError)
+                                        println("[Banner Ad View] - Ad Failed to refresh, cause: ${adError.message}")
+                                    }
                                 }
 
-                                override fun onAdFailedToRefresh(adError: LoadAdError) {
-                                    super.onAdFailedToRefresh(adError)
-                                    println("[Banner Ad View] - Ad Failed to refresh, cause: ${adError.message}")
+                                adEventCallback = object : BannerAdEventCallback {
+
+                                    override fun onAdShowedFullScreenContent() {
+                                        super.onAdShowedFullScreenContent()
+                                        println("[Banner Ad View] - onAdShowedFullScreenContent")
+                                    }
+
+                                    override fun onAdDismissedFullScreenContent() {
+                                        super.onAdDismissedFullScreenContent()
+                                        println("[Banner Ad View] - onAdDismissedFullScreenContent")
+                                    }
+
+                                    override fun onAdFailedToShowFullScreenContent(
+                                        fullScreenContentError: FullScreenContentError
+                                    ) {
+                                        super.onAdFailedToShowFullScreenContent(
+                                            fullScreenContentError
+                                        )
+                                        println("[Banner Ad View] - onAdFailedToShowFullScreenContent")
+                                    }
+
+                                    override fun onAdImpression() {
+                                        super.onAdImpression()
+                                        println("[Banner Ad View] - onAdImpression")
+                                    }
+
+                                    override fun onAdClicked() {
+                                        super.onAdClicked()
+                                        println("[Banner Ad View] - onAdClicked")
+                                    }
                                 }
-                            }
 
-                            adEventCallback = object : BannerAdEventCallback {
+                                activity.runOnUiThread {
 
-                                override fun onAdShowedFullScreenContent() {
-                                    super.onAdShowedFullScreenContent()
-                                    println("[Banner Ad View] - onAdShowedFullScreenContent")
-                                }
+                                    this.getView(activity).also { bannerAdView ->
 
-                                override fun onAdDismissedFullScreenContent() {
-                                    super.onAdDismissedFullScreenContent()
-                                    println("[Banner Ad View] - onAdDismissedFullScreenContent")
-                                }
+                                        println("[Banner Ad View Parent] - Banner ads with unit ID: ${bannerAdUnit.id} - parent: ${bannerAdView.parent}")
 
-                                override fun onAdFailedToShowFullScreenContent(
-                                    fullScreenContentError: FullScreenContentError
-                                ) {
-                                    super.onAdFailedToShowFullScreenContent(fullScreenContentError)
-                                    println("[Banner Ad View] - onAdFailedToShowFullScreenContent")
-                                }
+                                        try {
 
-                                override fun onAdImpression() {
-                                    super.onAdImpression()
-                                    println("[Banner Ad View] - onAdImpression")
-                                }
+                                            if (bannerAdView.parent != null)
+                                                (bannerAdView.parent as ViewGroup).removeView(
+                                                    bannerAdView
+                                                )
 
-                                override fun onAdClicked() {
-                                    super.onAdClicked()
-                                    println("[Banner Ad View] - onAdClicked")
-                                }
-                            }
+                                            adLayout.addView(bannerAdView)
 
-                            activity.runOnUiThread {
+                                            banner_Ad_View = bannerAdView
 
-                                this.getView(activity).also { bannerAdView ->
-
-                                    println("[Banner Ad View Parent] - Banner ads with unit ID: ${bannerAdUnit.id} - parent: ${bannerAdView.parent}")
-
-                                    try {
-
-                                        if (bannerAdView.parent != null)
-                                            (bannerAdView.parent as ViewGroup).removeView(bannerAdView)
-
-                                        adLayout.addView(bannerAdView)
-
-                                        banner_Ad_View = bannerAdView
-
-                                    } catch (e: Exception) {
-                                        e.printStackTrace()
-                                        initialViewHeight.value = 0.dp
-                                        println("[Banner Ad View Parent] [Exception] - Error loading banner ads, cause: ${e.message}")
-                                    } catch (e: Throwable) {
-                                        e.printStackTrace()
-                                        initialViewHeight.value = 0.dp
-                                        println("[Banner Ad View Parent] [Throwable] - Error loading banner ads, cause: ${e.message}")
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                            initialViewHeight.value = 0.dp
+                                            println("[Banner Ad View Parent] [Exception] - Error loading banner ads, cause: ${e.message}")
+                                        } catch (e: Throwable) {
+                                            e.printStackTrace()
+                                            initialViewHeight.value = 0.dp
+                                            println("[Banner Ad View Parent] [Throwable] - Error loading banner ads, cause: ${e.message}")
+                                        }
                                     }
                                 }
                             }
@@ -141,8 +162,15 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
                     }
                 }
             }
-        }
-    )
+        )
+
+        AdLoadingView(
+            visible = isLoadingAds.value,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(loadingViewHeight.value)
+        )
+    }
 
     DisposableEffect(Unit) {
         onDispose {
@@ -155,20 +183,3 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
         }
     }
 }
-
-//private fun retrieveBannerAds(
-//    bannerAdUnit: NextGenAdUnit,
-//    bannerAd: (BannerAd?) -> Unit
-//) {
-//
-////    val bannerCaching = MobileAdsManager.bannerAdsCaching
-//
-//    if (MobileAdsManager.containsCachedBannerAd(adUnit = bannerAdUnit)) {
-////        val bannerAdView = MobileAdsManager.bannerAdsCaching.getBannerAd(id = bannerAdUnit.id)
-//        bannerAd(null)
-//    } else {
-//        MobileAdsManager.fetchBannerAd(adUnit = bannerAdUnit) { bannerAdView ->
-//            bannerAd(bannerAdView)
-//        }
-//    }
-//}

@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Tab
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.TabRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -98,6 +100,7 @@ fun InlineAdaptive(modifier: Modifier = Modifier) {
                 )
                 .fillMaxSize(),
             state = pagerState,
+            userScrollEnabled = false,
             count = tabs.size
         ) { pageIndex ->
 
