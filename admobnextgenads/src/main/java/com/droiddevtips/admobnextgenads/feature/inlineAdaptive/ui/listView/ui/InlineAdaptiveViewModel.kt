@@ -1,6 +1,7 @@
 package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui
 
 import androidx.lifecycle.ViewModel
+import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.data.ListItem
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.data.ListViewState
@@ -33,6 +34,7 @@ class InlineAdaptiveViewModel: ViewModel() {
 
     private suspend fun loadData() {
 
+        MobileAdsManager.clearAllCachedBanner()
         delay(2.seconds) // Simulate remote server api call
         _inlineAdaptiveViewState.update { it.copy(isLoading = false, items = getDummyItemList()) }
 

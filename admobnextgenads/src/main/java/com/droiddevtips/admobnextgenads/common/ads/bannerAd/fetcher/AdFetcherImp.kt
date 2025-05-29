@@ -53,7 +53,10 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
 
                 override fun onAdLoaded(ad: BannerAd) {
                     super.onAdLoaded(ad)
-                    cacheBannerAds(id = adUnit.key, bannerAds = ad)
+                    if (adUnit.key.isNotBlank()) {
+                        cacheBannerAds(id = adUnit.key, bannerAds = ad)
+                    }
+
                     CoroutineScope(Dispatchers.Main).launch {
                         bannerAdView(ad)
                     }

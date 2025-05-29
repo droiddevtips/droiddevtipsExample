@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
@@ -34,6 +35,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
 
     val activity = LocalContext.current as Activity
+    val isInPreview = LocalInspectionMode.current
 
     val initialViewHeight = remember {
         mutableStateOf(300.dp)
@@ -64,96 +66,97 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
                 it.requestLayout()
             },
             factory = { context ->
-
                 FrameLayout(context).apply {
                     layoutParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                     )
                 }.also { adLayout ->
-                    parent = adLayout
-                    MobileAdsManager.fetchBannerAd(adUnit = bannerAdUnit) { bannerAdView ->
+                    if (!isInPreview) {
+                        parent = adLayout
+                        MobileAdsManager.fetchBannerAd(adUnit = bannerAdUnit) { bannerAdView ->
 
-                        isLoadingAds.value = false
+                            isLoadingAds.value = false
 
-                        if (bannerAdView == null) {
-                            initialViewHeight.value = 0.dp
-                        } else {
+                            if (bannerAdView == null) {
+                                initialViewHeight.value = 0.dp
+                            } else {
 
-                            bannerAdView.apply {
-                                initialViewHeight.value = getAdSize().height.dp
+                                bannerAdView.apply {
+                                    initialViewHeight.value = getAdSize().height.dp
 
-                                // Banner Ad refresh callback
-                                bannerAdRefreshCallback = object : BannerAdRefreshCallback {
+                                    // Banner Ad refresh callback
+                                    bannerAdRefreshCallback = object : BannerAdRefreshCallback {
 
-                                    override fun onAdRefreshed() {
-                                        super.onAdRefreshed()
-                                        println("[Banner Ad View] - onAdRefreshed")
+                                        override fun onAdRefreshed() {
+                                            super.onAdRefreshed()
+                                            println("[Banner Ad View] - onAdRefreshed")
+                                        }
+
+                                        override fun onAdFailedToRefresh(adError: LoadAdError) {
+                                            super.onAdFailedToRefresh(adError)
+                                            println("[Banner Ad View] - Ad Failed to refresh, cause: ${adError.message}")
+                                        }
                                     }
 
-                                    override fun onAdFailedToRefresh(adError: LoadAdError) {
-                                        super.onAdFailedToRefresh(adError)
-                                        println("[Banner Ad View] - Ad Failed to refresh, cause: ${adError.message}")
+                                    adEventCallback = object : BannerAdEventCallback {
+
+                                        override fun onAdShowedFullScreenContent() {
+                                            super.onAdShowedFullScreenContent()
+                                            println("[Banner Ad View] - onAdShowedFullScreenContent")
+                                        }
+
+                                        override fun onAdDismissedFullScreenContent() {
+                                            super.onAdDismissedFullScreenContent()
+                                            println("[Banner Ad View] - onAdDismissedFullScreenContent")
+                                        }
+
+                                        override fun onAdFailedToShowFullScreenContent(
+                                            fullScreenContentError: FullScreenContentError
+                                        ) {
+                                            super.onAdFailedToShowFullScreenContent(
+                                                fullScreenContentError
+                                            )
+                                            println("[Banner Ad View] - onAdFailedToShowFullScreenContent")
+                                        }
+
+                                        override fun onAdImpression() {
+                                            super.onAdImpression()
+                                            println("[Banner Ad View] - onAdImpression")
+                                        }
+
+                                        override fun onAdClicked() {
+                                            super.onAdClicked()
+                                            println("[Banner Ad View] - onAdClicked")
+                                        }
                                     }
-                                }
 
-                                adEventCallback = object : BannerAdEventCallback {
+                                    activity.runOnUiThread {
 
-                                    override fun onAdShowedFullScreenContent() {
-                                        super.onAdShowedFullScreenContent()
-                                        println("[Banner Ad View] - onAdShowedFullScreenContent")
-                                    }
+                                        this.getView(activity).also { bannerAdView ->
 
-                                    override fun onAdDismissedFullScreenContent() {
-                                        super.onAdDismissedFullScreenContent()
-                                        println("[Banner Ad View] - onAdDismissedFullScreenContent")
-                                    }
+                                            println("[Banner Ad View Parent] - Banner ads with unit ID: ${bannerAdUnit.id} - parent: ${bannerAdView.parent}")
 
-                                    override fun onAdFailedToShowFullScreenContent(
-                                        fullScreenContentError: FullScreenContentError
-                                    ) {
-                                        super.onAdFailedToShowFullScreenContent(
-                                            fullScreenContentError
-                                        )
-                                        println("[Banner Ad View] - onAdFailedToShowFullScreenContent")
-                                    }
+                                            try {
 
-                                    override fun onAdImpression() {
-                                        super.onAdImpression()
-                                        println("[Banner Ad View] - onAdImpression")
-                                    }
+                                                if (bannerAdView.parent != null)
+                                                    (bannerAdView.parent as ViewGroup).removeView(
+                                                        bannerAdView
+                                                    )
 
-                                    override fun onAdClicked() {
-                                        super.onAdClicked()
-                                        println("[Banner Ad View] - onAdClicked")
-                                    }
-                                }
+                                                adLayout.addView(bannerAdView)
 
-                                activity.runOnUiThread {
+                                                banner_Ad_View = bannerAdView
 
-                                    this.getView(activity).also { bannerAdView ->
-
-                                        println("[Banner Ad View Parent] - Banner ads with unit ID: ${bannerAdUnit.id} - parent: ${bannerAdView.parent}")
-
-                                        try {
-
-                                            if (bannerAdView.parent != null)
-                                                (bannerAdView.parent as ViewGroup).removeView(
-                                                    bannerAdView
-                                                )
-
-                                            adLayout.addView(bannerAdView)
-
-                                            banner_Ad_View = bannerAdView
-
-                                        } catch (e: Exception) {
-                                            e.printStackTrace()
-                                            initialViewHeight.value = 0.dp
-                                            println("[Banner Ad View Parent] [Exception] - Error loading banner ads, cause: ${e.message}")
-                                        } catch (e: Throwable) {
-                                            e.printStackTrace()
-                                            initialViewHeight.value = 0.dp
-                                            println("[Banner Ad View Parent] [Throwable] - Error loading banner ads, cause: ${e.message}")
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
+                                                initialViewHeight.value = 0.dp
+                                                println("[Banner Ad View Parent] [Exception] - Error loading banner ads, cause: ${e.message}")
+                                            } catch (e: Throwable) {
+                                                e.printStackTrace()
+                                                initialViewHeight.value = 0.dp
+                                                println("[Banner Ad View Parent] [Throwable] - Error loading banner ads, cause: ${e.message}")
+                                            }
                                         }
                                     }
                                 }
