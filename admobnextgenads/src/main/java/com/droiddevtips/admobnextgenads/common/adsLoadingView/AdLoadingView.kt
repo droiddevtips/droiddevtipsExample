@@ -24,9 +24,10 @@ import androidx.compose.ui.unit.dp
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Composable
-fun AdLoadingView(visible: Boolean, modifier: Modifier = Modifier) {
+fun AdLoadingView(visible: Boolean, modifier: Modifier = Modifier, frameModifier: Modifier = Modifier) {
 
     AnimatedVisibility(
+        modifier = frameModifier,
         visible = visible,
         enter = fadeIn(),
         exit = fadeOut()

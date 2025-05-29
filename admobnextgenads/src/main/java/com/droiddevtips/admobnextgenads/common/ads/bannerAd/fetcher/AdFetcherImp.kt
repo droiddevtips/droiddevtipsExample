@@ -122,6 +122,48 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
         }
     }
 
+    override fun fetchAnchoredBannerAd(
+        context: Context,
+        adUnit: NextGenAdUnit,
+        bannerAdView: (BannerAd?) -> Unit
+    ) {
+
+        if (adUnit.id.isBlank()) {
+            bannerAdView(null)
+            return
+        }
+
+        val adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context = context, width = MobileAdsManager.deviceScreenWidth)
+
+        val adRequest = BannerAdRequest.Builder(adUnit.id, adSize)
+            // In case you want to provide some custom targeting
+            .putCustomTargeting("key1", "value1")
+            .putCustomTargeting("key2", "value2")
+
+            .setContentUrl(adUnit.contentUrl) // For the content url
+            .build()
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            BannerAd.load(adRequest = adRequest, object : AdLoadCallback<BannerAd> {
+
+                override fun onAdLoaded(ad: BannerAd) {
+                    super.onAdLoaded(ad)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        bannerAdView(ad)
+                    }
+                }
+
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    super.onAdFailedToLoad(adError)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        bannerAdView(null)
+                    }
+                }
+            })
+        }
+    }
+
     override fun fetchInterstitialAd(
         adUnit: NextGenAdUnit,
         interstitialAd: (InterstitialAd?) -> Unit

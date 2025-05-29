@@ -1,7 +1,8 @@
 package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.anchored
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.common.ads.bannerAd.BannerAdAnchoredView
 
 /**
  * Created by Melchior Vrolijk
@@ -9,6 +10,8 @@ import androidx.compose.ui.Modifier
  */
 
 @Composable
-fun BannerAdAnchored(modifier: Modifier = Modifier) {
+fun BannerAdAnchored() {
+
+    BannerAdAnchoredView(bannerAdUnit = NextGenAdUnit.AnchoredBannerAd)
 
 }

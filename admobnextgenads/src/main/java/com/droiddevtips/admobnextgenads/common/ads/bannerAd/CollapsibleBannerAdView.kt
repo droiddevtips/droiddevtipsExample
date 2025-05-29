@@ -328,13 +328,14 @@ fun CollapsibleBannerAdView(
 
                 AdLoadingView(
                     visible = isLoadingAds.value,
-                    modifier = Modifier
+                    frameModifier = Modifier
                         .constrainAs(loadingView) {
                             bottom.linkTo(parent.bottom)
                             end.linkTo(parent.end)
                             start.linkTo(parent.start)
                             width = Dimension.fillToConstraints
-                        }
+                        },
+                    modifier = Modifier
                         .fillMaxWidth()
                         .height(loadingViewHeight.value)
                 )
