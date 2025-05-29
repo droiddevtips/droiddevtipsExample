@@ -1,7 +1,7 @@
 package com.droiddevtips.admobnextgenads
 
 import android.app.Application
-import com.droiddevtips.admobnextgenads.common.MobileAdsManager
+import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 
 /**
  * Created by Melchior Vrolijk

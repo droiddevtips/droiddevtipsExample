@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.common
+package com.droiddevtips.admobnextgenads.common.ads.bannerAd
 
 import android.app.Activity
 import android.view.View
@@ -16,7 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
+import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
+import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdEventCallback
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRefreshCallback
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
@@ -46,7 +47,7 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
             .fillMaxWidth()
             .animateContentSize(),
         update = {
-
+            it.requestLayout()
         },
         factory = { context ->
 
@@ -57,7 +58,7 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
                 )
             }.also { adLayout ->
                 parent = adLayout
-                retrieveBannerAds(bannerAdUnit = bannerAdUnit) { bannerAdView ->
+                MobileAdsManager.fetchBannerAd(adUnit = bannerAdUnit) { bannerAdView ->
 
                     if (bannerAdView == null) {
                         initialViewHeight.value = 0.dp
@@ -155,16 +156,19 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
     }
 }
 
-private fun retrieveBannerAds(
-    bannerAdUnit: NextGenAdUnit,
-    bannerAd: (BannerAd?) -> Unit
-) {
-    if (MobileAdsManager.bannerAdsCaching.hasBannerAd(bannerAdUnit = bannerAdUnit)) {
-        val bannerAdView = MobileAdsManager.bannerAdsCaching.getBannerAd(id = bannerAdUnit.id)
-        bannerAd(bannerAdView)
-    } else {
-        MobileAdsManager.bannerAdFetcher.fetchBannerAd(adUnit = bannerAdUnit) { bannerAdView ->
-            bannerAd(bannerAdView)
-        }
-    }
-}
+//private fun retrieveBannerAds(
+//    bannerAdUnit: NextGenAdUnit,
+//    bannerAd: (BannerAd?) -> Unit
+//) {
+//
+////    val bannerCaching = MobileAdsManager.bannerAdsCaching
+//
+//    if (MobileAdsManager.containsCachedBannerAd(adUnit = bannerAdUnit)) {
+////        val bannerAdView = MobileAdsManager.bannerAdsCaching.getBannerAd(id = bannerAdUnit.id)
+//        bannerAd(null)
+//    } else {
+//        MobileAdsManager.fetchBannerAd(adUnit = bannerAdUnit) { bannerAdView ->
+//            bannerAd(bannerAdView)
+//        }
+//    }
+//}

@@ -1,9 +1,9 @@
-package com.droiddevtips.admobnextgenads.common.bannerAd.fetcher
+package com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher
 
-import com.droiddevtips.admobnextgenads.common.MobileAdsManager
-import com.droiddevtips.admobnextgenads.common.NextGenAdUnit
-import com.droiddevtips.admobnextgenads.common.bannerAd.caching.BannerAdCaching
-import com.droiddevtips.admobnextgenads.common.bannerAd.caching.BannerAdCachingImp
+import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
+import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.common.ads.bannerAd.caching.BannerAdCaching
+import com.droiddevtips.admobnextgenads.common.ads.bannerAd.caching.BannerAdCachingImp
 import com.google.android.libraries.ads.mobile.sdk.banner.AdSize
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
@@ -19,13 +19,16 @@ import kotlinx.coroutines.launch
  */
 class BannerAdFetcherImp : BannerAdFetcher, BannerAdCaching by BannerAdCachingImp() {
 
-    override val bannerAdsCaching: BannerAdCaching
-        get() = this
-
     override fun fetchBannerAd(adUnit: NextGenAdUnit, bannerAdView: (BannerAd?) -> Unit) {
 
         if (adUnit.id.isBlank()) {
             bannerAdView(null)
+            return
+        }
+
+        if (containsCachedBannerAd(adUnit = adUnit)) {
+            val cachedBannerAd = getBannerAd(id = adUnit.key)
+            bannerAdView(cachedBannerAd)
             return
         }
 
@@ -63,5 +66,7 @@ class BannerAdFetcherImp : BannerAdFetcher, BannerAdCaching by BannerAdCachingIm
         }
     }
 
-    override fun getBannerAd(id: String): BannerAd? = bannerAdsCaching.getBannerAd(id = id)
+    override fun containsCachedBannerAd(adUnit: NextGenAdUnit): Boolean {
+        return hasBannerAd(bannerAdUnit = adUnit)
+    }
 }

@@ -1,6 +1,6 @@
-package com.droiddevtips.admobnextgenads.common.bannerAd.caching
+package com.droiddevtips.admobnextgenads.common.ads.bannerAd.caching
 
-import com.droiddevtips.admobnextgenads.common.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 
 /**
@@ -8,7 +8,6 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 interface BannerAdCaching {
-    val bannerAdCaching: BannerAdCachingImp
     fun hasBannerAd(bannerAdUnit: NextGenAdUnit): Boolean
     fun getBannerAd(id: String): BannerAd?
     fun cacheBannerAds(id:String, bannerAds:BannerAd)

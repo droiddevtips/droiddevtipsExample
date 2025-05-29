@@ -15,7 +15,7 @@ import com.droiddevtips.admobnextgenads.feature.main.Route
 import com.droiddevtips.admobnextgenads.core.domain.navigateToView
 import com.droiddevtips.admobnextgenads.feature.collapsible.CollapsibleAds
 import com.droiddevtips.admobnextgenads.feature.fixedSize.FixedSizeAds
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.InlineAdaptive
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.InlineAdaptive
 import com.droiddevtips.admobnextgenads.feature.interstitialAds.InterstitialAds
 import com.droiddevtips.admobnextgenads.feature.main.MainView
 import com.droiddevtips.admobnextgenads.feature.nativeAds.NativeAds
@@ -36,7 +36,7 @@ class AdMobNextGenExample : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = Route.InlineAdaptive.route,
+                        startDestination = Route.Home.route,
                         modifier = Modifier.padding(innerPadding)
                     ) {
 

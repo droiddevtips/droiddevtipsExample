@@ -1,10 +1,9 @@
-package com.droiddevtips.admobnextgenads.common
+package com.droiddevtips.admobnextgenads.common.ads
 
 import android.content.Context
 import android.widget.Toast
-import com.droiddevtips.admobnextgenads.common.bannerAd.BannerAdManager
-import com.droiddevtips.admobnextgenads.common.bannerAd.fetcher.BannerAdFetcher
-import com.droiddevtips.admobnextgenads.common.bannerAd.fetcher.BannerAdFetcherImp
+import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.BannerAdFetcher
+import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.BannerAdFetcherImp
 import com.google.android.libraries.ads.mobile.sdk.MobileAds
 import com.google.android.libraries.ads.mobile.sdk.initialization.AdapterStatus
 import com.google.android.libraries.ads.mobile.sdk.initialization.InitializationConfig
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-object MobileAdsManager: BannerAdManager, BannerAdFetcher by BannerAdFetcherImp() {
+object MobileAdsManager: BannerAdFetcher by BannerAdFetcherImp() {
 
     var initialized = false
         private set
@@ -25,9 +24,6 @@ object MobileAdsManager: BannerAdManager, BannerAdFetcher by BannerAdFetcherImp(
         private set
 
     val adsApplicationID = "ca-app-pub-3940256099942544~3347511713" // Sample AdMob app ID, replace with your own adMob ID if you have one
-
-    override val bannerAdFetcher: BannerAdFetcher
-        get() = this
 
     fun init(context: Context) {
 

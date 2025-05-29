@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.inlineAdaptive
+package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data
 
 import com.droiddevtips.admobnextgenads.core.data.AppString
 

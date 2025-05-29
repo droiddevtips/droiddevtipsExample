@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.common
+package com.droiddevtips.admobnextgenads.common.ads
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

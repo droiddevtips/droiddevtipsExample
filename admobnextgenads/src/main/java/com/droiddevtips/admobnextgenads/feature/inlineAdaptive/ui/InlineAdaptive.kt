@@ -1,6 +1,5 @@
-package com.droiddevtips.admobnextgenads.feature.inlineAdaptive
+package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,6 +21,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.InlineAdaptiveTab
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.listRoute
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.staticRoute
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui.InlineAdaptiveListView
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui.InlineAdaptiveViewModel
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.staticView.InlineAdaptiveStatic
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
@@ -56,7 +62,10 @@ fun InlineAdaptive(modifier: Modifier = Modifier) {
                 backgroundColor = MaterialTheme.colorScheme.background,
                 indicator = { tabPositions ->
                     SecondaryIndicator(
-                        modifier = Modifier.pagerTabIndicatorOffset(pagerState = pagerState, tabPositions = tabPositions),
+                        modifier = Modifier.pagerTabIndicatorOffset(
+                            pagerState = pagerState,
+                            tabPositions = tabPositions
+                        ),
                         height = 3.dp,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -104,18 +113,18 @@ fun InlineAdaptive(modifier: Modifier = Modifier) {
 
 @Composable
 private fun BannerAdStaticView(modifier: Modifier = Modifier) {
-    Column(modifier = modifier
-        .fillMaxSize()
-    ) {
-        Text("Banner ad static example")
-    }
+    InlineAdaptiveStatic(modifier = modifier)
 }
 
 @Composable
-private fun BannerAdListView(modifier: Modifier = Modifier) {
-    Column(modifier = modifier
-        .fillMaxSize()
-    ) {
-        Text("Banner ad list example")
+private fun BannerAdListView() {
+    val listViewModel = remember {
+        InlineAdaptiveViewModel()
     }
+    val viewState = listViewModel.inlineAdaptiveViewState.collectAsStateWithLifecycle()
+
+    InlineAdaptiveListView(
+        modifier = Modifier.fillMaxSize(),
+        viewState = viewState
+    )
 }
