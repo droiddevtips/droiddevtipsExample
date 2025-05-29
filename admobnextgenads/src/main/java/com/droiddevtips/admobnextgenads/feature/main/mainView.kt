@@ -36,7 +36,7 @@ fun MainView(
         )
     ) {
         Button(onClick = {
-            navigate(Route.InlineAdaptive.route)
+            navigate(Route.BannerAd.route)
         }) {
             Text(text = "Inline Adaptive banner ad")
         }

@@ -13,9 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.admobnextgenads.feature.main.Route
 import com.droiddevtips.admobnextgenads.core.domain.navigateToView
-import com.droiddevtips.admobnextgenads.feature.collapsible.CollapsibleAds
-import com.droiddevtips.admobnextgenads.feature.fixedSize.FixedSizeAds
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.InlineAdaptive
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.BannerAd
 import com.droiddevtips.admobnextgenads.feature.interstitialAds.InterstitialAds
 import com.droiddevtips.admobnextgenads.feature.main.MainView
 import com.droiddevtips.admobnextgenads.feature.nativeAds.NativeAds
@@ -46,16 +44,8 @@ class AdMobNextGenExample : ComponentActivity() {
                             }
                         }
 
-                        composable(route = Route.InlineAdaptive.route) {
-                            InlineAdaptive()
-                        }
-
-                        composable(route = Route.Collapsible.route) {
-                            CollapsibleAds()
-                        }
-
-                        composable(route = Route.FixedSize.route) {
-                            FixedSizeAds()
+                        composable(route = Route.BannerAd.route) {
+                            BannerAd()
                         }
 
                         composable(route = Route.InterstitialAds.route) {

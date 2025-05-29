@@ -43,7 +43,7 @@ class InlineAdaptiveViewModel: ViewModel() {
         val items = ArrayList<ListItem>()
 
         for (item in 1..50) {
-            items.add(ListItem(title = "Item $item"))
+            items.add(ListItem(title = "List item $item"))
             if (item % 10 == 0) {
                 items.add(ListItem(title = "", adUnit = NextGenAdUnit.BannerAd(_key = "item_$item")))
             }

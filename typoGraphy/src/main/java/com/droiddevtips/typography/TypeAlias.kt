@@ -5,4 +5,5 @@ package com.droiddevtips.typography
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 
-internal typealias AppFont = R.font
+typealias AppFont = R.font
+typealias Drawable = R.drawable

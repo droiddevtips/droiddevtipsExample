@@ -13,4 +13,5 @@ interface AdFetcher {
     fun fetchCollapsibleBannerAd(adUnit: NextGenAdUnit, bannerAdView: (BannerAd?) -> Unit = {})
     fun fetchInterstitialAd(adUnit: NextGenAdUnit, interstitialAd: (InterstitialAd?) -> Unit = {})
     fun containsCachedBannerAd(adUnit: NextGenAdUnit): Boolean
+    fun getCachedAdHeight(adUnit: NextGenAdUnit): Int
 }

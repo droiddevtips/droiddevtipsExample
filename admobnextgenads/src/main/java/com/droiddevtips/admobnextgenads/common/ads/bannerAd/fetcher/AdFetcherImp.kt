@@ -148,4 +148,8 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
     override fun containsCachedBannerAd(adUnit: NextGenAdUnit): Boolean {
         return hasBannerAd(bannerAdUnit = adUnit)
     }
+
+    override fun getCachedAdHeight(adUnit: NextGenAdUnit): Int = getBannerAd(id = adUnit.id)?.getAdSize()?.height ?:run {
+        0
+    }
 }

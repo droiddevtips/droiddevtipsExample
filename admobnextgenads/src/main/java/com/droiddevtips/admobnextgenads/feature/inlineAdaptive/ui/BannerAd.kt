@@ -1,13 +1,17 @@
 package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 //noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.ScrollableTabRow
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Tab
 //noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.TabRow
+import androidx.compose.material.TopAppBar
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
@@ -25,8 +29,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.InlineAdaptiveTab
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.anchoredRoute
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.collapsibleRoute
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.listRoute
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.staticRoute
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.anchored.BannerAdAnchored
+import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.collapsible.BannerAdCollapsible
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui.InlineAdaptiveListView
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui.InlineAdaptiveViewModel
 import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.staticView.InlineAdaptiveStatic
@@ -42,11 +50,13 @@ import kotlinx.coroutines.launch
  */
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun InlineAdaptive(modifier: Modifier = Modifier) {
+fun BannerAd(modifier: Modifier = Modifier) {
 
     val tabs = listOf(
         InlineAdaptiveTab.Static,
-        InlineAdaptiveTab.List
+        InlineAdaptiveTab.Inline,
+        InlineAdaptiveTab.Collapsible,
+        InlineAdaptiveTab.Anchored
     )
 
     val scope = rememberCoroutineScope()
@@ -56,7 +66,26 @@ fun InlineAdaptive(modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TabRow(
+            TopAppBar(
+                backgroundColor = MaterialTheme.colorScheme.background,
+                contentColor = MaterialTheme.colorScheme.primary,
+                title = {
+                    Text(
+                        "Banner Ad",
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
+                })
+        }
+    ) { innerPadding ->
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = innerPadding.calculateTopPadding())
+        ) {
+
+            ScrollableTabRow(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -90,25 +119,21 @@ fun InlineAdaptive(modifier: Modifier = Modifier) {
                     }
                 }
             )
-        }
-    ) { innerPadding ->
 
-        HorizontalPager(
-            modifier = Modifier
-                .padding(
-                    top = innerPadding.calculateTopPadding()
-                )
-                .fillMaxSize(),
-            state = pagerState,
-            userScrollEnabled = false,
-            count = tabs.size
-        ) { pageIndex ->
+            HorizontalPager(
+                modifier = Modifier
+                    .fillMaxSize(),
+                state = pagerState,
+                userScrollEnabled = false,
+                count = tabs.size
+            ) { pageIndex ->
 
-            when (tabs[pageIndex].route) {
-
-                staticRoute -> BannerAdStaticView()
-
-                listRoute -> BannerAdListView()
+                when (tabs[pageIndex].route) {
+                    staticRoute -> BannerAdStaticView()
+                    listRoute -> BannerAdListView()
+                    collapsibleRoute -> BannerAdCollapsible()
+                    anchoredRoute -> BannerAdAnchored()
+                }
             }
         }
     }

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">AdMobNextGenAds</string>
-    <string name="inline_static">Inline Static</string>
-    <string name="inline_list">Inline List</string>
+    <string name="inline_static">Inline (static)</string>
+    <string name="inline_list">Inline (list)</string>
+    <string name="collapsible">Collapsible</string>
+    <string name="anchored">Anchored</string>
 </resources>
