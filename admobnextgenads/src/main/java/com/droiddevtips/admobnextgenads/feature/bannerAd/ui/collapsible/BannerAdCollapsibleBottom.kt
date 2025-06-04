@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.collapsible
+package com.droiddevtips.admobnextgenads.feature.bannerAd.ui.collapsible
 
 import androidx.compose.runtime.Composable
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit

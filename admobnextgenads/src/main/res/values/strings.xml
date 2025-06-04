@@ -5,4 +5,9 @@
     <string name="collapsible_top">Collapsible (Top)</string>
     <string name="collapsible_bottom">Collapsible (Bottom)</string>
     <string name="anchored">Anchored</string>
+    <string name="native_ad_video">Native Ad video</string>
+    <string name="native_ad_non_video">Native Ad non video</string>
+    <string name="native_ad_fullscreen">Native Ad fullscreen</string>
+    <string name="play_video_ad_description">Play again</string>
+    <string name="mute_video_ad_description">Mute video ad?</string>
 </resources>

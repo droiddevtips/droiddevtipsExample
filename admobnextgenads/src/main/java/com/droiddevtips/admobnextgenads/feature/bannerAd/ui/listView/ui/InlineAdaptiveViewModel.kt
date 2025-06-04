@@ -1,10 +1,10 @@
-package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui
+package com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.ui
 
 import androidx.lifecycle.ViewModel
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.data.ListItem
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.data.ListViewState
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.data.ListItem
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.data.ListViewState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

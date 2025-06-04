@@ -12,7 +12,13 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
 import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.AdRequest
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
+import com.google.android.libraries.ads.mobile.sdk.common.VideoOptions
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoader
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallback
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdRequest
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,7 +50,6 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
             // In case you want to provide some custom targeting
             .putCustomTargeting("key1", "value1")
             .putCustomTargeting("key2", "value2")
-
             .setContentUrl(adUnit.contentUrl) // For the content url
             .build()
 
@@ -71,6 +76,33 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
                 }
             })
         }
+    }
+
+    override fun fetchNativeVideoAd(
+        adUnit: NextGenAdUnit,
+        muteVideo: Boolean,
+        requestCustomVideoControl: Boolean,
+        nativeVideoAd: (NativeAd?) -> Unit
+    ) {
+        val videoOptions = VideoOptions.Builder().setStartMuted(startMuted = muteVideo).setCustomControlsRequested(requestCustomVideoControl).build()
+        val nativeAdVideoRequest = NativeAdRequest.Builder(adUnit.id, listOf(NativeAd.NativeAdType.NATIVE))
+            .setVideoOptions(videoOptions)
+            .build()
+
+        val nativeAdVideoCallback = object: NativeAdLoaderCallback {
+
+            override fun onNativeAdLoaded(nativeAd: NativeAd) {
+                super.onNativeAdLoaded(nativeAd)
+                nativeVideoAd(nativeAd)
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                super.onAdFailedToLoad(adError)
+                nativeVideoAd(null)
+            }
+        }
+
+        NativeAdLoader.load(nativeAdVideoRequest, nativeAdVideoCallback)
     }
 
     override fun fetchCollapsibleBannerAd(

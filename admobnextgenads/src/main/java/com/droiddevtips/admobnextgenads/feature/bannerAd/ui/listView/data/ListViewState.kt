@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.data
+package com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

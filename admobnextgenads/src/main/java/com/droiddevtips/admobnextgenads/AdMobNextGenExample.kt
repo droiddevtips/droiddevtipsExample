@@ -13,7 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.admobnextgenads.feature.main.Route
 import com.droiddevtips.admobnextgenads.core.domain.navigateToView
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.BannerAd
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.BannerAd
 import com.droiddevtips.admobnextgenads.feature.interstitialAds.InterstitialAds
 import com.droiddevtips.admobnextgenads.feature.main.MainView
 import com.droiddevtips.admobnextgenads.feature.nativeAds.NativeAds

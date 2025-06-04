@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui
+package com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -35,8 +35,8 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.bannerAd.BannerAdView
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.data.ListItem
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.data.ListViewState
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.data.ListItem
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.data.ListViewState
 import com.droiddevtips.typography.Drawable
 
 /**

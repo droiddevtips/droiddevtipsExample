@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui
+package com.droiddevtips.admobnextgenads.feature.bannerAd.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,18 +28,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.InlineAdaptiveTab
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.anchoredRoute
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.collapsibleBottomRoute
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.collapsibleTopRoute
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.listRoute
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.data.staticRoute
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.anchored.BannerAdAnchored
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.collapsible.BannerAdCollapsibleBottom
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.collapsible.BannerAdCollapsibleTop
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui.InlineAdaptiveListView
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.listView.ui.InlineAdaptiveViewModel
-import com.droiddevtips.admobnextgenads.feature.inlineAdaptive.ui.staticView.InlineAdaptiveStatic
+import com.droiddevtips.admobnextgenads.core.data.TabItem
+import com.droiddevtips.admobnextgenads.core.data.anchoredRoute
+import com.droiddevtips.admobnextgenads.core.data.collapsibleBottomRoute
+import com.droiddevtips.admobnextgenads.core.data.collapsibleTopRoute
+import com.droiddevtips.admobnextgenads.core.data.listRoute
+import com.droiddevtips.admobnextgenads.core.data.staticRoute
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.anchored.BannerAdAnchored
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.collapsible.BannerAdCollapsibleBottom
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.collapsible.BannerAdCollapsibleTop
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.ui.InlineAdaptiveListView
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.ui.InlineAdaptiveViewModel
+import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.staticView.InlineAdaptiveStatic
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
@@ -55,11 +55,11 @@ import kotlinx.coroutines.launch
 fun BannerAd(modifier: Modifier = Modifier) {
 
     val tabs = listOf(
-        InlineAdaptiveTab.Static,
-        InlineAdaptiveTab.Inline,
-        InlineAdaptiveTab.CollapsibleTop,
-        InlineAdaptiveTab.CollapsibleBottom,
-        InlineAdaptiveTab.Anchored
+        TabItem.Static,
+        TabItem.InlineItem,
+        TabItem.CollapsibleTop,
+        TabItem.CollapsibleBottom,
+        TabItem.Anchored
     )
 
     val scope = rememberCoroutineScope()

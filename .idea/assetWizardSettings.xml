@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="droid_dev_tips_logo" />
-                            <entry key="sourceFile" value="$USER_HOME$/Desktop/droid_dev_tips_logo_only.svg" />
+                            <entry key="outputName" value="unmute_icon" />
+                            <entry key="sourceFile" value="$USER_HOME$/Desktop/unmute_icon.svg" />
                           </map>
                         </option>
                       </PersistentState>
