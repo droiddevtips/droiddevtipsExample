@@ -15,5 +15,6 @@ sealed class NextGenAdUnit(val id: String, val contentUrl: String, val key: Stri
     data object CollapsibleBannerAd: NextGenAdUnit(id = "ca-app-pub-3940256099942544/9214589741", contentUrl = "www.droiddevtips.com", key = "")
     data object InterstitialAd: NextGenAdUnit(id = "ca-app-pub-3940256099942544/1033173712", contentUrl = "www.droiddevtips.com", key = "")
     data object NativeAdVideo: NextGenAdUnit(id = "ca-app-pub-3940256099942544/1044960115", contentUrl = "www.droiddevtips.com", key = "")
+    data object NativeAdImage: NextGenAdUnit(id = "ca-app-pub-3940256099942544/2247696110", contentUrl = "www.droiddevtips.com", key = "")
 
 }

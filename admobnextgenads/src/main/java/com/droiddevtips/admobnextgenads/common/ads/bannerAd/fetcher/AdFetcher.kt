@@ -19,6 +19,11 @@ interface AdFetcher {
         nativeVideoAd: (NativeAd?) -> Unit = {}
     )
 
+    fun fetchNativeImageAd(
+        adUnit: NextGenAdUnit,
+        nativeVideoAd: (NativeAd?) -> Unit = {}
+    )
+
     fun fetchCollapsibleBannerAd(
         context: Context,
         adUnit: NextGenAdUnit,

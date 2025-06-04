@@ -1,11 +1,7 @@
 package com.droiddevtips.admobnextgenads.common.ads.nativeAd
 
-import android.app.Activity
-import android.content.Context
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
@@ -18,7 +14,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -50,6 +45,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.droiddevtips.admobnextgenads.R
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.droiddevtips.admobnextgenads.common.adsLoadingView.AdLoadingView
@@ -57,8 +53,6 @@ import com.droiddevtips.typography.extensions.dpToPx
 import com.google.android.libraries.ads.mobile.sdk.nativead.MediaView
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView
-import com.droiddevtips.admobnextgenads.R
-import com.droiddevtips.typography.Drawable
 
 /**
  * Created by Melchior Vrolijk
@@ -377,7 +371,6 @@ fun NativeAdMediaView(
                             )
                             (layoutParams as FrameLayout.LayoutParams).gravity =
                                 Gravity.CENTER_HORIZONTAL
-                            setBackgroundColor(android.graphics.Color.MAGENTA)
                         }.also { media_view ->
                             if (nativeAd != null) {
                                 nativeAdView.registerNativeAd(nativeAd, media_view)
@@ -477,7 +470,7 @@ fun VideoControllerView(modifier: Modifier = Modifier) {
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.align(alignment = Alignment.BottomStart)
+            modifier = modifier.align(alignment = Alignment.BottomStart)
         ) {
 
             Image(

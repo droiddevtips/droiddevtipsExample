@@ -18,7 +18,6 @@ import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoader
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallback
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdRequest
-import com.google.android.libraries.ads.mobile.sdk.nativead.NativeRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -87,6 +86,29 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
         val videoOptions = VideoOptions.Builder().setStartMuted(startMuted = muteVideo).setCustomControlsRequested(requestCustomVideoControl).build()
         val nativeAdVideoRequest = NativeAdRequest.Builder(adUnit.id, listOf(NativeAd.NativeAdType.NATIVE))
             .setVideoOptions(videoOptions)
+            .build()
+
+        val nativeAdVideoCallback = object: NativeAdLoaderCallback {
+
+            override fun onNativeAdLoaded(nativeAd: NativeAd) {
+                super.onNativeAdLoaded(nativeAd)
+                nativeVideoAd(nativeAd)
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                super.onAdFailedToLoad(adError)
+                nativeVideoAd(null)
+            }
+        }
+
+        NativeAdLoader.load(nativeAdVideoRequest, nativeAdVideoCallback)
+    }
+
+    override fun fetchNativeImageAd(
+        adUnit: NextGenAdUnit,
+        nativeVideoAd: (NativeAd?) -> Unit
+    ) {
+        val nativeAdVideoRequest = NativeAdRequest.Builder(adUnit.id, listOf(NativeAd.NativeAdType.NATIVE))
             .build()
 
         val nativeAdVideoCallback = object: NativeAdLoaderCallback {
