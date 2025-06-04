@@ -130,13 +130,3 @@ fun NativeAds(modifier: Modifier = Modifier) {
         }
     }
 }
-
-@Composable
-private fun NativeAdNonVideo(modifier: Modifier = Modifier) {
-    Text(text = "Native ad non video", modifier = modifier)
-}
-
-@Composable
-private fun NativeAdFullscreen(modifier: Modifier = Modifier) {
-    Text(text = "Native ad full screen", modifier = modifier)
-}
