@@ -73,7 +73,7 @@ fun NativeAdFullscreenView(adUnit: NextGenAdUnit, modifier: Modifier = Modifier)
     var native_Ad by remember { mutableStateOf<NativeAd?>(null) }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .animateContentSize()
     ) {
