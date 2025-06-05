@@ -8,3 +8,4 @@ import com.droiddevtips.admobnextgenads.R
  */
 
 typealias AppString = R.string
+typealias AppColor = R.color

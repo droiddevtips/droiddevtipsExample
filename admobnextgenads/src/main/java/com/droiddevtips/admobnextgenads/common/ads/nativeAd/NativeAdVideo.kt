@@ -36,7 +36,6 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,6 +47,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.droiddevtips.admobnextgenads.R
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.common.ads.nativeAd.elements.NativeAdTextElement
 import com.droiddevtips.admobnextgenads.common.adsLoadingView.AdLoadingView
 import com.droiddevtips.typography.extensions.dpToPx
 import com.google.android.libraries.ads.mobile.sdk.nativead.MediaView
@@ -220,15 +220,7 @@ private fun NativeAdTopSection(modifier: Modifier = Modifier) {
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Box(modifier = Modifier.background(color = Color(0xFFFFCC66))) {
-            Text(
-                "Ad",
-                fontSize = 10.sp,
-                color = Color.White,
-                lineHeight = 10.sp,
-                textAlign = TextAlign.Center
-            )
-        }
+        NativeAdTextElement()
     }
 }
 

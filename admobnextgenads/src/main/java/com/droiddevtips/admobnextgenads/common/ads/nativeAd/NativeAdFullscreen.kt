@@ -31,8 +31,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -42,7 +42,9 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import coil3.compose.AsyncImage
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.common.ads.nativeAd.elements.NativeAdTextElement
 import com.droiddevtips.admobnextgenads.common.adsLoadingView.AdLoadingView
+import com.droiddevtips.admobnextgenads.core.data.AppColor
 import com.google.android.libraries.ads.mobile.sdk.nativead.MediaView
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView
@@ -223,21 +225,7 @@ private fun FullScreenNativeAdContainer(nativeAd: NativeAd?) {
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                                     ) {
-                                        Box(
-                                            modifier = Modifier.background(
-                                                color = Color(
-                                                    0xFFFFCC66
-                                                )
-                                            )
-                                        ) {
-                                            Text(
-                                                "Ad",
-                                                fontSize = 10.sp,
-                                                color = Color.White,
-                                                lineHeight = 10.sp,
-                                                textAlign = TextAlign.Center
-                                            )
-                                        }
+                                        NativeAdTextElement()
 
                                         AndroidView(factory = { context ->
 
@@ -307,28 +295,19 @@ private fun FullScreenNativeAdContainer(nativeAd: NativeAd?) {
                                 }
                             }
 
-                            AndroidView(factory = { context ->
-
-                                val advertiserView = ComposeView(context).apply {
-                                    setContent {
-                                        nativeAd.advertiser?.let {
-                                            Box(
-                                                modifier = Modifier
-                                                    .background(
-                                                        shape = RoundedCornerShape(
-                                                            4.dp
-                                                        ), color = Color.Red
-                                                    )
-                                                    .align(Alignment.TopStart)
-                                            ) {
-                                                Text(it, modifier = Modifier.padding(all = 4.dp))
-                                            }
-                                        }
-                                    }
+                            nativeAd.advertiser?.let {
+                                Box(
+                                    modifier = Modifier
+                                        .background(
+                                            shape = RoundedCornerShape(
+                                                4.dp
+                                            ), color = colorResource(id = AppColor.droid_dev_tips_green).copy(alpha = 0.6f)
+                                        )
+                                        .align(Alignment.TopStart)
+                                ) {
+                                    Text(it, modifier = Modifier.padding(all = 4.dp))
                                 }
-                                nativeAdView.advertiserView = advertiserView
-                                advertiserView
-                            })
+                            }
                         }
                     }
                 }
