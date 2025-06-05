@@ -58,7 +58,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
-    implementation(project(":typoGraphy"))
+    implementation(project(":droidDevTipsTheme"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
