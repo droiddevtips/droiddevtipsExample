@@ -127,6 +127,33 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
         NativeAdLoader.load(nativeAdVideoRequest, nativeAdVideoCallback)
     }
 
+    override fun fetchNativeFullscreenAd(
+        adUnit: NextGenAdUnit,
+        nativeVideoAd: (NativeAd?) -> Unit
+    ) {
+        if (adUnit.id.isBlank()) {
+            nativeVideoAd(null)
+            return
+        }
+
+        val adRequest = NativeAdRequest.Builder(adUnit.id, listOf(NativeAd.NativeAdType.NATIVE)).build()
+
+        val adCallback = object: NativeAdLoaderCallback {
+
+            override fun onNativeAdLoaded(nativeAd: NativeAd) {
+                super.onNativeAdLoaded(nativeAd)
+                nativeVideoAd(nativeAd)
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                super.onAdFailedToLoad(adError)
+                nativeVideoAd(null)
+            }
+        }
+
+        NativeAdLoader.load(adRequest,adCallback)
+    }
+
     override fun fetchCollapsibleBannerAd(
         context: Context,
         adUnit: NextGenAdUnit,

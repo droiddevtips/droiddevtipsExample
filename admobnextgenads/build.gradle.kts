@@ -56,6 +56,8 @@ dependencies {
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.accompanist.pager)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
     implementation(project(":typoGraphy"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
