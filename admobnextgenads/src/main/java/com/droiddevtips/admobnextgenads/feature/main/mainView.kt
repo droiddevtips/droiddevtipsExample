@@ -8,8 +8,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 /**
@@ -20,6 +22,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MainView(
     modifier: Modifier = Modifier,
+    enableComponent: State<Boolean>,
     navigate: (String) -> Unit
 ) {
 
@@ -35,28 +38,45 @@ fun MainView(
             Alignment.CenterVertically
         )
     ) {
-        Button(onClick = {
-            navigate(Route.BannerAd.route)
-        }) {
-            Text(text = "Inline Adaptive banner ad")
+        Button(
+            enabled = enableComponent.value,
+            onClick = {
+                navigate(Route.BannerAd.route)
+            }
+        ) {
+            ButtonText(text = "Inline Adaptive banner ad", enable = enableComponent)
         }
 
-        Button(onClick = {
-            navigate(Route.InterstitialAds.route)
-        }) {
-            Text("Interstitial ad")
+        Button(
+            enabled = enableComponent.value,
+            onClick = {
+                navigate(Route.InterstitialAds.route)
+            }) {
+            ButtonText(text = "Interstitial ad", enable = enableComponent)
         }
 
-        Button(onClick = {
-            navigate(Route.NativeAds.route)
-        }) {
-            Text("Native ad")
+        Button(
+            enabled = enableComponent.value,
+            onClick = {
+                navigate(Route.NativeAds.route)
+            }) {
+            ButtonText(text = "Native ad", enable = enableComponent)
         }
 
-        Button(onClick = {
-            navigate(Route.RewardedAds.route)
-        }) {
-            Text("Rewarded ad")
+        Button(
+            enabled = enableComponent.value,
+            onClick = {
+                navigate(Route.RewardedAds.route)
+            }) {
+            ButtonText(text = "Rewarded ad", enable = enableComponent)
         }
     }
+}
+
+@Composable
+private fun ButtonText(text: String, enable: State<Boolean>) {
+    Text(
+        text = text,
+        color = if (enable.value) Color.Unspecified else Color.LightGray.copy(alpha = 0.6f)
+    )
 }

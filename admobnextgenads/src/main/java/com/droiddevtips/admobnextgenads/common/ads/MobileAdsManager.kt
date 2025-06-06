@@ -26,7 +26,7 @@ object MobileAdsManager: AdFetcher by AdFetcherImp() {
 
     val adsApplicationID = "ca-app-pub-3940256099942544~3347511713" // Sample AdMob app ID, replace with your own adMob ID if you have one
 
-    fun init(context: Context) {
+    fun init(context: Context, succeed: (Boolean) -> Unit) {
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -48,20 +48,21 @@ object MobileAdsManager: AdFetcher by AdFetcherImp() {
 
                 status.adapterStatusMap["com.google.android.libraries.ads.mobile.sdk.MobileAds"]?.let { adapterStatusResult ->
 
-                    CoroutineScope(Dispatchers.Main).launch {
-                        Toast.makeText(
-                            context,
-                            adapterStatusResult.description,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
                     if (adapterStatusResult.initializationState == AdapterStatus.InitializationState.COMPLETE) {
                         initialized = true
                         println("Mobile Ads initialized")
+                        succeed(initialized)
                     } else {
                         initialized = false
                         println("Failed to initialized mobile Ads, error: ${adapterStatusResult.description}")
+                        succeed(initialized)
+                        CoroutineScope(Dispatchers.Main).launch {
+                            Toast.makeText(
+                                context,
+                                adapterStatusResult.description,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }
