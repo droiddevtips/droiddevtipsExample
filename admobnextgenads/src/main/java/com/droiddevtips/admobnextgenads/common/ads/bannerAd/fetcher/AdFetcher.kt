@@ -5,6 +5,7 @@ import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
+import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
 
 /**
  * Created by Melchior Vrolijk
@@ -27,6 +28,11 @@ interface AdFetcher {
     fun fetchNativeFullscreenAd(
         adUnit: NextGenAdUnit,
         nativeVideoAd: (NativeAd?) -> Unit = {}
+    )
+
+    fun fetchRewardedAd(
+        adUnit: NextGenAdUnit,
+        rewardedAd: (RewardedAd?) -> Unit = {}
     )
 
     fun fetchCollapsibleBannerAd(

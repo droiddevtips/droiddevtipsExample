@@ -18,6 +18,7 @@ import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoader
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallback
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdRequest
+import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -152,6 +153,36 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
         }
 
         NativeAdLoader.load(adRequest,adCallback)
+    }
+
+    override fun fetchRewardedAd(
+        adUnit: NextGenAdUnit,
+        rewardedAd: (RewardedAd?) -> Unit
+    ) {
+
+        if (adUnit.id.isBlank()) {
+            rewardedAd(null)
+            return
+        }
+
+        val rewardedAdCallback = object: AdLoadCallback<RewardedAd> {
+
+            override fun onAdLoaded(ad: RewardedAd) {
+                super.onAdLoaded(ad)
+                rewardedAd(ad)
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                super.onAdFailedToLoad(adError)
+                rewardedAd(null)
+                println("[Rewarded Ad] - Error loading rewarded ad, cause: ${adError.message}")
+
+            }
+        }
+
+        val rewardedAdRequest = AdRequest.Builder(adUnit.id).build()
+
+        RewardedAd.load(rewardedAdRequest, rewardedAdCallback)
     }
 
     override fun fetchCollapsibleBannerAd(
