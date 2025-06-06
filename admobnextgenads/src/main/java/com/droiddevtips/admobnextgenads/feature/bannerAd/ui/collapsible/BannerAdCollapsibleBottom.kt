@@ -6,6 +6,7 @@ import com.droiddevtips.admobnextgenads.common.ads.bannerAd.CollapsibleBannerAdV
 import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.CollapsibleType
 
 /**
+ * The banner ad collapsible bottom composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

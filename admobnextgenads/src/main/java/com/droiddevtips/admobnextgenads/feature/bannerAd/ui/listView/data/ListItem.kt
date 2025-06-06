@@ -5,6 +5,7 @@ import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import kotlinx.parcelize.Parcelize
 
 /**
+ * The list view list item data model
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

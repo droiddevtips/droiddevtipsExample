@@ -14,6 +14,7 @@ import com.droiddevtips.admobnextgenads.common.ads.bannerAd.BannerAdView
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 
 /**
+ * The inline adaptive static composable
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

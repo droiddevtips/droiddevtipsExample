@@ -58,11 +58,5 @@ fun MainView(
         }) {
             Text("Rewarded ad")
         }
-
-        Button(onClick = {
-            navigate(Route.RewardedInterstitialAds.route)
-        }) {
-            Text("Rewarded interstitial ads")
-        }
     }
 }

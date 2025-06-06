@@ -11,14 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.droiddevtips.admobnextgenads.feature.main.Route
 import com.droiddevtips.admobnextgenads.core.domain.navigateToView
 import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.BannerAd
 import com.droiddevtips.admobnextgenads.feature.interstitialAds.InterstitialAds
 import com.droiddevtips.admobnextgenads.feature.main.MainView
+import com.droiddevtips.admobnextgenads.feature.main.Route
 import com.droiddevtips.admobnextgenads.feature.nativeAds.NativeAds
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.RewardedAds
-import com.droiddevtips.admobnextgenads.feature.rewardedInterstitialAds.RewardedInterstitialAds
 import com.droiddevtips.typography.DroidDevTipsTheme
 
 class AdMobNextGenExample : ComponentActivity() {
@@ -58,10 +57,6 @@ class AdMobNextGenExample : ComponentActivity() {
 
                         composable(route = Route.RewardedAds.route) {
                             RewardedAds()
-                        }
-
-                        composable(route = Route.RewardedInterstitialAds.route) {
-                            RewardedInterstitialAds()
                         }
                     }
                 }

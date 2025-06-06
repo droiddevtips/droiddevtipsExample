@@ -4,6 +4,7 @@ import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 
 /**
+ * The banner ad caching interface
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

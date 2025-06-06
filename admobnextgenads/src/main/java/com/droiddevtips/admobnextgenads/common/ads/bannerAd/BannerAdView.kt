@@ -1,21 +1,24 @@
 package com.droiddevtips.admobnextgenads.common.ads.bannerAd
 
-import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -29,14 +32,20 @@ import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 
 /**
+ * This is the Banner ad composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Composable
 fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
 
-    val activity = LocalContext.current as Activity
+    val activity = LocalActivity.current
     val isInPreview = LocalInspectionMode.current
+
+    if (activity == null) {
+        BannerAdViewFailedPlaceHolder()
+        return
+    }
 
     val initialViewHeight = remember {
         mutableStateOf(300.dp)
@@ -59,6 +68,11 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
             .fillMaxWidth()
             .animateContentSize()
     ) {
+
+        if (isInPreview) {
+            BannerAdViewFailedPlaceHolder()
+            return
+        }
 
         AndroidView(
             modifier = Modifier
@@ -134,7 +148,7 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
                                         }
                                     }
 
-                                    activity.runOnUiThread {
+                                    activity?.runOnUiThread {
 
                                         this.getView(activity).also { bannerAdView ->
 
@@ -188,5 +202,22 @@ fun BannerAdView(bannerAdUnit: NextGenAdUnit) {
             }
             banner_Ad?.destroy()
         }
+    }
+}
+
+@Composable
+private fun BannerAdViewFailedPlaceHolder(modifier: Modifier = Modifier) {
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(400.dp)
+            .background(color = Color.LightGray)
+    ) {
+        Text(
+            "Failed to load banner Ad View", color = Color.Black, modifier = Modifier.align(
+                Alignment.Center
+            )
+        )
     }
 }

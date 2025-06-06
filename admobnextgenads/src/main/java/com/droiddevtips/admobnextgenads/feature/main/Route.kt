@@ -8,10 +8,7 @@ package com.droiddevtips.admobnextgenads.feature.main
 sealed class Route(val route: String) {
     data object Home: Route("home")
     data object BannerAd: Route("bannerAd")
-//    data object Collapsible: Route("collapsible")
-//    data object FixedSize: Route("fixedSize")
     data object InterstitialAds: Route("interstitialAds")
     data object NativeAds: Route("nativeAds")
     data object RewardedAds: Route("rewardedAds")
-    data object RewardedInterstitialAds: Route("rewardedInterstitialAds")
 }

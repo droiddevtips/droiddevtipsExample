@@ -40,10 +40,10 @@ import com.droiddevtips.admobnextgenads.feature.bannerAd.ui.listView.data.ListVi
 import com.droiddevtips.typography.Drawable
 
 /**
+ * The inline adaptive list view composable
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 @Composable
 fun InlineAdaptiveListView(
     modifier: Modifier = Modifier,

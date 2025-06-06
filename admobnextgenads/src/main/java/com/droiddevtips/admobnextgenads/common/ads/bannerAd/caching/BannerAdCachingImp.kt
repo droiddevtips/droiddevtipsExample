@@ -5,6 +5,7 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import java.util.concurrent.ConcurrentHashMap
 
 /**
+ * The banner ad caching implementation
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

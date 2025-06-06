@@ -1,6 +1,7 @@
 package com.droiddevtips.admobnextgenads.core.data
 
 /**
+ * The app tab items
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
