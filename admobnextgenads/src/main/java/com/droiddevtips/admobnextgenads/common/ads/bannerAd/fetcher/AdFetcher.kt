@@ -6,6 +6,7 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
+import com.google.android.libraries.ads.mobile.sdk.rewardedinterstitial.RewardedInterstitialAd
 
 /**
  * The Ad fetcher interface
@@ -34,6 +35,11 @@ interface AdFetcher {
     fun fetchRewardedAd(
         adUnit: NextGenAdUnit,
         rewardedAd: (RewardedAd?) -> Unit = {}
+    )
+
+    fun fetchRewardedInterstitialAd(
+        adUnit: NextGenAdUnit,
+        rewardedInterstitialAd: (RewardedInterstitialAd?) -> Unit = {}
     )
 
     fun fetchCollapsibleBannerAd(

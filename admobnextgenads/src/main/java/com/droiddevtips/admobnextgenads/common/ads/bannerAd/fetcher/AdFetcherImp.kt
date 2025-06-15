@@ -6,6 +6,7 @@ import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.droiddevtips.admobnextgenads.common.ads.bannerAd.caching.BannerAdCaching
 import com.droiddevtips.admobnextgenads.common.ads.bannerAd.caching.BannerAdCachingImp
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.RewardedInterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.banner.AdSize
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
@@ -19,6 +20,7 @@ import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoader
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallback
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdRequest
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
+import com.google.android.libraries.ads.mobile.sdk.rewardedinterstitial.RewardedInterstitialAd
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -185,6 +187,29 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
 
         RewardedAd.load(rewardedAdRequest, rewardedAdCallback)
     }
+
+    override fun fetchRewardedInterstitialAd(
+        adUnit: NextGenAdUnit,
+        rewardedInterstitialAd: (RewardedInterstitialAd?) -> Unit
+    ) {
+        val rewardedInterstitialAdCallback = object : AdLoadCallback<RewardedInterstitialAd> {
+
+            override fun onAdLoaded(ad: RewardedInterstitialAd) {
+                super.onAdLoaded(ad)
+                rewardedInterstitialAd(ad)
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                super.onAdFailedToLoad(adError)
+                rewardedInterstitialAd(null)
+                println("[Rewarded interstitial Ad] - Error loading rewarded interstitial ad, cause: ${adError.message}")
+            }
+        }
+        val rewardedInterstitialAdBuilder = AdRequest.Builder(NextGenAdUnit.RewardedInterstitialAd.id).build()
+
+        RewardedInterstitialAd.load(rewardedInterstitialAdBuilder, rewardedInterstitialAdCallback)
+    }
+
 
     override fun fetchCollapsibleBannerAd(
         context: Context,

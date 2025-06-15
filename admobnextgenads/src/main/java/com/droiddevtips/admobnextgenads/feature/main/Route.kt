@@ -11,4 +11,5 @@ sealed class Route(val route: String) {
     data object InterstitialAds: Route("interstitialAds")
     data object NativeAds: Route("nativeAds")
     data object RewardedAds: Route("rewardedAds")
+    data object RewardedInterstitialAds: Route("rewardedInterstitialAds")
 }
