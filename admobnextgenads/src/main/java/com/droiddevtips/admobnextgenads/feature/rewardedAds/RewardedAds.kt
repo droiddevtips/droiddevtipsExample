@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -39,7 +40,7 @@ import kotlinx.coroutines.launch
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Composable
-fun RewardedAds(modifier: Modifier = Modifier) {
+fun RewardedAds(viewState: State<RewardedAdViewState>, modifier: Modifier = Modifier) {
 
     val scope = rememberCoroutineScope()
     val isLoadingAd = remember { mutableStateOf(false) }
