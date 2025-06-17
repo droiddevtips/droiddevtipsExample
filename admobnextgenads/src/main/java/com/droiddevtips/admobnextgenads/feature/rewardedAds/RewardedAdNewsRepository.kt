@@ -6,6 +6,6 @@ package com.droiddevtips.admobnextgenads.feature.rewardedAds
  */
 interface RewardedAdNewsRepository {
 
-    suspend fun loadNews(): List<RewardedAdListItem>
+    suspend fun loadNews(): List<RewardedAdListDisplayItem>
 
 }
