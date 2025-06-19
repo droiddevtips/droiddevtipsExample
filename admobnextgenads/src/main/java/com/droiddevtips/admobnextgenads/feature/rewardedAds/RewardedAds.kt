@@ -1,34 +1,29 @@
 package com.droiddevtips.admobnextgenads.feature.rewardedAds
 
-import android.text.Layout
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -39,20 +34,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.admobnextgenads.R
-import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
-import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.extensions.pulseEffect
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.rewarded.OnUserEarnedRewardListener
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardItem
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAdEventCallback
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /**
  * This is the rewarded ads composable view
@@ -103,9 +92,11 @@ fun RewardedAds(viewState: State<RewardedAdViewState>, modifier: Modifier = Modi
                 if (index < viewState.value.newsList.lastIndex) {
                     HorizontalDivider()
                 } else {
-                    Spacer(modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp))
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
+                    )
                 }
             }
         }
@@ -125,9 +116,32 @@ fun RewardedAds(viewState: State<RewardedAdViewState>, modifier: Modifier = Modi
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                Text("Click to get credit", style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold), modifier = Modifier.padding(start = 10.dp) ,color = Color.White)
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1.0f)
+                        .background(color = Color.Red),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
 
-                Column(modifier = Modifier.size(50.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    TextButton(onClick = {
+
+                    }) {
+                        Text(
+                            "Watch video for additional 1 credit",
+                            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                            modifier = Modifier
+                                .pulseEffect(),
+                            color = Color.White
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier.size(50.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
 
                     Text("Credit", style = MaterialTheme.typography.labelSmall, color = Color.White)
 
@@ -142,75 +156,10 @@ fun RewardedAds(viewState: State<RewardedAdViewState>, modifier: Modifier = Modi
                 }
             }
         }
-
-
     }
-
-    /*
-    Box(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-
-        if (rewarded_Ad.value != null) {
-            isLoadingAd.value = false
-            enableActionButton.value = false
-            RewardedAdView(rewardedAd = rewarded_Ad.value, onAdDismissed = {
-                println("[Rewarded Ad] - On dismissed callback")
-                rewarded_Ad.value = null
-                enableActionButton.value = true
-            })
-        }
-
-        if (viewState.value.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.size(35.dp), strokeWidth = 1.dp)
-        }
-
-        if (viewState.value.newsList.isNotEmpty()) {
-
-            LazyColumn(state = lazyColumnListState, modifier = Modifier.fillMaxSize()) {
-
-                items(viewState.value.newsList) { listItem ->
-
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Text(text = listItem.title)
-                    }
-                }
-            }
-        }
-
-        /*
-        Button(
-            modifier = Modifier.padding(top = 20.dp),
-            enabled = enableActionButton.value,
-            onClick = {
-                scope.launch(Dispatchers.Main) {
-                    if (rewarded_Ad.value == null) {
-                        enableActionButton.value = false
-                        isLoadingAd.value = true
-                        MobileAdsManager.fetchRewardedAd(adUnit = NextGenAdUnit.RewardedAd) { rewardedAd ->
-                            rewardedAd?.let {
-                                CoroutineScope(Dispatchers.Main).launch {
-                                    delay(3000)
-                                    rewarded_Ad.value = rewardedAd
-                                }
-                            }
-                        }
-                    }
-                }
-            }) {
-            Text(
-                "Load Rewarded ad",
-                color = if (enableActionButton.value) Color.Unspecified else Color.LightGray.copy(
-                    alpha = 0.28f
-                )
-            )
-        }
-        */
-    }
-    */
 }
+
+
 
 @Composable
 private fun RewardedAdView(
