@@ -1,7 +1,10 @@
-package com.droiddevtips.admobnextgenads.feature.rewardedAds
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
+package com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -37,6 +40,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.admobnextgenads.R
 import com.droiddevtips.admobnextgenads.extensions.pulseEffect
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdViewState
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdViewAction
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.rewarded.OnUserEarnedRewardListener
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardItem
@@ -49,13 +55,14 @@ import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAdEventCallb
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Composable
-fun RewardedAds(viewState: State<RewardedAdViewState>, modifier: Modifier = Modifier) {
+fun RewardedAdsArticleListView(
+    viewState: State<RewardedAdViewState>,
+    action: (RewardedAdViewAction) -> Unit,
+    onItemClicked: (RewardedAdListDisplayItem) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
-    val scope = rememberCoroutineScope()
     val lazyColumnListState = rememberLazyListState()
-    val isLoadingAd = remember { mutableStateOf(false) }
-    val enableActionButton = remember { mutableStateOf(true) }
-    val rewarded_Ad = remember { mutableStateOf<RewardedAd?>(null) }
 
     Box(modifier = modifier.fillMaxSize()) {
 
@@ -65,19 +72,7 @@ fun RewardedAds(viewState: State<RewardedAdViewState>, modifier: Modifier = Modi
             enter = fadeIn(),
             exit = fadeOut(animationSpec = tween(300))
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.surfaceContainer),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(
-                    4.dp,
-                    alignment = Alignment.CenterVertically
-                )
-            ) {
-                CircularProgressIndicator(modifier = Modifier.size(50.dp))
-                Text("Loading items....", style = MaterialTheme.typography.bodyLarge)
-            }
+            ShimmerListView()
         }
 
         LazyColumn(
@@ -87,7 +82,7 @@ fun RewardedAds(viewState: State<RewardedAdViewState>, modifier: Modifier = Modi
                 .align(Alignment.Center)
         ) {
             itemsIndexed(viewState.value.newsList) { index, listItem ->
-                RewardedAdListItem(displayItem = listItem)
+                RewardedAdListItem(displayItem = listItem, onClick = onItemClicked)
 
                 if (index < viewState.value.newsList.lastIndex) {
                     HorizontalDivider()
@@ -119,22 +114,32 @@ fun RewardedAds(viewState: State<RewardedAdViewState>, modifier: Modifier = Modi
                 Column(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .weight(1.0f)
-                        .background(color = Color.Red),
+                        .weight(1.0f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
 
-                    TextButton(onClick = {
+                    if (viewState.value.showRewardedAdButton) {
 
-                    }) {
-                        Text(
-                            "Watch video for additional 1 credit",
-                            style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                            modifier = Modifier
-                                .pulseEffect(),
-                            color = Color.White
-                        )
+                        if (viewState.value.isLoadingAd) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(30.dp),
+                                color = Color.White
+                            )
+                        } else {
+                            TextButton(onClick = {
+                                action(RewardedAdViewAction.LoadAndShowRewardedAd)
+                            }) {
+                                Text(
+                                    "Watch video for additional 1 credit",
+                                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                                    modifier = Modifier
+                                        .pulseEffect(),
+                                    color = Color.White
+                                )
+                            }
+                        }
+
                     }
                 }
 
@@ -157,82 +162,16 @@ fun RewardedAds(viewState: State<RewardedAdViewState>, modifier: Modifier = Modi
             }
         }
     }
-}
 
-
-
-@Composable
-private fun RewardedAdView(
-    rewardedAd: RewardedAd?,
-    modifier: Modifier = Modifier,
-    onAdDismissed: () -> Unit
-) {
-
-    if (rewardedAd == null) {
-        FailedToLoadPlaceholder(modifier = modifier)
-        onAdDismissed()
-        return
-    }
-
-    LocalActivity.current?.let { _activity ->
-
-        rewardedAd.adEventCallback = object : RewardedAdEventCallback {
-
-            override fun onAdShowedFullScreenContent() {
-                super.onAdShowedFullScreenContent()
-                println("[Rewarded Ad] - Ad Showed FullScreen Content")
-            }
-
-            override fun onAdDismissedFullScreenContent() {
-                super.onAdDismissedFullScreenContent()
-                println("[Rewarded Ad] - On Ad Dismissed FullScreen Content")
-                onAdDismissed()
-            }
-
-            override fun onAdFailedToShowFullScreenContent(fullScreenContentError: FullScreenContentError) {
-                super.onAdFailedToShowFullScreenContent(fullScreenContentError)
-                println("[Rewarded Ad] - On Ad Failed to show FullScreen, cause: ${fullScreenContentError.message}")
-            }
-
-            override fun onAdImpression() {
-                super.onAdImpression()
-                println("[Rewarded Ad] - On Ad Impression")
-            }
-
-            override fun onAdClicked() {
-                super.onAdClicked()
-                println("[Rewarded Ad] - On Ad Clicked")
-            }
+    if (viewState.value.showRewardedAd) {
+        viewState.value.rewardedAdView?.let {
+            RewardedAdView(rewardedAd = it, onAdDismissed = {
+                action(RewardedAdViewAction.DismissRewardedAd)
+            }, onUserRewardCollected = {
+                action(RewardedAdViewAction.OnRewardedAdCompleted)
+            })
+        } ?: run {
+            action(RewardedAdViewAction.DismissRewardedAd)
         }
-
-        rewardedAd.show(_activity, object : OnUserEarnedRewardListener {
-
-            override fun onUserEarnedReward(reward: RewardItem) {
-                println("[Rewarded Ad] - On User Earned Reward")
-                println("[Rewarded Ad] - type: ${reward.type}")
-                println("[Rewarded Ad] - amount: ${reward.amount}")
-            }
-        })
-    } ?: run {
-        FailedToLoadPlaceholder(modifier = modifier)
-        onAdDismissed()
-    }
-}
-
-@Composable
-private fun FailedToLoadPlaceholder(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(400.dp)
-            .background(color = Color.LightGray)
-    ) {
-        Text(
-            "Failed loading rewarded ad",
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(
-                Alignment.Center
-            )
-        )
     }
 }

@@ -1,7 +1,9 @@
-package com.droiddevtips.admobnextgenads.feature.rewardedAds
+package com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.repository
 
 import com.droiddevtips.admobnextgenads.R
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
 import kotlinx.coroutines.delay
+import java.util.UUID
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.seconds
 
@@ -20,10 +22,27 @@ class RewardedAdNewsRepositoryImpl: RewardedAdNewsRepository {
 
         return ArrayList<RewardedAdListDisplayItem>().apply {
             for (item in 1..50) {
-                add(RewardedAdListDisplayItem(image = getRandomFeatureImage(),title = "News article $item", description = "The description for article $item"))
+                add(
+                    RewardedAdListDisplayItem(
+                        imageID = "$item",
+                        image = getRandomFeatureImage(),
+                        title = "News article $item",
+                        titleID = UUID.randomUUID().toString(),
+                        description = "The description for article $item"
+                    )
+                )
 
                 if (item % 5 == 0) {
-                    add(RewardedAdListDisplayItem(image = getRandomPremiumFeatureImage(), title = "Premium article $item", "Requires 1 credit to read premium article $item", premium = true))
+                    add(
+                        RewardedAdListDisplayItem(
+                            imageID = "${UUID.randomUUID()}$item",
+                            image = getRandomPremiumFeatureImage(),
+                            title = "Premium article $item",
+                            titleID = "${UUID.randomUUID()}$item",
+                            description = "Requires 1 credit to read premium article $item",
+                            premium = true
+                        )
+                    )
                 }
             }
         }

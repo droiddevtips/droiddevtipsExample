@@ -1,4 +1,6 @@
-package com.droiddevtips.admobnextgenads.feature.rewardedAds
+package com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.repository
+
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
 
 /**
  * Created by Melchior Vrolijk

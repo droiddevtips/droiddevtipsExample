@@ -24,8 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -36,10 +34,7 @@ import com.droiddevtips.admobnextgenads.feature.interstitialAds.InterstitialAds
 import com.droiddevtips.admobnextgenads.feature.main.MainView
 import com.droiddevtips.admobnextgenads.feature.main.Route
 import com.droiddevtips.admobnextgenads.feature.nativeAds.NativeAds
-import com.droiddevtips.admobnextgenads.feature.rewardedAds.RewardedAdNewsRepositoryImpl
-import com.droiddevtips.admobnextgenads.feature.rewardedAds.RewardedAdViewModel
-import com.droiddevtips.admobnextgenads.feature.rewardedAds.RewardedAdViewModelFactory
-import com.droiddevtips.admobnextgenads.feature.rewardedAds.RewardedAds
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui.RewardedAd
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.RewardedInterstitialAd
 import com.droiddevtips.typography.DroidDevTipsTheme
 import com.google.android.ump.ConsentInformation
@@ -103,9 +98,10 @@ class AdMobNextGenExample : ComponentActivity() {
                             }
 
                             composable(route = Route.RewardedAds.route) {
-                                val rewardedAdViewModel: RewardedAdViewModel = viewModel(factory = RewardedAdViewModelFactory(repository = RewardedAdNewsRepositoryImpl()))
-                                val viewState = rewardedAdViewModel.rewardedAdViewState.collectAsStateWithLifecycle()
-                                RewardedAds(viewState = viewState)
+//                                val rewardedAdViewModel: RewardedAdViewModel = viewModel(factory = RewardedAdViewModelFactory(repository = RewardedAdNewsRepositoryImpl()))
+//                                val viewState = rewardedAdViewModel.rewardedAdViewState.collectAsStateWithLifecycle()
+//                                RewardedAdsArticleListView(viewState = viewState)
+                                RewardedAd()
                             }
 
                             composable(route = Route.RewardedInterstitialAds.route) {

@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.rewardedAds
+package com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -11,7 +11,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class RewardedAdListDisplayItem(
     val image: Int,
+    val imageID: String,
     val title: String,
+    val titleID: String,
     val description: String,
     val premium: Boolean = false
 ) : Parcelable
