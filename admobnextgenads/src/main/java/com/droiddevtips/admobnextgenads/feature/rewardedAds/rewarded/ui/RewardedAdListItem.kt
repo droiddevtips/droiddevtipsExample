@@ -35,6 +35,7 @@ import com.droiddevtips.admobnextgenads.core.data.AppColor
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
 
 /**
+ * The rewarded ad list item composable
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

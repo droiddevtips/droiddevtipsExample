@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.admobnextgenads.core.data.AppString
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.rewarded.OnUserEarnedRewardListener
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardItem
@@ -19,6 +21,7 @@ import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAdEventCallback
 
 /**
+ * The composable rewarded ad view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
@@ -92,7 +95,7 @@ private fun FailedToLoadPlaceholder(modifier: Modifier = Modifier) {
             .background(color = Color.LightGray)
     ) {
         Text(
-            "Failed loading rewarded ad",
+            text = stringResource(id = AppString.failed_to_load_rewarded_ad),
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(
                 Alignment.Center

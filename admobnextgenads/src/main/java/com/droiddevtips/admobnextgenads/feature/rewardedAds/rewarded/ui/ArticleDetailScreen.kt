@@ -2,12 +2,10 @@
 
 package com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui
 
-import com.droiddevtips.admobnextgenads.R
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,14 +19,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.admobnextgenads.R
+import com.droiddevtips.admobnextgenads.core.data.AppString
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
 
 /**
+ * This is the article detail composable screen
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 @Composable
 fun ArticleDetailScreen(
     data: RewardedAdListDisplayItem?
@@ -65,7 +66,7 @@ fun ArticleDetailScreen(
         )
 
         Text(
-            text = if (data.premium) "Some premium article content" else "Some article content"
+            text = stringResource(id = if (data.premium) AppString.article_content_premium else AppString.article_content)
         )
     }
 }

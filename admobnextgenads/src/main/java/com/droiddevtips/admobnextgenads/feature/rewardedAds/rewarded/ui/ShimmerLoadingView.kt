@@ -31,10 +31,10 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 
 /**
+ * The shimmer effect as a loading screen composable
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 @Composable
 fun ShimmerListView(modifier: Modifier = Modifier) {
 

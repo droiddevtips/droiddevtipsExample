@@ -2,7 +2,6 @@
 
 package com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui
 
-import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.tween
@@ -31,26 +30,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.admobnextgenads.R
+import com.droiddevtips.admobnextgenads.core.data.AppString
 import com.droiddevtips.admobnextgenads.extensions.pulseEffect
-import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdViewState
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdViewAction
-import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
-import com.google.android.libraries.ads.mobile.sdk.rewarded.OnUserEarnedRewardListener
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardItem
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAdEventCallback
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdViewState
 
 /**
  * This is the rewarded ads composable view
@@ -134,7 +126,7 @@ fun RewardedAdsArticleListView(
                                 action(RewardedAdViewAction.LoadAndShowRewardedAd)
                             }) {
                                 Text(
-                                    "Watch video for additional 1 credit",
+                                    text = stringResource(id = AppString.more_credit_message),
                                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                                     modifier = Modifier
                                         .pulseEffect(),

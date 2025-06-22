@@ -8,6 +8,7 @@ import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.AdFetcher
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.repository.RewardedAdNewsRepository
 
 /**
+ * The rewarded ad view model factory
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

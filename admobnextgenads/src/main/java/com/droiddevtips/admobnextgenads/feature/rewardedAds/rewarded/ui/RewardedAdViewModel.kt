@@ -3,6 +3,7 @@ package com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.AdFetcher
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdViewAction
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
+ * The rewarded ad view model
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
@@ -49,11 +51,7 @@ class RewardedAdViewModel(
         val newsList = repository.loadNews()
         _rewardedAdViewState.update { it.copy(isLoading = false, newsList = newsList) }
         saveState()
-
-        delay(3000)
-        _rewardedAdViewState.update { it.copy(showRewardedAdButton = true) }
-        saveState()
-
+        showCreditRewardedButton()
     }
 
     fun performAction(action: RewardedAdViewAction) {
@@ -61,12 +59,12 @@ class RewardedAdViewModel(
         when(action) {
             is RewardedAdViewAction.DismissRewardedAd -> {
                 _rewardedAdViewState.update { it.copy(showRewardedAdButton = false, showRewardedAd = false, rewardedAdView = null) }
+                showCreditRewardedButton(processDelay = 5000L)
             }
 
             is RewardedAdViewAction.LoadAndShowRewardedAd -> {
                 _rewardedAdViewState.update { it.copy(isLoadingAd = true) }
                 adFetcher.fetchRewardedAd(NextGenAdUnit.RewardedAd) { rewardedAd ->
-                    Log.i("TAG23","Rewarded ad: $rewardedAd")
                     rewardedAd?.let {
                         _rewardedAdViewState.update { it.copy(showRewardedAd = true, rewardedAdView = rewardedAd) }
                     }?:run {
@@ -77,25 +75,24 @@ class RewardedAdViewModel(
 
             is RewardedAdViewAction.OnRewardedAdCompleted -> {
                 _rewardedAdViewState.update { it.copy(isLoadingAd = false, showRewardedAdButton = false, showRewardedAd = false, rewardedAdView = null, credit = rewardedAdViewState.value.credit + 1) }
+                showCreditRewardedButton(processDelay = 5000L)
             }
 
             is RewardedAdViewAction.SubtractCredit -> {
                 _rewardedAdViewState.update { it.copy(credit = rewardedAdViewState.value.credit - 1) }
             }
         }
-
-
-    }
-
-    fun loadAndShowRewardedAd() {
-
-    }
-
-    fun dismissRewardedAd() {
-
     }
 
     private fun saveState() {
         savedStateHandle[savedStateHandleKey] = _rewardedAdViewState.value
+    }
+
+    private fun showCreditRewardedButton(processDelay: Long = 3000L) {
+        viewModelScope.launch {
+            delay(processDelay)
+            _rewardedAdViewState.update { it.copy(showRewardedAdButton = true) }
+            saveState()
+        }
     }
 }
