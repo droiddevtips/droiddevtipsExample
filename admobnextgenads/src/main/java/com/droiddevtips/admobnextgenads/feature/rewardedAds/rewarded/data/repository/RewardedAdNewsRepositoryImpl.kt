@@ -8,6 +8,7 @@ import kotlin.random.Random
 import kotlin.time.Duration.Companion.seconds
 
 /**
+ * The rewarded ad news repository implementation which implement the [RewardedAdNewsRepository] interface
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

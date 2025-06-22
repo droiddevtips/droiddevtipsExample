@@ -19,15 +19,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.core.data.AppString
 import com.google.android.libraries.ads.mobile.sdk.common.FullScreenContentError
 import com.google.android.libraries.ads.mobile.sdk.rewarded.OnUserEarnedRewardListener
 import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardItem
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAdEventCallback
 import com.google.android.libraries.ads.mobile.sdk.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.rewardedinterstitial.RewardedInterstitialAdEventCallback
 import kotlinx.coroutines.CoroutineScope
@@ -88,7 +88,7 @@ fun RewardedInterstitialAd(modifier: Modifier = Modifier) {
                 }
             }) {
             Text(
-                "Load Rewarded interstitial ad",
+                text = stringResource(id = AppString.load_interstitial_ad),
                 color = if (enableActionButton.value) Color.Unspecified else Color.LightGray.copy(
                     alpha = 0.28f
                 )
@@ -164,7 +164,7 @@ private fun FailedToLoadingRewardedInterstitialAdPlaceholder(modifier: Modifier 
             .background(color = Color.LightGray)
     ) {
         Text(
-            "Failed loading rewarded interstitial ad",
+            text = stringResource(id = AppString.failed_to_load_rewarded_interstitial_ad),
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(
                 Alignment.Center

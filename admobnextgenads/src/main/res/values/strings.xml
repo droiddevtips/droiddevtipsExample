@@ -15,4 +15,6 @@
     <string name="no_sufficient_credit">No sufficient credit</string>
     <string name="more_credit_message">Watch video for additional 1 credit</string>
     <string name="failed_to_load_rewarded_ad">Failed loading rewarded ad</string>
+    <string name="failed_to_load_rewarded_interstitial_ad">Failed loading rewarded interstitial ad</string>
+    <string name="load_interstitial_ad">Load Rewarded interstitial ad</string>
 </resources>

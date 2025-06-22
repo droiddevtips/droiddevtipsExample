@@ -58,7 +58,7 @@ class RewardedAdViewModel(
 
         when(action) {
             is RewardedAdViewAction.DismissRewardedAd -> {
-                _rewardedAdViewState.update { it.copy(showRewardedAdButton = false, showRewardedAd = false, rewardedAdView = null) }
+                _rewardedAdViewState.update { it.copy(isLoadingAd = false, showRewardedAdButton = false, showRewardedAd = false, rewardedAdView = null) }
                 showCreditRewardedButton(processDelay = 5000L)
             }
 
@@ -75,11 +75,12 @@ class RewardedAdViewModel(
 
             is RewardedAdViewAction.OnRewardedAdCompleted -> {
                 _rewardedAdViewState.update { it.copy(isLoadingAd = false, showRewardedAdButton = false, showRewardedAd = false, rewardedAdView = null, credit = rewardedAdViewState.value.credit + 1) }
-                showCreditRewardedButton(processDelay = 5000L)
+
             }
 
             is RewardedAdViewAction.SubtractCredit -> {
                 _rewardedAdViewState.update { it.copy(credit = rewardedAdViewState.value.credit - 1) }
+                showCreditRewardedButton(processDelay = 5000L)
             }
         }
     }
@@ -91,7 +92,7 @@ class RewardedAdViewModel(
     private fun showCreditRewardedButton(processDelay: Long = 3000L) {
         viewModelScope.launch {
             delay(processDelay)
-            _rewardedAdViewState.update { it.copy(showRewardedAdButton = true) }
+            _rewardedAdViewState.update { it.copy(showRewardedAdButton = true, isLoadingAd = false) }
             saveState()
         }
     }
