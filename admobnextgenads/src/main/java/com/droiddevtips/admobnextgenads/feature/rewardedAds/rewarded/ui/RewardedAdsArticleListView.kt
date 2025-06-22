@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -150,9 +151,9 @@ fun RewardedAdsArticleListView(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    Text("Credit", style = MaterialTheme.typography.labelSmall, color = Color.White)
+                    Text("Credit", style = MaterialTheme.typography.labelSmall, color = Color.White, modifier = Modifier.padding(top = 3.dp))
 
-                    Box(modifier = Modifier.size(40.dp)) {
+                    Box(modifier = Modifier.size(35.dp)) {
                         Text(
                             "${viewState.value.credit}",
                             color = Color.White,
