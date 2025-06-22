@@ -45,6 +45,9 @@ fun RewardedAd(modifier: Modifier = Modifier) {
                     action = rewardedAdViewModel::performAction,
                     onItemClicked = {
 
+                        if (viewState.value.isLoadingAd)
+                            return@RewardedAdsArticleListView
+
                         if (it.premium && viewState.value.credit == 0) {
                             Toast.makeText(context,"No sufficient credit", Toast.LENGTH_LONG).show()
                             return@RewardedAdsArticleListView
