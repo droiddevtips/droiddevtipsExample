@@ -98,9 +98,6 @@ class AdMobNextGenExample : ComponentActivity() {
                             }
 
                             composable(route = Route.RewardedAds.route) {
-//                                val rewardedAdViewModel: RewardedAdViewModel = viewModel(factory = RewardedAdViewModelFactory(repository = RewardedAdNewsRepositoryImpl()))
-//                                val viewState = rewardedAdViewModel.rewardedAdViewState.collectAsStateWithLifecycle()
-//                                RewardedAdsArticleListView(viewState = viewState)
                                 RewardedAd()
                             }
 

@@ -1,6 +1,5 @@
 package com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -80,7 +79,7 @@ class RewardedAdViewModel(
 
             is RewardedAdViewAction.SubtractCredit -> {
                 _rewardedAdViewState.update { it.copy(credit = rewardedAdViewState.value.credit - 1) }
-                showCreditRewardedButton(processDelay = 5000L)
+                showCreditRewardedButton(processDelay = 10000L)
             }
         }
     }
