@@ -26,7 +26,6 @@ import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui.ArticleD
 fun RewardedInterstitial(modifier: Modifier = Modifier) {
 
     val navController = rememberNavController()
-    val context = LocalContext.current
     val dataStateKey = "data"
 
     Box(modifier = modifier.fillMaxSize()) {

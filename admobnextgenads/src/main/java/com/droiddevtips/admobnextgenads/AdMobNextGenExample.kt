@@ -34,9 +34,8 @@ import com.droiddevtips.admobnextgenads.feature.interstitialAds.InterstitialAds
 import com.droiddevtips.admobnextgenads.feature.main.MainView
 import com.droiddevtips.admobnextgenads.feature.main.Route
 import com.droiddevtips.admobnextgenads.feature.nativeAds.NativeAds
-import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui.RewardedAd
-import com.droiddevtips.admobnextgenads.feature.rewardedAds.RewardedInterstitialAd
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.RewardedInterstitial
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui.RewardedAd
 import com.droiddevtips.typography.DroidDevTipsTheme
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentInformation.OnConsentInfoUpdateFailureListener

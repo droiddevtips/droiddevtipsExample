@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial
 
 import androidx.lifecycle.ViewModel

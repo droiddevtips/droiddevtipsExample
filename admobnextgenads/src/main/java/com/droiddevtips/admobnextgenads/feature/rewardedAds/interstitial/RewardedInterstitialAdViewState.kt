@@ -2,7 +2,6 @@ package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial
 
 import android.os.Parcelable
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
-import com.google.android.libraries.ads.mobile.sdk.rewarded.RewardedAd
 import com.google.android.libraries.ads.mobile.sdk.rewardedinterstitial.RewardedInterstitialAd
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
