@@ -71,5 +71,4 @@ fun RewardedInterstitial(modifier: Modifier = Modifier) {
             }
         }
     }
-
 }
