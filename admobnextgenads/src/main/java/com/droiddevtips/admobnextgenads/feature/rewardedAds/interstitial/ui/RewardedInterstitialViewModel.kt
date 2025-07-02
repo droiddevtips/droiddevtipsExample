@@ -1,11 +1,13 @@
-package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial
+package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.ui
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
 import com.droiddevtips.admobnextgenads.common.ads.bannerAd.fetcher.AdFetcher
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.data.RewardedInterstitialAdNewsRepository
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.data.RewardedInterstitialAdViewAction
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.data.RewardedInterstitialAdViewState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -17,6 +19,7 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
+ * This is the rewarded interstitial view model
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
@@ -120,7 +123,6 @@ class RewardedInterstitialViewModel(
 
     private fun preFetchRewardedAd() {
         adFetcher.fetchRewardedInterstitialAd(adUnit = NextGenAdUnit.RewardedInterstitialAd) { rewardedInterstitialAd ->
-            Log.i("TAG12", "[Rewarded interstitial ads] - $rewardedInterstitialAd")
             println("[Rewarded interstitial ads] - $rewardedInterstitialAd")
             viewModelScope.launch {
                 rewardedInterstitialAd?.let { _rewardedInterstitialAd ->
@@ -153,5 +155,4 @@ class RewardedInterstitialViewModel(
     private fun saveState() {
         savedStateHandle[savedStateHandleKey] = _rewardedInterstitialAdViewState.value
     }
-
 }

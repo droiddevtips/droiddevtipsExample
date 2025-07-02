@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial
+package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.data
 
 import android.os.Parcelable
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
@@ -7,6 +7,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 /**
+ * This is the rewarded interstitial view state data model
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial
+package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.data
 
 import com.droiddevtips.admobnextgenads.R
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
@@ -8,6 +8,7 @@ import kotlin.random.Random
 import kotlin.time.Duration.Companion.seconds
 
 /**
+ * The rewarded interstitial ad news repository implementation
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
@@ -57,7 +58,7 @@ class RewardedInterstitialAdNewsRepositoryImpl: RewardedInterstitialAdNewsReposi
             R.mipmap.image4
         )
 
-        val randomIndex = Random.nextInt(imageIDs.size)
+        val randomIndex = Random.Default.nextInt(imageIDs.size)
 
         return imageIDs[randomIndex]
     }
@@ -69,7 +70,7 @@ class RewardedInterstitialAdNewsRepositoryImpl: RewardedInterstitialAdNewsReposi
             R.mipmap.image6,
         )
 
-        val randomIndex = Random.nextInt(imageIDs.size)
+        val randomIndex = Random.Default.nextInt(imageIDs.size)
 
         return imageIDs[randomIndex]
     }

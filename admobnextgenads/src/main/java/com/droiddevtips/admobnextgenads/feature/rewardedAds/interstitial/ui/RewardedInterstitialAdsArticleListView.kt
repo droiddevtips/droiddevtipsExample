@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial
+package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.ui
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -16,12 +16,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,13 +29,13 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.droiddevtips.admobnextgenads.core.data.AppColor
 import com.droiddevtips.admobnextgenads.core.data.AppString
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.data.RewardedInterstitialAdViewAction
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.data.RewardedInterstitialAdViewState
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui.RewardedAdListItem
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui.ShimmerListView
@@ -48,10 +46,10 @@ import com.google.android.libraries.ads.mobile.sdk.rewardedinterstitial.Rewarded
 import com.google.android.libraries.ads.mobile.sdk.rewardedinterstitial.RewardedInterstitialAdEventCallback
 
 /**
+ * The rewarded interstitial ads list view composable
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 @Composable
 fun RewardedInterstitialAdsListView(
     viewState: State<RewardedInterstitialAdViewState>,
@@ -64,14 +62,7 @@ fun RewardedInterstitialAdsListView(
 
     Box(modifier = modifier.fillMaxSize()) {
 
-        AnimatedVisibility(
-            modifier = Modifier.fillMaxSize(),
-            visible = viewState.value.isLoading,
-            enter = fadeIn(),
-            exit = fadeOut(animationSpec = tween(300))
-        ) {
-            ShimmerListView()
-        }
+        ShimmerLoadingView(visible = viewState.value.isLoading)
 
         LazyColumn(
             state = lazyColumnListState,
@@ -82,11 +73,6 @@ fun RewardedInterstitialAdsListView(
             itemsIndexed(viewState.value.newsList) { index, listItem ->
                 RewardedAdListItem(displayItem = listItem, onClick = {
                     if (listItem.premium) {
-//                        action(
-//                            RewardedInterstitialAdViewAction.ShowRewardedInterstitialAd(
-//                                premiumArticleData = it
-//                            )
-//                        )
                         action(
                             RewardedInterstitialAdViewAction.ShowRewardedInterstitialAdDialog(premiumArticleData = it)
                         )
@@ -103,34 +89,6 @@ fun RewardedInterstitialAdsListView(
                             .fillMaxWidth()
                             .height(50.dp)
                     )
-                }
-            }
-        }
-
-        AnimatedVisibility(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            visible = viewState.value.isLoadingAd,
-            enter = fadeIn(),
-            exit = fadeOut(animationSpec = tween(300))
-        ) {
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = colorResource(id = AppColor.droid_dev_tips_green))
-            ) {
-
-                Row(
-                    modifier = Modifier.padding(all = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(30.dp),
-                        color = Color.White
-                    )
-
-                    Text("is loading rewarded ads.....")
                 }
             }
         }
@@ -279,5 +237,18 @@ private fun RewardedInterstitialAdView(
                 }
             )
         }
+    }
+}
+
+@Composable
+private fun ShimmerLoadingView(visible: Boolean, modifier: Modifier = Modifier) {
+
+    AnimatedVisibility(
+        modifier = modifier.fillMaxSize(),
+        visible = visible,
+        enter = fadeIn(),
+        exit = fadeOut(animationSpec = tween(300))
+    ) {
+        ShimmerListView()
     }
 }

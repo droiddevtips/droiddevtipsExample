@@ -1,4 +1,4 @@
-package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial
+package com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.core.domain.navigateToView
+import com.droiddevtips.admobnextgenads.feature.rewardedAds.interstitial.data.RewardedInterstitialAdNewsRepositoryImpl
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdListDisplayItem
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.data.RewardedAdViewRoute
 import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui.ArticleDetailScreen
@@ -29,11 +30,19 @@ fun RewardedInterstitial(modifier: Modifier = Modifier) {
 
     Box(modifier = modifier.fillMaxSize()) {
 
-        NavHost(navController = navController, startDestination = RewardedAdViewRoute.RewardedAdsArticleList.route) {
+        NavHost(
+            navController = navController,
+            startDestination = RewardedAdViewRoute.RewardedAdsArticleList.route
+        ) {
 
             composable(route = RewardedAdViewRoute.RewardedAdsArticleList.route) {
                 val rewardedAdViewModel: RewardedInterstitialViewModel =
-                    viewModel(factory = RewardedInterstitialAdViewModelFactory(repository = RewardedInterstitialAdNewsRepositoryImpl(), adFetcher = MobileAdsManager))
+                    viewModel(
+                        factory = RewardedInterstitialAdViewModelFactory(
+                            repository = RewardedInterstitialAdNewsRepositoryImpl(),
+                            adFetcher = MobileAdsManager
+                        )
+                    )
                 val viewState =
                     rewardedAdViewModel.rewardedInterstitialAdViewState.collectAsStateWithLifecycle()
                 RewardedInterstitialAdsListView(
@@ -52,7 +61,10 @@ fun RewardedInterstitial(modifier: Modifier = Modifier) {
             composable(
                 route = RewardedAdViewRoute.RewardedAdsArticleDetail.route
             ) {
-                val data = navController.previousBackStackEntry?.savedStateHandle?.get<RewardedAdListDisplayItem>(dataStateKey)
+                val data =
+                    navController.previousBackStackEntry?.savedStateHandle?.get<RewardedAdListDisplayItem>(
+                        dataStateKey
+                    )
                 ArticleDetailScreen(
                     data = data
                 )
