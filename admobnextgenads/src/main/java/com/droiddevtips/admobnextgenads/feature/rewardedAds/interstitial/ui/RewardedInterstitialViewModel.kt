@@ -56,7 +56,8 @@ class RewardedInterstitialViewModel(
                 if (action.rewardClaimed) {
                     _rewardedInterstitialAdViewState.update {
                         it.copy(
-                            navigateToDetail = true
+                            navigateToDetail = true,
+                            rewardedInterstitialAdView = null
                         )
                     }
                 } else {
@@ -64,11 +65,13 @@ class RewardedInterstitialViewModel(
                         it.copy(
                             isLoadingAd = false,
                             premiumArticleData = null,
+                            rewardedInterstitialAdView = null,
                             showRewardedInterstitial = false,
-                            rewardedInterstitialAdView = null
+                            navigateToDetail = false
                         )
                     }
                 }
+                preFetchRewardedAd()
             }
 
             is RewardedInterstitialAdViewAction.ShowRewardedInterstitialAdDialog -> {
@@ -114,6 +117,7 @@ class RewardedInterstitialViewModel(
                         isLoadingAd = false,
                         premiumArticleData = null,
                         showRewardedInterstitial = false,
+                        navigateToDetail = false,
                         rewardedInterstitialAdView = null
                     )
                 }
