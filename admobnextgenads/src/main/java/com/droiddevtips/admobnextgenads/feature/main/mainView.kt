@@ -71,13 +71,13 @@ fun MainView(
             ButtonText(text = "Rewarded ad", enable = enableComponent)
         }
 
-//        Button(
-//            enabled = enableComponent.value,
-//            onClick = {
-//                navigate(Route.RewardedInterstitialAds.route)
-//            }) {
-//            ButtonText(text = "Rewarded interstitial ad", enable = enableComponent)
-//        }
+        Button(
+            enabled = enableComponent.value,
+            onClick = {
+                navigate(Route.RewardedInterstitialAds.route)
+            }) {
+            ButtonText(text = "Rewarded interstitial ad", enable = enableComponent)
+        }
     }
 }
 

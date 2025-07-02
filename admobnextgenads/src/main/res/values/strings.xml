@@ -17,4 +17,8 @@
     <string name="failed_to_load_rewarded_ad">Failed loading rewarded ad</string>
     <string name="failed_to_load_rewarded_interstitial_ad">Failed loading rewarded interstitial ad</string>
     <string name="load_interstitial_ad">Load Rewarded interstitial ad</string>
+    <string name="premium_article">Premium article</string>
+    <string name="premium_article_ad_message">Watch a short video to read premium article?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
