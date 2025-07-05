@@ -21,7 +21,6 @@ import com.droiddevtips.admobnextgenads.feature.rewardedAds.rewarded.ui.ArticleD
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 @Composable
 fun RewardedInterstitial(modifier: Modifier = Modifier) {
 
