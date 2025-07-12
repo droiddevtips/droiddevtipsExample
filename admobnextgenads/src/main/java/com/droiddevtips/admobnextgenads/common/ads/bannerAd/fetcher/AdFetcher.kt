@@ -19,17 +19,17 @@ interface AdFetcher {
         adUnit: NextGenAdUnit,
         muteVideo: Boolean,
         requestCustomVideoControl: Boolean = false,
-        nativeVideoAd: (NativeAd?) -> Unit = {}
+        nativeVideoAd: (NativeAd?, Boolean) -> Unit
     )
 
     fun fetchNativeImageAd(
         adUnit: NextGenAdUnit,
-        nativeVideoAd: (NativeAd?) -> Unit = {}
+        nativeVideoAd: (NativeAd?, Boolean) -> Unit
     )
 
     fun fetchNativeFullscreenAd(
         adUnit: NextGenAdUnit,
-        nativeVideoAd: (NativeAd?) -> Unit = {}
+        nativeVideoAd: (NativeAd?, Boolean) -> Unit
     )
 
     fun fetchRewardedAd(

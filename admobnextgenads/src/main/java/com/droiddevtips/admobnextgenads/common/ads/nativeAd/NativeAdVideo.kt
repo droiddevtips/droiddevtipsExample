@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -47,6 +48,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.droiddevtips.admobnextgenads.R
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.common.ads.adsErrorView.AdErrorView
 import com.droiddevtips.admobnextgenads.common.ads.nativeAd.elements.NativeAdTextElement
 import com.droiddevtips.admobnextgenads.common.adsLoadingView.AdLoadingView
 import com.droiddevtips.typography.extensions.dpToPx
@@ -81,6 +83,7 @@ fun NativeAdVideoComposeView(
     }
 
     val isLoadingAds = remember { mutableStateOf(true) }
+    val errorLoadingAds = remember { mutableStateOf(false) }
     var native_Ad by remember { mutableStateOf<NativeAd?>(null) }
 
     Box(
@@ -110,7 +113,8 @@ fun NativeAdVideoComposeView(
             MobileAdsManager.fetchNativeVideoAd(
                 adUnit = adUnit,
                 muteVideo = mutedVideo
-            ) { nativeVideoAd ->
+            ) { nativeVideoAd, error ->
+                errorLoadingAds.value = error
                 isLoadingAds.value = false
                 native_Ad = nativeVideoAd
             }
@@ -120,6 +124,12 @@ fun NativeAdVideoComposeView(
             visible = isLoadingAds.value,
             modifier = Modifier
                 .fillMaxWidth()
+                .height(loadingViewHeight.value)
+        )
+
+        AdErrorView(
+            visible = errorLoadingAds.value,
+            modifier = Modifier.fillMaxWidth()
                 .height(loadingViewHeight.value)
         )
     }

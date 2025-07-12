@@ -16,6 +16,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 import com.google.android.libraries.ads.mobile.sdk.common.VideoOptions
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd.NativeMediaAspectRatio
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoader
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallback
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdRequest
@@ -85,7 +86,7 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
         adUnit: NextGenAdUnit,
         muteVideo: Boolean,
         requestCustomVideoControl: Boolean,
-        nativeVideoAd: (NativeAd?) -> Unit
+        nativeVideoAd: (NativeAd?, Boolean) -> Unit
     ) {
         val videoOptions = VideoOptions.Builder().setStartMuted(startMuted = muteVideo).setCustomControlsRequested(requestCustomVideoControl).build()
         val nativeAdVideoRequest = NativeAdRequest.Builder(adUnit.id, listOf(NativeAd.NativeAdType.NATIVE))
@@ -96,12 +97,12 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
 
             override fun onNativeAdLoaded(nativeAd: NativeAd) {
                 super.onNativeAdLoaded(nativeAd)
-                nativeVideoAd(nativeAd)
+                nativeVideoAd(nativeAd, false)
             }
 
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 super.onAdFailedToLoad(adError)
-                nativeVideoAd(null)
+                nativeVideoAd(null, true)
             }
         }
 
@@ -110,7 +111,7 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
 
     override fun fetchNativeImageAd(
         adUnit: NextGenAdUnit,
-        nativeVideoAd: (NativeAd?) -> Unit
+        nativeVideoAd: (NativeAd?, Boolean) -> Unit
     ) {
         val nativeAdVideoRequest = NativeAdRequest.Builder(adUnit.id, listOf(NativeAd.NativeAdType.NATIVE))
             .build()
@@ -119,12 +120,12 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
 
             override fun onNativeAdLoaded(nativeAd: NativeAd) {
                 super.onNativeAdLoaded(nativeAd)
-                nativeVideoAd(nativeAd)
+                nativeVideoAd(nativeAd, false)
             }
 
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 super.onAdFailedToLoad(adError)
-                nativeVideoAd(null)
+                nativeVideoAd(null, true)
             }
         }
 
@@ -133,25 +134,25 @@ class AdFetcherImp : AdFetcher, BannerAdCaching by BannerAdCachingImp() {
 
     override fun fetchNativeFullscreenAd(
         adUnit: NextGenAdUnit,
-        nativeVideoAd: (NativeAd?) -> Unit
+        nativeVideoAd: (NativeAd?, Boolean) -> Unit
     ) {
         if (adUnit.id.isBlank()) {
-            nativeVideoAd(null)
+            nativeVideoAd(null, true)
             return
         }
 
-        val adRequest = NativeAdRequest.Builder(adUnit.id, listOf(NativeAd.NativeAdType.NATIVE)).build()
+        val adRequest = NativeAdRequest.Builder(adUnit.id, listOf(NativeAd.NativeAdType.NATIVE)).setMediaAspectRatio(NativeMediaAspectRatio.ANY).build()
 
         val adCallback = object: NativeAdLoaderCallback {
 
             override fun onNativeAdLoaded(nativeAd: NativeAd) {
                 super.onNativeAdLoaded(nativeAd)
-                nativeVideoAd(nativeAd)
+                nativeVideoAd(nativeAd,false)
             }
 
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 super.onAdFailedToLoad(adError)
-                nativeVideoAd(null)
+                nativeVideoAd(null,true)
             }
         }
 

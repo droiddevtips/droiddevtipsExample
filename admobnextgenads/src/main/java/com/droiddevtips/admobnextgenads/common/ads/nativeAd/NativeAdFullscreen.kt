@@ -42,6 +42,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import coil3.compose.AsyncImage
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.common.ads.adsErrorView.AdErrorView
 import com.droiddevtips.admobnextgenads.common.ads.nativeAd.elements.NativeAdTextElement
 import com.droiddevtips.admobnextgenads.common.adsLoadingView.AdLoadingView
 import com.droiddevtips.admobnextgenads.core.data.AppColor
@@ -73,6 +74,7 @@ fun NativeAdFullscreenView(adUnit: NextGenAdUnit, modifier: Modifier = Modifier)
     }
 
     val isLoadingAds = remember { mutableStateOf(true) }
+    val errorLoadingAds = remember { mutableStateOf(false) }
     var native_Ad by remember { mutableStateOf<NativeAd?>(null) }
 
     Box(
@@ -101,7 +103,8 @@ fun NativeAdFullscreenView(adUnit: NextGenAdUnit, modifier: Modifier = Modifier)
 
             MobileAdsManager.fetchNativeFullscreenAd(
                 adUnit = adUnit
-            ) { nativeVideoAd ->
+            ) { nativeVideoAd, error ->
+                errorLoadingAds.value = error
                 isLoadingAds.value = false
                 native_Ad = nativeVideoAd
             }
@@ -111,6 +114,12 @@ fun NativeAdFullscreenView(adUnit: NextGenAdUnit, modifier: Modifier = Modifier)
             visible = isLoadingAds.value,
             modifier = Modifier
                 .fillMaxWidth()
+                .height(loadingViewHeight.value)
+        )
+
+        AdErrorView(
+            visible = errorLoadingAds.value,
+            modifier = Modifier.fillMaxWidth()
                 .height(loadingViewHeight.value)
         )
     }
@@ -218,7 +227,6 @@ private fun FullScreenNativeAdContainer(nativeAd: NativeAd?) {
                                             modifier = Modifier
                                                 .size(65.dp)
                                                 .clip(shape = CircleShape)
-                                                .background(color = Color.Red)
                                         )
                                     }
 

@@ -21,6 +21,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.droiddevtips.admobnextgenads.common.ads.MobileAdsManager
 import com.droiddevtips.admobnextgenads.common.ads.NextGenAdUnit
+import com.droiddevtips.admobnextgenads.common.ads.adsErrorView.AdErrorView
 import com.droiddevtips.admobnextgenads.common.adsLoadingView.AdLoadingView
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd
 
@@ -48,6 +49,7 @@ fun NativeAdImage(adUnit: NextGenAdUnit) {
     }
 
     val isLoadingAds = remember { mutableStateOf(true) }
+    val errorLoadingAds = remember { mutableStateOf(false) }
     var native_Ad by remember { mutableStateOf<NativeAd?>(null) }
 
     Box(
@@ -76,7 +78,8 @@ fun NativeAdImage(adUnit: NextGenAdUnit) {
 
             MobileAdsManager.fetchNativeImageAd(
                 adUnit = adUnit
-            ) { nativeVideoAd ->
+            ) { nativeVideoAd, error ->
+                errorLoadingAds.value = error
                 isLoadingAds.value = false
                 native_Ad = nativeVideoAd
             }
@@ -86,6 +89,12 @@ fun NativeAdImage(adUnit: NextGenAdUnit) {
             visible = isLoadingAds.value,
             modifier = Modifier
                 .fillMaxWidth()
+                .height(loadingViewHeight.value)
+        )
+
+        AdErrorView(
+            visible = errorLoadingAds.value,
+            modifier = Modifier.fillMaxWidth()
                 .height(loadingViewHeight.value)
         )
     }

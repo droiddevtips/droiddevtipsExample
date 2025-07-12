@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
  */
 @Composable
 fun NativeAdTextElement(modifier: Modifier = Modifier) {
+
     Box(
         modifier = modifier.background(
             color = Color(
