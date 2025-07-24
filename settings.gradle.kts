@@ -23,3 +23,4 @@ rootProject.name = "DroidDevTipsExamples"
 include(":app")
 include(":admobnextgenads")
 include(":droidDevTipsTheme")
+include(":masteringcomposetheme")

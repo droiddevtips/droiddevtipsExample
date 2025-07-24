@@ -19,9 +19,14 @@ val DarkColorScheme = darkColorScheme(
     secondary = Color(0xFFE9F6BF),
     tertiary = Color(0x99A4C639),
     primaryContainer = Color(0xFF2A2A2A),
+    secondaryContainer = Color(0xCCA4C639),
     surfaceContainer = Color(0xFF2A2A2A),
     background = Color(0xFF2A2A2A),
     inversePrimary = Color.White,
+    surfaceContainerLow = Color(0xFFA4C639),
+    surfaceContainerHighest = Color(0x99A4C639).copy(alpha = 0.30f),
+    outline = Color(0xCCA4C639),
+    onPrimary = Color.White
 )
 
 val LightColorScheme = lightColorScheme(
@@ -29,9 +34,14 @@ val LightColorScheme = lightColorScheme(
     secondary = Color(0xFF769A04),
     tertiary = Color(0xFFD3E892),
     primaryContainer = Color.White,
+    secondaryContainer = Color(0xCCA4C639),
     surfaceContainer = Color.White,
     background = Color.White,
     inversePrimary = Color.Black,
+    surfaceContainerLow = Color(0xFFA4C639),
+    surfaceContainerHighest = Color(0xFF769A04).copy(alpha = 0.30f),
+    outline = Color(0xCCA4C639),
+    onPrimary = Color.LightGray
 )
 
 @Composable
