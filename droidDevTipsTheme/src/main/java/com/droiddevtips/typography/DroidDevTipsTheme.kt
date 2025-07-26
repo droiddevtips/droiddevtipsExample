@@ -1,11 +1,14 @@
 package com.droiddevtips.typography
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.droiddevtips.typography.typography.droidDevTipsTypography
 
 /**
@@ -44,6 +47,14 @@ val LightColorScheme = lightColorScheme(
     onPrimary = Color.LightGray
 )
 
+val themeShapes = Shapes(
+    extraSmall = RoundedCornerShape(4.0.dp),
+    small = RoundedCornerShape(8.0.dp),
+    medium = RoundedCornerShape(12.0.dp),
+    large = RoundedCornerShape(16.0.dp),
+    extraLarge = RoundedCornerShape(28.0.dp)
+)
+
 @Composable
 fun DroidDevTipsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -57,6 +68,7 @@ fun DroidDevTipsTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
+        shapes = themeShapes,
         typography = droidDevTipsTypography(isInDarkTheme = darkTheme),
         content = content
     )

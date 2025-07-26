@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -72,7 +73,9 @@ private fun MasteringThemeMainContainer(modifier: Modifier = Modifier) {
 
                 Button(onClick = {
                     demoToast(context = context,"Filled button clicked!")
-                }) {
+                },
+                    shape = RoundedCornerShape(24)
+                    ) {
                     Text("Filled button")
                 }
 
@@ -83,57 +86,24 @@ private fun MasteringThemeMainContainer(modifier: Modifier = Modifier) {
                 }
 
                 OutlinedButton(onClick = {
-                    demoToast(context = context,"Tonal button clicked!")
+                    demoToast(context = context,"Outlined button clicked!")
                 }) {
                     Text("Outlined button")
                 }
 
-                ElevatedButton(onClick = {}) {
+                ElevatedButton(onClick = {
+                    demoToast(context = context,"Elevated button clicked!")
+                }) {
                     Text("Elevated button")
                 }
 
-                TextButton(onClick = {}) {
+                TextButton(onClick = {
+                    demoToast(context = context,"Text button clicked!")
+                }) {
                     Text("Text button")
                 }
             }
         }
-
-
-
-//        Text(text = "Text component")
-//
-//        var textFieldText by rememberSaveable { mutableStateOf("") }
-//
-//        TextField(
-//            value = textFieldText,
-//            maxLines = 1,
-//            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-//            onValueChange = {
-//                textFieldText = it
-//            }, label = {
-//                Text(text = "Label")
-//            }
-//        )
-
-//        var outlinedTextFieldText by rememberSaveable { mutableStateOf("") }
-//
-//        OutlinedTextField(
-//            value = outlinedTextFieldText,
-//            maxLines = 1,
-//            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-//            onValueChange = {
-//                outlinedTextFieldText = it
-//            }, label = {
-//                Text(text = "Label")
-//            }
-//        )
-
-
-//        for (nums in 1..50) {
-//            Button(onClick = {}) {
-//                Text("Button $nums")
-//            }
-//        }
 
         Spacer(modifier = Modifier.height(16.dp))
     }
