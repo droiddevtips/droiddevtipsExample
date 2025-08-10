@@ -69,36 +69,75 @@ private fun MasteringThemeMainContainer(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(all = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Text("Buttons", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center, fontWeight = FontWeight.Bold)
+                Text(
+                    "Buttons",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold
+                )
 
-                Button(onClick = {
-                    demoToast(context = context,"Filled button clicked!")
-                },
+                Button(
+                    onClick = {
+                        demoToast(context = context, "Filled button clicked!")
+                    },
                     shape = RoundedCornerShape(24)
-                    ) {
+                ) {
                     Text("Filled button")
                 }
 
+                Button(
+                    enabled = false, onClick = {
+                        demoToast(context = context, "Filled button clicked!")
+                    },
+                    shape = RoundedCornerShape(24)
+                ) {
+                    Text("Filled button disabled")
+                }
+
                 FilledTonalButton(onClick = {
-                    demoToast(context = context,"Tonal button clicked!")
+                    demoToast(context = context, "Tonal button clicked!")
                 }) {
                     Text("Tonal button")
                 }
 
+                FilledTonalButton(enabled = false, onClick = {
+                    demoToast(context = context, "Tonal button clicked!")
+                }) {
+                    Text("Tonal button (disabled)")
+                }
+
                 OutlinedButton(onClick = {
-                    demoToast(context = context,"Outlined button clicked!")
+                    demoToast(context = context, "Outlined button clicked!")
                 }) {
                     Text("Outlined button")
                 }
 
+                OutlinedButton(enabled = false, onClick = {
+                    demoToast(context = context, "Outlined button clicked!")
+                }) {
+                    Text("Outlined button (disabled)")
+                }
+
                 ElevatedButton(onClick = {
-                    demoToast(context = context,"Elevated button clicked!")
+                    demoToast(context = context, "Elevated button clicked!")
                 }) {
                     Text("Elevated button")
                 }
 
+                ElevatedButton(enabled = false, onClick = {
+                    demoToast(context = context, "Elevated button clicked!")
+                }) {
+                    Text("Elevated button disabled")
+                }
+
                 TextButton(onClick = {
-                    demoToast(context = context,"Text button clicked!")
+                    demoToast(context = context, "Text button clicked!")
+                }) {
+                    Text("Text button")
+                }
+
+                TextButton(enabled = false,onClick = {
+                    demoToast(context = context, "Text button clicked!")
                 }) {
                     Text("Text button")
                 }

@@ -22,14 +22,16 @@ val DarkColorScheme = darkColorScheme(
     secondary = Color(0xFFE9F6BF),
     tertiary = Color(0x99A4C639),
     primaryContainer = Color(0xFF2A2A2A),
-    secondaryContainer = Color(0xCCA4C639),
+    secondaryContainer = Color(0x99A4C639),
     surfaceContainer = Color(0xFF2A2A2A),
     background = Color(0xFF2A2A2A),
+    onSecondaryContainer = Color.White,
     inversePrimary = Color.White,
-    surfaceContainerLow = Color(0xFFA4C639),
+    surfaceContainerLow = Color.White,
     surfaceContainerHighest = Color(0x99A4C639).copy(alpha = 0.30f),
-    outline = Color(0xCCA4C639),
-    onPrimary = Color.White
+    outline = Color(0x99A4C639),
+    onPrimary = Color.White,
+    onSurface = Color(0xFFE6E0E9)
 )
 
 val LightColorScheme = lightColorScheme(
@@ -41,10 +43,11 @@ val LightColorScheme = lightColorScheme(
     surfaceContainer = Color.White,
     background = Color.White,
     inversePrimary = Color.Black,
-    surfaceContainerLow = Color(0xFFA4C639),
+    surfaceContainerLow = Color.White,
     surfaceContainerHighest = Color(0xFF769A04).copy(alpha = 0.30f),
     outline = Color(0xCCA4C639),
-    onPrimary = Color.LightGray
+    onPrimary = Color.Black,
+    onSurface = Color(0xFF1D1B20)
 )
 
 val themeShapes = Shapes(
@@ -69,7 +72,7 @@ fun DroidDevTipsTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         shapes = themeShapes,
-        typography = droidDevTipsTypography(isInDarkTheme = darkTheme),
+        typography = droidDevTipsTypography(),
         content = content
     )
 }
