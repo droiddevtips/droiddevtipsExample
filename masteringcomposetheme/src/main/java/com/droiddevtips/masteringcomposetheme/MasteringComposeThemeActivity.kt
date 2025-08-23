@@ -30,6 +30,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.masteringcomposetheme.ui.theme.OutlineTextFieldErrorExample
+import com.droiddevtips.masteringcomposetheme.ui.theme.OutlineTextFieldExample
+import com.droiddevtips.masteringcomposetheme.ui.theme.PasswordTextFieldExample
+import com.droiddevtips.masteringcomposetheme.ui.theme.TextFieldCustomLeadingIconColorExample
+import com.droiddevtips.masteringcomposetheme.ui.theme.TextFieldErrorStateExample
+import com.droiddevtips.masteringcomposetheme.ui.theme.TextFieldExample
+import com.droiddevtips.masteringcomposetheme.ui.theme.TextFieldInDisableStateExample
+import com.droiddevtips.masteringcomposetheme.ui.theme.TextFieldWithPrefixExample
+import com.droiddevtips.masteringcomposetheme.ui.theme.TextFieldWithSuffixExample
 import com.droiddevtips.typography.DroidDevTipsTheme
 
 class MasteringComposeThemeActivity : ComponentActivity() {
@@ -136,7 +145,7 @@ private fun MasteringThemeMainContainer(modifier: Modifier = Modifier) {
                     Text("Text button")
                 }
 
-                TextButton(enabled = false,onClick = {
+                TextButton(enabled = false, onClick = {
                     demoToast(context = context, "Text button clicked!")
                 }) {
                     Text("Text button")
@@ -144,7 +153,40 @@ private fun MasteringThemeMainContainer(modifier: Modifier = Modifier) {
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Card(modifier = Modifier.fillMaxWidth()) {
+
+            Column(
+                modifier = Modifier.padding(all = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    "TextField",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold
+                )
+
+                TextFieldExample()
+
+                TextFieldCustomLeadingIconColorExample()
+
+                TextFieldErrorStateExample()
+
+                TextFieldInDisableStateExample()
+
+                TextFieldWithSuffixExample()
+
+                TextFieldWithPrefixExample()
+
+                PasswordTextFieldExample()
+
+                OutlineTextFieldExample()
+
+                OutlineTextFieldErrorExample()
+            }
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 

@@ -30,8 +30,11 @@ val DarkColorScheme = darkColorScheme(
     surfaceContainerLow = Color.White,
     surfaceContainerHighest = Color(0x99A4C639).copy(alpha = 0.30f),
     outline = Color(0x99A4C639),
+    outlineVariant = Color.Blue,
     onPrimary = Color.White,
-    onSurface = Color(0xFFE6E0E9)
+    onSurface = Color(0xFFE6E0E9),
+    onSurfaceVariant = Color.White,
+    error = Color.Red
 )
 
 val LightColorScheme = lightColorScheme(
@@ -47,7 +50,8 @@ val LightColorScheme = lightColorScheme(
     surfaceContainerHighest = Color(0xFF769A04).copy(alpha = 0.30f),
     outline = Color(0xCCA4C639),
     onPrimary = Color.Black,
-    onSurface = Color(0xFF1D1B20)
+    onSurface = Color(0xFF1D1B20),
+    onSurfaceVariant = Color.White
 )
 
 val themeShapes = Shapes(
