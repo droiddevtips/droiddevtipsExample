@@ -1,4 +1,4 @@
-package com.droiddevtips.masteringcomposetheme.ui.theme
+package com.droiddevtips.masteringcomposetheme.feature.textfield.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
