@@ -24,12 +24,39 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.masteringcomposetheme.feature.customCard.ui.AppCustomCard
 
 /**
  * These are the [TextField] examples
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
+@Composable
+fun TextFieldExampleContainer(modifier: Modifier = Modifier) {
+
+    AppCustomCard(modifier = modifier, title = "TextField") {
+
+        TextFieldExample()
+
+        TextFieldCustomLeadingIconColorExample()
+
+        TextFieldErrorStateExample()
+
+        TextFieldInDisableStateExample()
+
+        TextFieldWithSuffixExample()
+
+        TextFieldWithPrefixExample()
+
+        PasswordTextFieldExample()
+
+        OutlineTextFieldExample()
+
+        OutlineTextFieldErrorExample()
+
+    }
+}
+
 @Composable
 fun TextFieldExample(modifier: Modifier = Modifier) {
 
