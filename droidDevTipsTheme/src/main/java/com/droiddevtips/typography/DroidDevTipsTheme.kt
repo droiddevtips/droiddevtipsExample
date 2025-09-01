@@ -28,10 +28,12 @@ val DarkColorScheme = darkColorScheme(
     onSecondaryContainer = Color.White,
     inversePrimary = Color.White,
     surfaceContainerLow = Color.White,
-    surfaceContainerHighest = Color(0x99A4C639).copy(alpha = 0.30f),
+    surfaceContainerHighest = Color(0x99A4C639).copy(alpha = 0.30f),  // Color(0x99A4C639).copy(alpha = 0.30f)
+    surfaceContainerHigh = Color(0xFF2A2A2A),
     outline = Color(0x99A4C639),
-    outlineVariant = Color.Blue,
+    outlineVariant = Color(0xCCA4C639),
     onPrimary = Color.White,
+    onPrimaryContainer = Color.White,
     onSurface = Color(0xFFE6E0E9),
     onSurfaceVariant = Color.White,
     error = Color.Red

@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.masteringcomposetheme.feature.button.ui.Material3ButtonExample
 import com.droiddevtips.masteringcomposetheme.feature.checkbox.ui.CheckBoxExample
+import com.droiddevtips.masteringcomposetheme.feature.datepicker.ui.Material3DatePicker
 import com.droiddevtips.masteringcomposetheme.feature.textfield.ui.TextFieldExampleContainer
 import com.droiddevtips.typography.DroidDevTipsTheme
 
@@ -56,6 +57,8 @@ private fun MasteringThemeMainContainer(modifier: Modifier = Modifier) {
         TextFieldExampleContainer()
 
         CheckBoxExample()
+
+        Material3DatePicker()
 
         Spacer(modifier = Modifier.height(32.dp))
     }
