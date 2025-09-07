@@ -18,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TimeInput
 import androidx.compose.material3.TimePicker
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberDateRangePickerState
@@ -45,6 +46,7 @@ fun Material3DatePicker(modifier: Modifier = Modifier) {
     var showDatePickerRangeSelection by remember { mutableStateOf(false) }
     var showDatePickerWithInput by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
+    var showTimePickerInputDialog by remember { mutableStateOf(false) }
 
     AppCustomCard(modifier = modifier, title = "Date/time picker") {
 
@@ -99,6 +101,17 @@ fun Material3DatePicker(modifier: Modifier = Modifier) {
                 Text("Open Time picker")
             }
         }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(modifier = Modifier.padding(all = 16.dp), onClick = {
+                showTimePickerInputDialog = true
+            }) {
+                Text("Open Time picker input dialog")
+            }
+        }
     }
 
     if (showDatePicker) {
@@ -144,6 +157,14 @@ fun Material3DatePicker(modifier: Modifier = Modifier) {
                 showTimePicker = false
             }
         )
+    }
+
+    if (showTimePickerInputDialog) {
+        TimePickerInputDialog(onConfirmation = {
+            showTimePickerInputDialog = false
+        }, onDismiss = {
+            showTimePickerInputDialog = false
+        })
     }
 }
 
@@ -249,6 +270,44 @@ private fun TimePickerDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 TimePicker(state = timePickerState)
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Button(onClick = onDismiss) {
+                        Text("Dismiss picker")
+                    }
+                    Button(onClick = onConfirmation) {
+                        Text("Confirm selection")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun TimePickerInputDialog(
+    onConfirmation: () -> Unit,
+    onDismiss: () -> Unit
+) {
+
+    val currentTime = java.util.Calendar.getInstance()
+
+    val timePickerState = rememberTimePickerState(
+        initialHour = currentTime.get(java.util.Calendar.HOUR_OF_DAY),
+        initialMinute = currentTime.get(java.util.Calendar.MINUTE),
+        is24Hour = false
+    )
+
+    Dialog(onDismissRequest = onDismiss) {
+        Column(modifier = Modifier.background(color = MaterialTheme.colorScheme.background)) {
+            Column(
+                modifier = Modifier.padding(all = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                TimeInput(state = timePickerState)
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,

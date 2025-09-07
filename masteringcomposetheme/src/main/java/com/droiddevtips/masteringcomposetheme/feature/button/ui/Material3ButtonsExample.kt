@@ -89,7 +89,7 @@ fun Material3ButtonExample(modifier: Modifier = Modifier) {
         TextButton(enabled = false, onClick = {
             demoToast(context = context, "Text button clicked!")
         }) {
-            Text("Text button")
+            Text("Text button disabled")
         }
 
     }
