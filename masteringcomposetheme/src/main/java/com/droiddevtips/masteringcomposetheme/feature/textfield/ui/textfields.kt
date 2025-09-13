@@ -22,8 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.masteringcomposetheme.common.MasteringThemeString
 import com.droiddevtips.masteringcomposetheme.feature.customCard.ui.AppCustomCard
 
 /**
@@ -34,7 +36,7 @@ import com.droiddevtips.masteringcomposetheme.feature.customCard.ui.AppCustomCar
 @Composable
 fun TextFieldExampleContainer(modifier: Modifier = Modifier) {
 
-    AppCustomCard(modifier = modifier, title = "TextField") {
+    AppCustomCard(modifier = modifier, title = stringResource(id = MasteringThemeString.text_field)) {
 
         TextFieldExample()
 
@@ -89,13 +91,13 @@ fun TextFieldExample(modifier: Modifier = Modifier) {
             }
         },
         supportingText = {
-            Text("Your app user name")
+            Text(text = stringResource(id = MasteringThemeString.app_user_name))
         },
         placeholder = {
-            Text("Enter username or email")
+            Text(text = stringResource(id = MasteringThemeString.enter_username_email))
         },
         label = {
-            Text("Username")
+            Text(text = stringResource(id = MasteringThemeString.username))
         },
         value = username.value,
         onValueChange = { value ->
@@ -118,7 +120,7 @@ fun TextFieldCustomLeadingIconColorExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = "Text field with custom leading icon color")
+        Text(text = stringResource(id = MasteringThemeString.text_field_custom_icon_color))
 
         TextField(
             modifier = modifier
@@ -150,10 +152,10 @@ fun TextFieldCustomLeadingIconColorExample(modifier: Modifier = Modifier) {
                 }
             },
             supportingText = {
-                Text("Your app user name")
+                Text(text = stringResource(id = MasteringThemeString.app_user_name))
             },
             label = {
-                Text("Username")
+                Text(text = stringResource(id = MasteringThemeString.username))
             },
             value = username.value,
             onValueChange = { value ->
@@ -176,7 +178,7 @@ fun TextFieldErrorStateExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = "Text field in error state")
+        Text(text = stringResource(id = MasteringThemeString.text_field_in_error_state))
 
         TextField(
             modifier = modifier
@@ -201,15 +203,15 @@ fun TextFieldErrorStateExample(modifier: Modifier = Modifier) {
                 }
             },
             supportingText = {
-                Text("Your app user name")
+                Text(text = stringResource(id = MasteringThemeString.app_user_name))
             },
             placeholder = {
-                Text("Enter username or email")
+                Text(text = stringResource(id = MasteringThemeString.enter_username_email))
             },
             label = {
-                Text("Username")
+                Text(text = stringResource(id = MasteringThemeString.username))
             },
-            value = "Invalid username",
+            value = stringResource(id = MasteringThemeString.invalid_username),
             isError = true,
             onValueChange = { },
             singleLine = true
@@ -230,7 +232,7 @@ fun TextFieldInDisableStateExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = "Text field in disabled state")
+        Text(text = stringResource(id = MasteringThemeString.text_field_disabled_state))
 
         TextField(
             modifier = modifier
@@ -260,13 +262,13 @@ fun TextFieldInDisableStateExample(modifier: Modifier = Modifier) {
                 }
             },
             supportingText = {
-                Text("Your app user name")
+                Text(text = stringResource(id = MasteringThemeString.app_user_name))
             },
             placeholder = {
-                Text("Enter username or email")
+                Text(text = stringResource(id = MasteringThemeString.enter_username_email))
             },
             label = {
-                Text("Username")
+                Text(text = stringResource(id = MasteringThemeString.username))
             },
             value = username.value,
             onValueChange = { value ->
@@ -290,7 +292,7 @@ fun TextFieldWithSuffixExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = "Text field with suffix")
+        Text(text = stringResource(id = MasteringThemeString.text_field_suffix))
 
         TextField(
             modifier = modifier
@@ -317,13 +319,13 @@ fun TextFieldWithSuffixExample(modifier: Modifier = Modifier) {
                 }
             },
             supportingText = {
-                Text("Your email account")
+                Text(text = stringResource(id = MasteringThemeString.your_email_account))
             },
             suffix = {
-                Text("@example.com")
+                Text(text = stringResource(id = MasteringThemeString.email_suffix))
             },
             label = {
-                Text("Email account")
+                Text(text = stringResource(id = MasteringThemeString.email_account))
             },
             value = username.value,
             onValueChange = { value ->
@@ -347,7 +349,7 @@ fun TextFieldWithPrefixExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = "Text field with prefix")
+        Text(text = stringResource(id = MasteringThemeString.text_field_prefix))
 
         TextField(
             modifier = modifier
@@ -377,13 +379,13 @@ fun TextFieldWithPrefixExample(modifier: Modifier = Modifier) {
                 }
             },
             supportingText = {
-                Text("Your email domain")
+                Text(text = stringResource(id = MasteringThemeString.your_email_domain))
             },
             prefix = {
-                Text("info@")
+                Text(text = stringResource(id = MasteringThemeString.info_prefix))
             },
             label = {
-                Text("Email domain")
+                Text(text = stringResource(id = MasteringThemeString.email_domain))
             },
             value = username.value,
             onValueChange = { value ->
@@ -407,7 +409,7 @@ fun PasswordTextFieldExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = "Password text field")
+        Text(text = stringResource(id = MasteringThemeString.password_text_field))
 
         TextField(
             modifier = modifier
@@ -435,13 +437,13 @@ fun PasswordTextFieldExample(modifier: Modifier = Modifier) {
                 }
             },
             placeholder = {
-                Text("Enter your password")
+                Text(text = stringResource(id = MasteringThemeString.enter_your_password))
             },
             supportingText = {
-                Text("Account password")
+                Text(text = stringResource(id = MasteringThemeString.account_password))
             },
             label = {
-                Text("Password")
+                Text(text = stringResource(id = MasteringThemeString.password))
             },
             value = username.value,
             onValueChange = { value ->
@@ -465,7 +467,7 @@ fun OutlineTextFieldExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = "Outlined Text field")
+        Text(text = stringResource(id = MasteringThemeString.outlined_text_field))
 
         OutlinedTextField(
             modifier = modifier
@@ -493,13 +495,13 @@ fun OutlineTextFieldExample(modifier: Modifier = Modifier) {
                 }
             },
             supportingText = {
-                Text("Account password")
+                Text(text = stringResource(id = MasteringThemeString.account_password))
             },
             label = {
-                Text("Password")
+                Text(text = stringResource(id = MasteringThemeString.password))
             },
             placeholder = {
-                Text("Enter your password")
+                Text(text = stringResource(id = MasteringThemeString.enter_your_password))
             },
             value = username.value,
             onValueChange = { value ->
@@ -523,7 +525,7 @@ fun OutlineTextFieldErrorExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Text(text = "Outlined Text field (Error)")
+        Text(text = stringResource(id = MasteringThemeString.outlined_text_field_error))
 
         OutlinedTextField(
             modifier = modifier
@@ -549,13 +551,13 @@ fun OutlineTextFieldErrorExample(modifier: Modifier = Modifier) {
                 }
             },
             supportingText = {
-                Text("Account password")
+                Text(text = stringResource(id = MasteringThemeString.account_password))
             },
             label = {
-                Text("Password")
+                Text(text = stringResource(id = MasteringThemeString.password))
             },
             placeholder = {
-                Text("Enter your password")
+                Text(text = stringResource(id = MasteringThemeString.enter_your_password))
             },
             value = username.value,
             onValueChange = { value ->

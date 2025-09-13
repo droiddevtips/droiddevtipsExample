@@ -13,10 +13,12 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.masteringcomposetheme.common.MasteringThemeString
 import com.droiddevtips.masteringcomposetheme.feature.checkbox.data.Fruit
 
 /**
@@ -35,30 +37,30 @@ fun CheckBoxExample(modifier: Modifier = Modifier) {
         ) {
 
             Text(
-                "Checkbox",
+                text = stringResource(id = MasteringThemeString.checkbox),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold
             )
 
             CheckboxItem(
-                title = "Unchecked",
+                title = stringResource(id = MasteringThemeString.unchecked),
                 checked = false
             )
 
             CheckboxItem(
-                title = "Checked",
+                title = stringResource(id = MasteringThemeString.checked),
                 checked = true
             )
 
             CheckboxItem(
-                title = "Unchecked",
+                title = stringResource(id = MasteringThemeString.unchecked),
                 checked = false,
                 enable = false
             )
 
             CheckboxItem(
-                title = "Checked",
+                title = stringResource(id = MasteringThemeString.checked),
                 checked = true,
                 enable = false
             )
@@ -88,7 +90,7 @@ private fun CheckboxGroupExample(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
 
         Text(
-            "Fruit list\n(try state checkbox)",
+            text = stringResource(id = MasteringThemeString.fruit_list_try_state_checkbox),
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
@@ -96,7 +98,7 @@ private fun CheckboxGroupExample(modifier: Modifier = Modifier) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Select all")
+            Text(text = stringResource(id = MasteringThemeString.select_all))
             TriStateCheckbox(
                 state = parentState,
                 enabled = false,

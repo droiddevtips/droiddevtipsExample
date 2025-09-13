@@ -61,6 +61,8 @@ private fun MasteringThemeMainContainer(modifier: Modifier = Modifier) {
 
         Material3DatePicker()
 
+        Material3Progress()
+
         Spacer(modifier = Modifier.height(32.dp))
     }
 }

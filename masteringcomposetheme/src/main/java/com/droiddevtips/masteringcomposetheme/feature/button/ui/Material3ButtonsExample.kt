@@ -12,6 +12,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.droiddevtips.masteringcomposetheme.common.MasteringThemeString
 import com.droiddevtips.masteringcomposetheme.feature.customCard.ui.AppCustomCard
 
 /**
@@ -24,7 +26,7 @@ fun Material3ButtonExample(modifier: Modifier = Modifier) {
 
     val context = LocalContext.current
 
-    AppCustomCard(modifier = modifier, title = "Buttons") {
+    AppCustomCard(modifier = modifier, title = stringResource(id = MasteringThemeString.buttons)) {
 
         Button(
             onClick = {
@@ -32,7 +34,7 @@ fun Material3ButtonExample(modifier: Modifier = Modifier) {
             },
             shape = RoundedCornerShape(24)
         ) {
-            Text("Filled button")
+            Text(text = stringResource(id = MasteringThemeString.filled_buttons))
         }
 
         Button(
@@ -41,55 +43,55 @@ fun Material3ButtonExample(modifier: Modifier = Modifier) {
             },
             shape = RoundedCornerShape(24)
         ) {
-            Text("Filled button disabled")
+            Text(text = stringResource(id = MasteringThemeString.filled_buttons_disabled))
         }
 
         FilledTonalButton(onClick = {
             demoToast(context = context, "Tonal button clicked!")
         }) {
-            Text("Tonal button")
+            Text(text = stringResource(id = MasteringThemeString.tonal_button))
         }
 
         FilledTonalButton(enabled = false, onClick = {
             demoToast(context = context, "Tonal button clicked!")
         }) {
-            Text("Tonal button (disabled)")
+            Text(text = stringResource(id = MasteringThemeString.tonal_button_disabled))
         }
 
         OutlinedButton(onClick = {
             demoToast(context = context, "Outlined button clicked!")
         }) {
-            Text("Outlined button")
+            Text(text = stringResource(id = MasteringThemeString.outlined_button))
         }
 
         OutlinedButton(enabled = false, onClick = {
             demoToast(context = context, "Outlined button clicked!")
         }) {
-            Text("Outlined button (disabled)")
+            Text(text = stringResource(id = MasteringThemeString.outlined_button_disabled))
         }
 
         ElevatedButton(onClick = {
             demoToast(context = context, "Elevated button clicked!")
         }) {
-            Text("Elevated button")
+            Text(text = stringResource(id = MasteringThemeString.elevated_button))
         }
 
         ElevatedButton(enabled = false, onClick = {
             demoToast(context = context, "Elevated button clicked!")
         }) {
-            Text("Elevated button disabled")
+            Text(text = stringResource(id = MasteringThemeString.elevated_button_disabled))
         }
 
         TextButton(onClick = {
             demoToast(context = context, "Text button clicked!")
         }) {
-            Text("Text button")
+            Text(text = stringResource(id = MasteringThemeString.text_button))
         }
 
         TextButton(enabled = false, onClick = {
             demoToast(context = context, "Text button clicked!")
         }) {
-            Text("Text button disabled")
+            Text(text = stringResource(id = MasteringThemeString.text_button_disabled))
         }
 
     }

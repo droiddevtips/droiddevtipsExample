@@ -30,15 +30,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.droiddevtips.masteringcomposetheme.common.MasteringThemeString
 import com.droiddevtips.masteringcomposetheme.feature.customCard.ui.AppCustomCard
 
 /**
+ * These are the date and time picker examples
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 @Composable
 fun Material3DatePicker(modifier: Modifier = Modifier) {
 
@@ -48,7 +50,7 @@ fun Material3DatePicker(modifier: Modifier = Modifier) {
     var showTimePicker by remember { mutableStateOf(false) }
     var showTimePickerInputDialog by remember { mutableStateOf(false) }
 
-    AppCustomCard(modifier = modifier, title = "Date/time picker") {
+    AppCustomCard(modifier = modifier, title = stringResource(id = MasteringThemeString.date_time_picker)) {
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -59,7 +61,7 @@ fun Material3DatePicker(modifier: Modifier = Modifier) {
                 showDatePicker = true
 
             }) {
-                Text("Open Date picker")
+                Text(text = stringResource(id = MasteringThemeString.open_date_picker))
             }
         }
 
@@ -72,7 +74,7 @@ fun Material3DatePicker(modifier: Modifier = Modifier) {
                 showDatePickerWithInput = true
 
             }) {
-                Text("Open Date picker with input")
+                Text(text = stringResource(id = MasteringThemeString.open_date_picker_input))
             }
         }
 
@@ -85,7 +87,7 @@ fun Material3DatePicker(modifier: Modifier = Modifier) {
                 showDatePickerRangeSelection = true
 
             }) {
-                Text("Open Date picker with range")
+                Text(text = stringResource(id = MasteringThemeString.open_date_picker_range))
             }
         }
 
@@ -98,7 +100,7 @@ fun Material3DatePicker(modifier: Modifier = Modifier) {
                 showTimePicker = true
 
             }) {
-                Text("Open Time picker")
+                Text(text = stringResource(id = MasteringThemeString.open_time_picker))
             }
         }
 
@@ -109,7 +111,7 @@ fun Material3DatePicker(modifier: Modifier = Modifier) {
             Button(modifier = Modifier.padding(all = 16.dp), onClick = {
                 showTimePickerInputDialog = true
             }) {
-                Text("Open Time picker input dialog")
+                Text(text = stringResource(id = MasteringThemeString.open_time_picker_input))
             }
         }
     }
@@ -187,14 +189,14 @@ private fun DatePickerModal(
                 onDateSelected(datePickerState.selectedDateMillis)
                 onDismiss()
             }) {
-                Text("OK")
+                Text(text = stringResource(id = MasteringThemeString.ok).uppercase())
             }
         },
         dismissButton = {
             TextButton(onClick = {
                 onDismiss()
             }) {
-                Text("Cancel")
+                Text(text = stringResource(id = MasteringThemeString.cancel))
             }
         }
     ) {
@@ -225,14 +227,14 @@ private fun DatePickerRangeModal(
                 )
                 onDismiss()
             }) {
-                Text("OK")
+                Text(text = stringResource(id = MasteringThemeString.ok).uppercase())
             }
         },
         dismissButton = {
             TextButton(onClick = {
                 onDismiss()
             }) {
-                Text("Cancel")
+                Text(text = stringResource(id = MasteringThemeString.cancel))
             }
         }
     ) {
@@ -240,7 +242,7 @@ private fun DatePickerRangeModal(
             state = dateRangePickerState,
             title = {
                 Row(modifier = Modifier.padding(horizontal = 24.dp)) {
-                    Text(text = "Select date range")
+                    Text(text = stringResource(id = MasteringThemeString.select_date_range))
                 }
             },
             showModeToggle = false,
@@ -276,10 +278,10 @@ private fun TimePickerDialog(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Button(onClick = onDismiss) {
-                        Text("Dismiss picker")
+                        Text(text = stringResource(id = MasteringThemeString.dismiss_picker))
                     }
                     Button(onClick = onConfirmation) {
-                        Text("Confirm selection")
+                        Text(text = stringResource(id = MasteringThemeString.confirm_selection))
                     }
                 }
             }
@@ -314,10 +316,10 @@ private fun TimePickerInputDialog(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Button(onClick = onDismiss) {
-                        Text("Dismiss picker")
+                        Text(text = stringResource(id = MasteringThemeString.dismiss_picker))
                     }
                     Button(onClick = onConfirmation) {
-                        Text("Confirm selection")
+                        Text(text = stringResource(id = MasteringThemeString.confirm_selection))
                     }
                 }
             }
