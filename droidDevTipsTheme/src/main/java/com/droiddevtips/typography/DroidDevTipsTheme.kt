@@ -18,12 +18,12 @@ import com.droiddevtips.typography.typography.droidDevTipsTypography
  */
 
 val DarkColorScheme = darkColorScheme(
-    primary = Color(0xCCA4C639),  // Color(0xCCA4C639)
+    primary = Color(0xCCA4C639),
     secondary = Color(0xFFE9F6BF),
     tertiary = Color(0x99A4C639),
     tertiaryContainer = Color(0x99A4C639).copy(alpha = 0.30f),
-    primaryContainer = Color(0xFF2A2A2A), // Color(0xFF2A2A2A)
-    secondaryContainer = Color(0x99A4C639),
+    primaryContainer = Color(0xFF2A2A2A),
+    secondaryContainer = Color(0xFF797979),  // Color(0x99A4C639)
     surfaceContainer = Color(0xFF2A2A2A),
     background = Color(0xFF2A2A2A),
     onSecondaryContainer = Color.White,
@@ -37,7 +37,7 @@ val DarkColorScheme = darkColorScheme(
     onPrimaryContainer = Color.White,
     onTertiaryContainer = Color(0xCCA4C639),
     onSurface = Color(0xFFE6E0E9),
-    onSurfaceVariant = Color.Blue,
+    onSurfaceVariant = Color(0xFFE6E0E9),
     error = Color.Red
 )
 
@@ -48,7 +48,7 @@ val LightColorScheme = lightColorScheme(
     primaryContainer = Color.White,
     tertiaryContainer = Color(0xFF769A04).copy(alpha = 0.22f),
     onPrimaryContainer = Color.Black,
-    secondaryContainer = Color(0xCCA4C639),
+    secondaryContainer = Color(0xFFD8D8D8),
     surfaceContainer = Color.White,
     background = Color.White,
     inversePrimary = Color.Black,
@@ -58,7 +58,7 @@ val LightColorScheme = lightColorScheme(
     outline = Color(0xFFA4C639),
     onPrimary = Color.Black,
     onSurface = Color(0xFF1D1B20),
-    onSurfaceVariant = Color(0xFF8B8B8B)
+    onSurfaceVariant = Color(0xFF797979)
 )
 
 val themeShapes = Shapes(
