@@ -120,7 +120,7 @@ private fun CircularProgress(modifier: Modifier = Modifier) {
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = stringResource(id = MasteringThemeString.indeterminate), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(text = stringResource(id = MasteringThemeString.indeterminate_text), color = MaterialTheme.colorScheme.onSurfaceVariant)
 
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp),

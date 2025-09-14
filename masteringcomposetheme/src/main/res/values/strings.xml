@@ -41,9 +41,9 @@
     <string name="open_time_picker_input">Open Time picker input dialog</string>
     <string name="outlined_text_field">Outlined Text field</string>
     <string name="outlined_text_field_error">Outlined Text field (Error)</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="determinate">Determinate</string>
-    <string name="indeterminate">Indeterminate</string>
+    <string name="indeterminate_text">Indeterminate</string>
     <string name="invalid_username">Invalid username</string>
     <string name="info_prefix">info@</string>
     <string name="move_slider_text">Move slider to animate progress indicators</string>
