@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample
 
 import androidx.lifecycle.ViewModel
