@@ -1,7 +1,7 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui
 
 import androidx.lifecycle.ViewModel
-import com.droiddevtips.multiscreensupport.data.MultiScreenSupportAction
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.MultiScreenSupportAction
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

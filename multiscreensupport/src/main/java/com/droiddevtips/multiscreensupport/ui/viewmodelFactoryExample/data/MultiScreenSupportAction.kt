@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.data
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data
 
 /**
  * Created by Melchior Vrolijk

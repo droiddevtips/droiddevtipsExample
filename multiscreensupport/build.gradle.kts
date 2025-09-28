@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.compose.material3.window.size.class1)
+    implementation(libs.androidx.compose.material.icons.extended.android)
     implementation(project(":droidDevTipsTheme"))
     implementation(libs.androidx.compose.adaptive)
     testImplementation(libs.junit)
