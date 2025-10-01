@@ -12,8 +12,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.window.core.layout.WindowHeightSizeClass
-import androidx.window.core.layout.WindowWidthSizeClass
+import androidx.window.core.layout.WindowSizeClass.Companion.HEIGHT_DP_EXPANDED_LOWER_BOUND
+import androidx.window.core.layout.WindowSizeClass.Companion.HEIGHT_DP_MEDIUM_LOWER_BOUND
+import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_EXPANDED_LOWER_BOUND
+import androidx.window.core.layout.WindowSizeClass.Companion.WIDTH_DP_MEDIUM_LOWER_BOUND
 
 /**
  * The composable remember example
@@ -27,20 +29,16 @@ fun RememberExample(modifier: Modifier = Modifier) {
     val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
     val number = remember { mutableIntStateOf(1) }
 
-    val width = when (windowSizeClass.windowWidthSizeClass) {
-
-        WindowWidthSizeClass.COMPACT -> WindowWidthSizeClass.COMPACT.toString()
-        WindowWidthSizeClass.MEDIUM -> WindowWidthSizeClass.MEDIUM.toString()
-        WindowWidthSizeClass.EXPANDED -> WindowWidthSizeClass.EXPANDED.toString()
-        else -> "Unknown width"
+    val width = when  {
+        windowSizeClass.isWidthAtLeastBreakpoint(WIDTH_DP_EXPANDED_LOWER_BOUND) -> "Expanded"
+        windowSizeClass.isWidthAtLeastBreakpoint(WIDTH_DP_MEDIUM_LOWER_BOUND) -> "Medium"
+        else -> "Compact"
     }
 
-    val height = when (windowSizeClass.windowHeightSizeClass) {
-
-        WindowHeightSizeClass.COMPACT -> WindowHeightSizeClass.COMPACT.toString()
-        WindowHeightSizeClass.MEDIUM -> WindowHeightSizeClass.MEDIUM.toString()
-        WindowHeightSizeClass.EXPANDED -> WindowHeightSizeClass.EXPANDED.toString()
-        else -> "Unknown height"
+    val height = when {
+        windowSizeClass.isHeightAtLeastBreakpoint(HEIGHT_DP_EXPANDED_LOWER_BOUND) -> "Expanded"
+        windowSizeClass.isHeightAtLeastBreakpoint(HEIGHT_DP_MEDIUM_LOWER_BOUND) -> "Medium"
+        else -> "Compact"
     }
 
     Column(
@@ -48,8 +46,9 @@ fun RememberExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp, alignment = Alignment.CenterVertically)
     ) {
+
         Text(
-            text = "$width\n$height",
+            text = "Width: $width\nHeight: $height",
             modifier = modifier
         )
 

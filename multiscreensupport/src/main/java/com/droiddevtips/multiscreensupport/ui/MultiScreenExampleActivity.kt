@@ -7,9 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,56 +33,59 @@ class MultiScreenExampleActivity : ComponentActivity() {
             val navHostController = rememberNavController()
 
             DroidDevTipsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
-                    NavHost(
-                        navController = navHostController,
-                        startDestination = MultiScreenSupportRoute.Home.route,
-                        modifier = Modifier.padding(innerPadding)
+                Surface(color = MaterialTheme.colorScheme.primaryContainer) {
+                    Column(modifier = Modifier
+                        .fillMaxSize()
                     ) {
 
-                        composable(MultiScreenSupportRoute.Home.route) {
-                            Column(
-                                modifier = Modifier
-                                    .padding(innerPadding)
-                                    .fillMaxSize(),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.spacedBy(
-                                    space = 30.dp,
-                                    alignment = Alignment.CenterVertically
-                                )
-                            ) {
+                        NavHost(
+                            navController = navHostController,
+                            startDestination = MultiScreenSupportRoute.Home.route
+                        ) {
 
-                                Button(onClick = {
-                                    navHostController.navigateToView(MultiScreenSupportRoute.RememberExample.route)
-                                }) {
-                                    Text("Remember example")
-                                }
+                            composable(route = MultiScreenSupportRoute.Home.route) {
+                                Column(
+                                    modifier = Modifier
 
-                                Button(onClick = {
-                                    navHostController.navigateToView(MultiScreenSupportRoute.RememberSaveableExample.route)
-                                }) {
-                                    Text("Remember saveable example")
-                                }
+                                        .fillMaxSize(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.spacedBy(
+                                        space = 30.dp,
+                                        alignment = Alignment.CenterVertically
+                                    )
+                                ) {
 
-                                Button(onClick = {
-                                    navHostController.navigateToView(MultiScreenSupportRoute.ViewModelFactoryExample.route)
-                                }) {
-                                    Text("Viewmodel factory example")
+                                    Button(onClick = {
+                                        navHostController.navigateToView(MultiScreenSupportRoute.RememberExample.route)
+                                    }) {
+                                        Text("Remember example")
+                                    }
+
+                                    Button(onClick = {
+                                        navHostController.navigateToView(MultiScreenSupportRoute.RememberSaveableExample.route)
+                                    }) {
+                                        Text("Remember saveable example")
+                                    }
+
+                                    Button(onClick = {
+                                        navHostController.navigateToView(MultiScreenSupportRoute.ViewModelFactoryExample.route)
+                                    }) {
+                                        Text("Viewmodel factory example")
+                                    }
                                 }
                             }
-                        }
 
-                        composable(MultiScreenSupportRoute.RememberExample.route) {
-                            RememberExample()
-                        }
+                            composable(route = MultiScreenSupportRoute.RememberExample.route) {
+                                RememberExample()
+                            }
 
-                        composable(route = MultiScreenSupportRoute.RememberSaveableExample.route) {
-                            RememberSaveableExample()
-                        }
+                            composable(route = MultiScreenSupportRoute.RememberSaveableExample.route) {
+                                RememberSaveableExample()
+                            }
 
-                        composable(route = MultiScreenSupportRoute.ViewModelFactoryExample.route) {
-                            ViewModelFactoryExample()
+                            composable(route = MultiScreenSupportRoute.ViewModelFactoryExample.route) {
+                                ViewModelFactoryExample()
+                            }
                         }
                     }
                 }

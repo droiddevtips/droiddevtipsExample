@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.play.services.ads.identifier)
+    implementation(libs.accompanist.systemuicontroller)
     implementation(project(":droidDevTipsTheme"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

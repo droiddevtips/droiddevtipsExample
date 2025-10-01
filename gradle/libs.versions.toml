@@ -1,5 +1,6 @@
 [versions]
 accompanistPagerIndicators = "0.25.1"
+accompanistSystemuicontroller = "0.36.0"
 adsMobileSdk = "0.17.0-alpha02"
 agp = "8.13.0"
 animation = "1.8.3"
@@ -26,9 +27,11 @@ adaptive = "1.1.0"
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerIndicators" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPagerIndicators" }
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 ads-mobile-sdk = { module = "com.google.android.libraries.ads.mobile.sdk:ads-mobile-sdk", version.ref = "adsMobileSdk" }
 androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "animation" }
 androidx-compose-material-icons-extended-android = { module = "androidx.compose.material:material-icons-extended-android", version.ref = "materialIconsExtended" }
+androidx-compose-material3-adaptive-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite", version.ref = "material3WindowSizeClass" }
 androidx-compose-material3-window-size-class1 = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

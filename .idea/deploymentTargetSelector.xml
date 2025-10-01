@@ -31,15 +31,33 @@
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="multiscreensupport">
-        <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-09-28T10:00:49.964226Z">
+        <option name="selectionMode" value="DIALOG" />
+        <DropdownSelection timestamp="2025-10-01T20:30:36.241521Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=/Users/melchiorvrolijk/.android/avd/Pixel_Fold.avd" />
             </handle>
           </Target>
         </DropdownSelection>
-        <DialogSelection />
+        <DialogSelection>
+          <targets>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="PhysicalDevice" identifier="serial=R52Y707QM7V" />
+              </handle>
+            </Target>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="LocalEmulator" identifier="path=/Users/melchiorvrolijk/.android/avd/Pixel_Fold.avd" />
+              </handle>
+            </Target>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="LocalEmulator" identifier="path=/Users/melchiorvrolijk/.android/avd/Medium_Desktop.avd" />
+              </handle>
+            </Target>
+          </targets>
+        </DialogSelection>
       </SelectionState>
     </selectionStates>
   </component>
