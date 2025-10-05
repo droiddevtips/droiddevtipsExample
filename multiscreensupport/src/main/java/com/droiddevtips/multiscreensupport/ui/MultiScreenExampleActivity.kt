@@ -21,7 +21,7 @@ import com.droiddevtips.multiscreensupport.data.MultiScreenSupportRoute
 import com.droiddevtips.multiscreensupport.domain.navigateToView
 import com.droiddevtips.multiscreensupport.ui.rememberExample.RememberExample
 import com.droiddevtips.multiscreensupport.ui.rememberSaveableExample.RememberSaveableExample
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ViewModelFactoryExample
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.ui.ViewModelFactoryExample
 import com.droiddevtips.typography.DroidDevTipsTheme
 
 class MultiScreenExampleActivity : ComponentActivity() {

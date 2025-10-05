@@ -1,7 +1,7 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.ui
 
 import androidx.lifecycle.ViewModel
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.MultiScreenSupportAction
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.data.MultiScreenSupportAction
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,5 +25,4 @@ class MultiScreenViewModel: ViewModel() {
             }
         }
     }
-
 }

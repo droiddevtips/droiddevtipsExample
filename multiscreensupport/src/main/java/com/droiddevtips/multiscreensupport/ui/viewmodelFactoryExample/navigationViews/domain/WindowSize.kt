@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.domain
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.domain
 
 import android.content.res.Configuration
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo

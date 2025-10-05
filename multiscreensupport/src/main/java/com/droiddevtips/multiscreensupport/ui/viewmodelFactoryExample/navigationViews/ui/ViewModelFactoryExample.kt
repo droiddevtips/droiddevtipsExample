@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -32,10 +32,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.multiscreensupport.domain.navigateToView
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.TabItem
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.domain.currentWindowSize
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.domain.Device
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.domain.DeviceOrientation
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.data.Routes
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.data.TabItem
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.domain.Device
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.domain.currentWindowSize
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.navigationViews.ui.home.HomeView
 import kotlinx.coroutines.launch
 
 /**
@@ -107,7 +108,7 @@ fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.surfaceContainer) // MaterialTheme.colorScheme.surfaceContainer
+                    .background(color = MaterialTheme.colorScheme.surfaceContainer) // Color(0xFFF8F8F8) MaterialTheme.colorScheme.surfaceContainer
             ) {
 
                 Box(modifier = Modifier
@@ -119,43 +120,16 @@ fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
                         } else {
                             Modifier.fillMaxSize()
                         }
-                    )
-                    .background(color = Color.Cyan)
+                    ).background(color = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.surface else Color(0xFFE1E1E1)) // MaterialTheme.colorScheme.surface
                 ) {
 
-                    // .background(color = if (isSystemInDarkTheme()) Color(0xFF1D1D1D) else MaterialTheme.colorScheme.secondaryContainer)
                     NavHost(navController, TabItem.Home.route) {
 
                         composable(route = TabItem.Home.route) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.Transparent)
-                            ) {
-
-                                if (currentWindowSize.device == Device.Tablet) {
-                                    Text("Tablet")
-                                } else {
-                                    Text("Mobile")
-                                }
-
-                                when(currentWindowSize.orientation) {
-
-                                    DeviceOrientation.Landscape -> {
-                                        // Layout for landscape
-                                        Text("Landscape")
-                                    }
-                                    DeviceOrientation.Portrait -> {
-                                        // Layout for portrait
-                                        Text("Portrait")
-                                    }
-
-                                    DeviceOrientation.Undefined -> {
-                                        // Layout for portrait
-                                        Text("Undefined")
-                                    }
-                                }
-                            }
+                            HomeView(navigate = { article ->
+//                                navController.currentBackStackEntry?.savedStateHandle?.set("article",article)
+//                                navController.navigateToView(route = Routes.ArticleDetail.route)
+                            })
                         }
 
                         composable(route = TabItem.News.route) {
@@ -169,6 +143,16 @@ fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
                         }
 
                         composable(route = TabItem.Follower.route) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = Color.LightGray)
+                            ) {
+                                Text("Follower")
+                            }
+                        }
+
+                        composable(route = Routes.ArticleDetail.route) {
                             Column(
                                 modifier = Modifier
                                     .fillMaxSize()
