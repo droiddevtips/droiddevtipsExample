@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DroidDevTipsExamples">
         <activity
-            android:name=".ui.MultiScreenExampleActivity"
+            android:name=".ui.viewmodelFactoryExample.ui.MultiScreenExampleActivity"
             android:exported="true"
             android:theme="@style/Theme.DroidDevTipsExamples">
             <intent-filter>
