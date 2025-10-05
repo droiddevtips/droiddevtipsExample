@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.articleDetail
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -28,8 +28,9 @@ import androidx.compose.ui.unit.sp
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
+
 @Composable
-fun HomeDetailView(modifier: Modifier = Modifier) {
+fun ArticleDetailView(modifier: Modifier = Modifier) {
 
     val density = LocalDensity.current
     val scrollable = rememberScrollState()
@@ -69,7 +70,4 @@ fun HomeDetailView(modifier: Modifier = Modifier) {
         Text("Title", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
         Text("Content section")
     }
-
-
-
 }

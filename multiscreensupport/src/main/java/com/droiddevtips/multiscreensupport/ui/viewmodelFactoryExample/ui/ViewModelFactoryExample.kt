@@ -1,19 +1,15 @@
 package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.Text
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.multiscreensupport.domain.navigateToView
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.MainRoute
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.data.Article
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.articleDetail.ArticleDetailView
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.MainNavigationSuiteScaffold
 
 /**
@@ -41,17 +37,8 @@ fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
         composable(route = MainRoute.Detail.route) {
 
             val article = mainNavController.previousBackStackEntry?.savedStateHandle?.get<Article>("article")
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .statusBarsPadding()
-                    .background(color = Color.DarkGray)
-            ) {
-
-                Text(text = "Article detail -> ${article?.title}")
-
-            }
+            Log.i("TAG34","Article title: ${article?.title}")
+            ArticleDetailView()
         }
     }
 }
