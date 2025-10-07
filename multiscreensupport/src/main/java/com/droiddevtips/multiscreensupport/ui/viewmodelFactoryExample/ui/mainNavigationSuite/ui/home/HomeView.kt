@@ -1,6 +1,7 @@
 package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -18,6 +19,7 @@ import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.curre
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun HomeView(modifier: Modifier = Modifier, navigate: (Article) -> Unit) {
 

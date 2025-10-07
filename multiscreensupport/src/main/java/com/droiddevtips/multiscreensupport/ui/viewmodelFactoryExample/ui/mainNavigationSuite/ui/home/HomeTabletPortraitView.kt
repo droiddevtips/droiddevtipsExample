@@ -3,8 +3,9 @@ package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNa
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.data.Article
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.ui.grid.ArticleGridView
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeArticleViewState
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailViewState
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeViewEvent
 
 /**
@@ -13,7 +14,7 @@ import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNav
  */
 @Composable
 fun HomeTabletPortraitView(
-    viewState: State<HomeArticleViewState>,
+    viewState: State<ListDetailViewState<Article>>,
     modifier: Modifier = Modifier,
     event: (HomeViewEvent) -> Unit
 ) {

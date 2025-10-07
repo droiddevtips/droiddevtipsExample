@@ -16,8 +16,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailViewState
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.data.Article
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.ui.ArticleLoadingView
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeArticleViewState
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeViewEvent
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
@@ -30,7 +31,7 @@ import kotlinx.coroutines.flow.debounce
 @OptIn(FlowPreview::class)
 @Composable
 fun ArticleListView(
-    viewState: State<HomeArticleViewState>,
+    viewState: State<ListDetailViewState<Article>>,
     modifier: Modifier = Modifier,
     event: (HomeViewEvent) -> Unit
 ) {
@@ -47,7 +48,7 @@ fun ArticleListView(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(horizontal = 0.dp, vertical = 16.dp)
         ) {
-            items(viewState.value.articles) { article ->
+            items(viewState.value.itemsList) { article ->
                 ArticleListItem(article = article) {
                     event(HomeViewEvent.NavigateToDetail(article = article))
                 }

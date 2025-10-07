@@ -2,6 +2,7 @@ package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNa
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -15,9 +16,10 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailViewState
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.data.Article
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.ui.list.ArticleListView
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.articleDetail.ArticleDetailView
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeArticleViewState
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeViewEvent
 
 /**
@@ -26,48 +28,30 @@ import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNav
  */
 @Composable
 fun HomeTabletLandscapeView(
-    viewState: State<HomeArticleViewState>,
+    viewState: State<ListDetailViewState<Article>>,
     modifier: Modifier = Modifier,
     event: (HomeViewEvent) -> Unit
 ) {
 
-//    val density = LocalDensity.current
-//    val scrollable = rememberScrollState()
-
     Row(modifier = modifier.fillMaxSize()) {
 
-
-        ArticleListView(
-            viewState = viewState,
-            modifier = Modifier
-                .fillMaxWidth(fraction = 0.35f)
-                .fillMaxHeight(),
-            event = event)
-
-        /*
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth(fraction = 0.35f)
-                .verticalScroll(scrollable),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Spacer(modifier = Modifier.height(1.dp))
-
-            for (i in 1..50) {
-                ArticleListItem(onItemClicked = {
-
-                })
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
+            ArticleListView(
+                viewState = viewState,
+                modifier = Modifier
+                    .fillMaxSize(),
+                event = event)
         }
-        */
 
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .fillMaxWidth()
+                .fillMaxWidth(fraction = 0.7f)
+                .weight(1f)
                 .padding(all = 16.dp)
         ) {
 

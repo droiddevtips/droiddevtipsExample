@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeArticleViewState
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailViewState
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.data.Article
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeViewEvent
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.repository.HomeArticleRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,15 +23,16 @@ class HomeArticleViewModel(
     private val repository: HomeArticleRepository
 ) : ViewModel() {
 
-    val _homeArticleViewState = MutableStateFlow( getSavedState() ?: HomeArticleViewState())
-    val homeArticleViewState: StateFlow<HomeArticleViewState>
+    val _homeArticleViewState = MutableStateFlow<ListDetailViewState<Article>>( getSavedState() ?: ListDetailViewState<Article>())
+    val homeArticleViewState: StateFlow<ListDetailViewState<Article>>
         get() = _homeArticleViewState.asStateFlow()
 
     private fun loadData() {
         Log.i("TAG34","Load home articles")
+
         viewModelScope.launch {
             val articles = repository.loadHomeArticles()
-            _homeArticleViewState.update { it.copy(articles = articles, showLoadingView = false) }
+            _homeArticleViewState.update { it.copy(itemsList = articles, showLoadingView = false) }
             saveState()
         }
     }
@@ -48,7 +50,7 @@ class HomeArticleViewModel(
             }
 
             is HomeViewEvent.NavigateToDetail -> {
-                _homeArticleViewState.update { it.copy(selectedArticle = event.article) }
+                _homeArticleViewState.update { it.copy(selectedItem = event.article) }
             }
 
             is HomeViewEvent.SetScrollPosition -> {
@@ -63,9 +65,9 @@ class HomeArticleViewModel(
         savedStateHandle[this::class.java.simpleName] = homeArticleViewState.value
     }
 
-    private fun getSavedState(): HomeArticleViewState? {
+    private fun getSavedState(): ListDetailViewState<Article>? {
 
-        val savedState = savedStateHandle.get<HomeArticleViewState>(this::class.java.simpleName)
+        val savedState = savedStateHandle.get<ListDetailViewState<Article>>(this::class.java.simpleName)
 
         Log.i("TAG34","Saved state: $savedState")
         return savedState
