@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,7 +16,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailEvent
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailItem
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailViewState
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.debounce
 @OptIn(FlowPreview::class)
 @Composable
 fun GridView(
-    viewState: State<ListDetailViewState<ListDetailItem>>,
+    viewState: State<ListDetailViewState>,
     modifier: Modifier = Modifier,
     event: (ListDetailEvent) -> Unit
 ) {
