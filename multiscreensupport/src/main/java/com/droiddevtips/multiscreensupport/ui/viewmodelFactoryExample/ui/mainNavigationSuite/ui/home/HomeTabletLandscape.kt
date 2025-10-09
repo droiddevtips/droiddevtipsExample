@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -30,7 +31,7 @@ import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNav
 fun HomeTabletLandscapeView(
     viewState: State<ListDetailViewState<Article>>,
     modifier: Modifier = Modifier,
-    event: (HomeViewEvent) -> Unit
+    event: (HomeViewEvent) -> Unit,
 ) {
 
     Row(modifier = modifier.fillMaxSize()) {

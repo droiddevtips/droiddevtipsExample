@@ -8,9 +8,4 @@ import kotlinx.parcelize.Parcelize
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Parcelize
-data class ListDetailViewState(
-    val itemsList: List<ListDetailItem> = emptyList(),
-    val selectedItem:ListDetailItem? = null,
-    val showLoadingView: Boolean = true,
-    val visibleIndex: Int = 0
-): Parcelable
+data class ListDetailItem(val title:String, val description:String, val image:Int): Parcelable

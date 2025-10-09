@@ -23,8 +23,8 @@ class HomeArticleViewModel(
     private val repository: HomeArticleRepository
 ) : ViewModel() {
 
-    val _homeArticleViewState = MutableStateFlow<ListDetailViewState<Article>>( getSavedState() ?: ListDetailViewState<Article>())
-    val homeArticleViewState: StateFlow<ListDetailViewState<Article>>
+    val _homeArticleViewState = MutableStateFlow<ListDetailViewState>( getSavedState() ?: ListDetailViewState())
+    val homeArticleViewState: StateFlow<ListDetailViewState>
         get() = _homeArticleViewState.asStateFlow()
 
     private fun loadData() {
@@ -32,7 +32,7 @@ class HomeArticleViewModel(
 
         viewModelScope.launch {
             val articles = repository.loadHomeArticles()
-            _homeArticleViewState.update { it.copy(itemsList = articles, showLoadingView = false) }
+            _homeArticleViewState.update { it.copy(itemsList = emptyList(), showLoadingView = false) }
             saveState()
         }
     }
@@ -45,17 +45,17 @@ class HomeArticleViewModel(
 
         when (event) {
 
-            is HomeViewEvent.ToggleLoadingView -> {
-                _homeArticleViewState.update { it.copy(showLoadingView = event.visible) }
-            }
-
-            is HomeViewEvent.NavigateToDetail -> {
-                _homeArticleViewState.update { it.copy(selectedItem = event.article) }
-            }
-
-            is HomeViewEvent.SetScrollPosition -> {
-                _homeArticleViewState.update { it.copy(visibleIndex = event.index) }
-            }
+//            is HomeViewEvent.ToggleLoadingView -> {
+//                _homeArticleViewState.update { it.copy(showLoadingView = event.visible) }
+//            }
+//
+//            is HomeViewEvent.NavigateToDetail -> {
+//                _homeArticleViewState.update { it.copy(selectedItem = event.article) }
+//            }
+//
+//            is HomeViewEvent.SetScrollPosition -> {
+//                _homeArticleViewState.update { it.copy(visibleIndex = event.index) }
+//            }
         }
 
         saveState()
@@ -65,9 +65,9 @@ class HomeArticleViewModel(
         savedStateHandle[this::class.java.simpleName] = homeArticleViewState.value
     }
 
-    private fun getSavedState(): ListDetailViewState<Article>? {
+    private fun getSavedState(): ListDetailViewState? {
 
-        val savedState = savedStateHandle.get<ListDetailViewState<Article>>(this::class.java.simpleName)
+        val savedState = savedStateHandle.get<ListDetailViewState>(this::class.java.simpleName)
 
         Log.i("TAG34","Saved state: $savedState")
         return savedState
