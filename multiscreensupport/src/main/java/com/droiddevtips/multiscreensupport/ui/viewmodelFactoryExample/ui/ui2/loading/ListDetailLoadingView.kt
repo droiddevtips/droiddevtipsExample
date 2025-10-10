@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.loading
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

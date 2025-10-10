@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,6 +28,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.droiddevtips.multiscreensupport.domain.clickableWithPrimaryColorRipple
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailItem
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.Device
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.DeviceOrientation
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.currentWindowSize
 
 /**
  * Created by Melchior Vrolijk
@@ -40,6 +44,7 @@ fun ListItem(
     onItemClicked: (ListDetailItem) -> Unit
 ) {
 
+    val currentWindowSize = currentWindowSize()
     val actualBoxSize = rememberSaveable { mutableIntStateOf(150) }
     val density = LocalDensity.current
 
@@ -102,7 +107,7 @@ fun ListItem(
                 )
                 Text(
                     item.description,
-                    maxLines = 2,
+                    maxLines = if (currentWindowSize.device == Device.Tablet && currentWindowSize.orientation == DeviceOrientation.Landscape)  3 else 2,
                     overflow = TextOverflow.Ellipsis,
                     color = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
                 )

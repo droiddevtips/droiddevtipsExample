@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.landscapeTablet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,34 +16,34 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailEvent
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailViewState
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.ui.list.ArticleListView
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.articleDetail.ArticleDetailView
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeViewEvent
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.detail.DetailView
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.list.ListView
 
 /**
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
+
 @Composable
-fun HomeTabletLandscapeView(
+fun ListDetailTabletLandscapeView(
     viewState: State<ListDetailViewState>,
     modifier: Modifier = Modifier,
-    event: (HomeViewEvent) -> Unit,
+    event: (ListDetailEvent) -> Unit
 ) {
-
-    Row(modifier = modifier.fillMaxSize()) {
+    Row(modifier = modifier) {
 
         Box(
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth(fraction = 0.35f)
         ) {
-            ArticleListView(
+            ListView(
                 viewState = viewState,
-                modifier = Modifier
-                    .fillMaxSize(),
-                event = event)
+                modifier = modifier,
+                event = event
+            )
         }
 
         Column(
@@ -66,7 +66,7 @@ fun HomeTabletLandscapeView(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top)
             ) {
-                ArticleDetailView()
+                DetailView()
             }
         }
     }

@@ -30,10 +30,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.multiscreensupport.domain.navigateToView
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ViewType
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.data.Article
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.data.MainNestedNavRoute
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.data.TabItem
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.HomeView
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.CustomListDetailView
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.Device
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.currentWindowSize
 import kotlinx.coroutines.launch
@@ -119,7 +121,11 @@ fun MainNavigationSuiteScaffold(modifier: Modifier = Modifier, navigate: (Articl
                     NavHost(nestedNavController, TabItem.Home.route) {
 
                         composable(route = TabItem.Home.route) {
-                            HomeView(navigate = navigate)
+//                            HomeView(navigate = navigate)
+
+                            CustomListDetailView(viewType = ViewType.Home, navigate = {
+
+                            })
                         }
 
                         composable(route = TabItem.News.route) {

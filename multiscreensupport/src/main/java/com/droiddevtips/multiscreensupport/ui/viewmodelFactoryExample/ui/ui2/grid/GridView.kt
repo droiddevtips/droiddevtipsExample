@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.ui.grid
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.grid
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -15,10 +15,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailEvent
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailViewState
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.data.Article
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.ui.ArticleLoadingView
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeViewEvent
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.loading.ListDetailLoadingView
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
@@ -29,12 +28,11 @@ import kotlinx.coroutines.flow.debounce
  */
 @OptIn(FlowPreview::class)
 @Composable
-fun ArticleGridView(
+fun GridView(
     viewState: State<ListDetailViewState>,
     modifier: Modifier = Modifier,
-    event: (HomeViewEvent) -> Unit
+    event: (ListDetailEvent) -> Unit
 ) {
-
     val lazyGridState = rememberLazyGridState(initialFirstVisibleItemIndex = viewState.value.visibleIndex)
 
     Box(modifier = modifier) {
@@ -44,10 +42,10 @@ fun ArticleGridView(
             modifier = modifier,
             columns = GridCells.Adaptive(minSize = 260.dp)
         ) {
-            items(viewState.value.itemsList) { article ->
-//                ArticleGridItem(article = article,onItemClicked = {
-//                    event(HomeViewEvent.NavigateToDetail(article = article))
-//                })
+            items(viewState.value.itemsList) { item ->
+                GridItem(item = item) {
+                    event(ListDetailEvent.NavigateToDetail(item = item))
+                }
             }
         }
 
@@ -56,7 +54,7 @@ fun ArticleGridView(
             enter = fadeIn(),
             exit = fadeOut(animationSpec = tween(500))
         ) {
-            ArticleLoadingView()
+            ListDetailLoadingView()
         }
 
         LaunchedEffect(lazyGridState) {
@@ -64,7 +62,7 @@ fun ArticleGridView(
                 lazyGridState.firstVisibleItemIndex
             }.debounce(500L)
                 .collectLatest { index ->
-                    event(HomeViewEvent.SetScrollPosition(index = index))
+                    event(ListDetailEvent.SetScrollPosition(index = index))
                 }
         }
 

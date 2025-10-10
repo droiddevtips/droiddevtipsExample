@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.grid
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

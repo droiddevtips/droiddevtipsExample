@@ -14,7 +14,7 @@ import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNav
  */
 @Composable
 fun HomeMobileLandscapeView(
-    viewState: State<ListDetailViewState<Article>>,
+    viewState: State<ListDetailViewState>,
     modifier: Modifier = Modifier,
     event: (HomeViewEvent) -> Unit
 ) {

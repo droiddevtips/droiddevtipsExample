@@ -1,14 +1,15 @@
-package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2
+package com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.list
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailEvent
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailViewState
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.ui.ArticleLoadingView
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
@@ -27,23 +29,27 @@ import kotlinx.coroutines.flow.debounce
  */
 @OptIn(FlowPreview::class)
 @Composable
-fun GridView(
+fun ListView(
     viewState: State<ListDetailViewState>,
     modifier: Modifier = Modifier,
     event: (ListDetailEvent) -> Unit
 ) {
-    val lazyGridState = rememberLazyGridState(initialFirstVisibleItemIndex = viewState.value.visibleIndex)
+
+    val lazyListState = rememberLazyListState(
+        initialFirstVisibleItemIndex = viewState.value.visibleIndex
+    )
 
     Box(modifier = modifier) {
 
-        LazyVerticalGrid(
-            state = lazyGridState,
+        LazyColumn(
+            state = lazyListState,
             modifier = modifier,
-            columns = GridCells.Adaptive(minSize = 260.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(horizontal = 0.dp, vertical = 16.dp)
         ) {
             items(viewState.value.itemsList) { item ->
-                GridItem(item = item) {
-                    event(ListDetailEvent.NavigateToDetail(item = item))
+                ListItem(item = item) {
+                    event(ListDetailEvent.NavigateToDetail(item = it))
                 }
             }
         }
@@ -53,22 +59,22 @@ fun GridView(
             enter = fadeIn(),
             exit = fadeOut(animationSpec = tween(500))
         ) {
-            ListDetailLoadingView()
+            ArticleLoadingView()
         }
+    }
 
-        LaunchedEffect(lazyGridState) {
-            snapshotFlow {
-                lazyGridState.firstVisibleItemIndex
-            }.debounce(500L)
-                .collectLatest { index ->
-                    event(ListDetailEvent.SetScrollPosition(index = index))
-                }
-        }
-
-        LaunchedEffect(viewState.value.visibleIndex) {
-            if (viewState.value.visibleIndex != lazyGridState.firstVisibleItemIndex) {
-                lazyGridState.animateScrollToItem(index = viewState.value.visibleIndex)
+    LaunchedEffect(lazyListState) {
+        snapshotFlow {
+            lazyListState.firstVisibleItemIndex
+        }.debounce(500L)
+            .collectLatest { index ->
+                event(ListDetailEvent.SetScrollPosition(index = index))
             }
+    }
+
+    LaunchedEffect(viewState.value.visibleIndex) {
+        if (viewState.value.visibleIndex != lazyListState.firstVisibleItemIndex) {
+            lazyListState.animateScrollToItem(index = viewState.value.visibleIndex)
         }
     }
 }

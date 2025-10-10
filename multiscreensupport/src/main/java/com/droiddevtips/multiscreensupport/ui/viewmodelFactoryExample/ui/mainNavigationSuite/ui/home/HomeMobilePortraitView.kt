@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailViewState
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.data.Article
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.article.ui.list.ArticleListView
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNavigationSuite.ui.home.data.HomeViewEvent
 
@@ -14,7 +13,7 @@ import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.mainNav
  */
 @Composable
 fun HomeMobilePortraitView(
-    viewState: State<ListDetailViewState<Article>>,
+    viewState: State<ListDetailViewState>,
     modifier: Modifier = Modifier,
     event: (HomeViewEvent) -> Unit
 ) {

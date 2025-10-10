@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.debounce
 @OptIn(FlowPreview::class)
 @Composable
 fun ArticleListView(
-    viewState: State<ListDetailViewState<Article>>,
+    viewState: State<ListDetailViewState>,
     modifier: Modifier = Modifier,
     event: (HomeViewEvent) -> Unit
 ) {
@@ -49,9 +49,9 @@ fun ArticleListView(
             contentPadding = PaddingValues(horizontal = 0.dp, vertical = 16.dp)
         ) {
             items(viewState.value.itemsList) { article ->
-                ArticleListItem(article = article) {
-                    event(HomeViewEvent.NavigateToDetail(article = article))
-                }
+//                ArticleListItem(article = article) {
+//                    event(HomeViewEvent.NavigateToDetail(article = article))
+//                }
             }
         }
 

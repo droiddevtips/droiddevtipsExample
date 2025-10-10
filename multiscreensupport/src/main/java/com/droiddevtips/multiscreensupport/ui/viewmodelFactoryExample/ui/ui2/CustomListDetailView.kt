@@ -4,9 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.repository.ListDetailDemoRepositoryImp
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ListDetailItem
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.ViewType
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.data.repository.ListDetailDemoRepositoryImp
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.domain.parseEvent
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.grid.GridView
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.landscapeTablet.ListDetailTabletLandscapeView
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.list.ListView
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.viewmodel.ListDetailViewModel
+import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.ui.ui2.viewmodel.ListDetailViewModelFactory
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.Device
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.DeviceOrientation
 import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.currentWindowSize
@@ -22,10 +28,11 @@ fun CustomListDetailView(
     navigate: (ListDetailItem) -> Unit
 ) {
 
-    val listDetailViewModel: ListDetailViewModel = viewModel(factory = ListDetailViewModelFactory(
-        viewType = viewType,
-        repository = ListDetailDemoRepositoryImp()
-    )
+    val listDetailViewModel: ListDetailViewModel = viewModel(
+        factory = ListDetailViewModelFactory(
+            viewType = viewType,
+            repository = ListDetailDemoRepositoryImp()
+        )
     )
 
     val viewState = listDetailViewModel.listDetailViewState.collectAsStateWithLifecycle()
@@ -34,26 +41,49 @@ fun CustomListDetailView(
 
     if (currentWindowSize.device == Device.Mobile) {
 
-        when(currentWindowSize.orientation) {
+        when (currentWindowSize.orientation) {
 
-            DeviceOrientation.Landscape -> {}
+            DeviceOrientation.Landscape -> GridView(
+                viewState = viewState,
+                modifier = modifier,
+                event = {
+                    it.parseEvent(
+                        updateViewModel = listDetailViewModel::handleEvent,
+                        navigate = navigate
+                    )
+                })
 
-            else -> {
-
-            }
+            else -> ListView(viewState = viewState, modifier = modifier, event = {
+                it.parseEvent(
+                    updateViewModel = listDetailViewModel::handleEvent,
+                    navigate = navigate
+                )
+            })
         }
 
     } else {
 
-        when(currentWindowSize.orientation) {
+        when (currentWindowSize.orientation) {
 
-            DeviceOrientation.Landscape -> {}
+            DeviceOrientation.Landscape -> ListDetailTabletLandscapeView(
+                viewState = viewState,
+                modifier = modifier,
+                event = {
+                    it.parseEvent(
+                        updateViewModel = listDetailViewModel::handleEvent,
+                        navigate = navigate
+                    )
+                })
 
-            else -> {
-
-            }
+            else -> GridView(
+                viewState = viewState,
+                modifier = modifier,
+                event = {
+                    it.parseEvent(
+                        updateViewModel = listDetailViewModel::handleEvent,
+                        navigate = navigate
+                    )
+                })
         }
-
     }
-
 }
