@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ViewType
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepository
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepository
 
 /**
  * Created by Melchior Vrolijk

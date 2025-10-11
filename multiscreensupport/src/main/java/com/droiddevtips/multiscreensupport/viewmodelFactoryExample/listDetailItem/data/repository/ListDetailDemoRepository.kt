@@ -1,7 +1,7 @@
 package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.repository
 
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ViewType
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 
 /**
  * Created by Melchior Vrolijk

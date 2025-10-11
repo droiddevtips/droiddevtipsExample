@@ -11,6 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class ListDetailViewState(
     val itemsList: List<ListDetailItem> = emptyList(),
     val selectedItem:ListDetailItem? = null,
+    val showEmptyView: Boolean = false,
     val showLoadingView: Boolean = true,
     val visibleIndex: Int = 0
 ): Parcelable

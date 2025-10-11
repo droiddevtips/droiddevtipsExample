@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,10 +29,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.droiddevtips.multiscreensupport.common.extensions.clickableWithPrimaryColorRipple
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.Device
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.DeviceOrientation
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOrientation
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
 
 /**
  * Created by Melchior Vrolijk
@@ -40,6 +42,7 @@ import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.util.curre
 @Composable
 fun ListItem(
     item: ListDetailItem,
+    viewType: ViewType,
     modifier: Modifier = Modifier,
     onItemClicked: (ListDetailItem) -> Unit
 ) {
@@ -86,8 +89,13 @@ fun ListItem(
             Image(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(actualBoxSize.intValue.dp)
-                    .clip(RoundedCornerShape(12.dp)),
+                    .size(actualBoxSize.intValue.dp).then(
+                        if (viewType == ViewType.Follower) {
+                            Modifier.clip(CircleShape)
+                        } else {
+                            Modifier.clip(RoundedCornerShape(12.dp))
+                        }
+                    ),
                 painter = painterResource(id = item.image),
                 contentDescription = "Test"
             )

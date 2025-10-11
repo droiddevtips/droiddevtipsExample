@@ -16,10 +16,11 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ListDetailEvent
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ListDetailViewState
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.ui.detail.DetailView
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.ui.list.ListView
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailEvent
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailViewState
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.detail.DetailView
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.list.ListView
 
 /**
  * Created by Melchior Vrolijk
@@ -29,6 +30,7 @@ import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetail
 @Composable
 fun ListDetailTabletLandscapeView(
     viewState: State<ListDetailViewState>,
+    viewType: ViewType,
     modifier: Modifier = Modifier,
     event: (ListDetailEvent) -> Unit
 ) {
@@ -41,6 +43,7 @@ fun ListDetailTabletLandscapeView(
         ) {
             ListView(
                 viewState = viewState,
+                viewType = viewType,
                 modifier = modifier,
                 event = event
             )

@@ -1,13 +1,13 @@
 package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.repository
 
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ViewType
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.mainNavigationSuite.ui.follower.FollowerDataSource
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.mainNavigationSuite.ui.follower.FollowerDataSourceImp
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.mainNavigationSuite.ui.home.HomeItemsDataSource
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.mainNavigationSuite.ui.home.HomeItemsDataSourceImp
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.mainNavigationSuite.ui.news.NewsDataSource
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.mainNavigationSuite.ui.news.NewsDataSourceImp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.FollowerDataSource
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.FollowerDataSourceImp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.HomeItemsDataSource
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.HomeItemsDataSourceImp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.NewsDataSource
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.NewsDataSourceImp
 
 /**
  * Created by Melchior Vrolijk

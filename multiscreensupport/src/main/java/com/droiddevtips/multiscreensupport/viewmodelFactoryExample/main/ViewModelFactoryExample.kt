@@ -11,6 +11,9 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.detail.DetailView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.data.MainRoute
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.MainNavigationSuiteScaffold
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOrientation
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
 
 /**
  * Created by Melchior Vrolijk
@@ -19,6 +22,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigatio
 @Composable
 fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
 
+    val currentWindowSize = currentWindowSize()
     val mainNavController = rememberNavController()
 
     NavHost(
@@ -29,6 +33,10 @@ fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
         composable(MainRoute.Main.route) {
 
             MainNavigationSuiteScaffold(navigate = { item ->
+
+                if (currentWindowSize.device == Device.Tablet && currentWindowSize.orientation == DeviceOrientation.Landscape)
+                    return@MainNavigationSuiteScaffold
+
                 mainNavController.currentBackStackEntry?.savedStateHandle?.set("item", item)
                 mainNavController.navigateToView(route = MainRoute.Detail.route)
             })

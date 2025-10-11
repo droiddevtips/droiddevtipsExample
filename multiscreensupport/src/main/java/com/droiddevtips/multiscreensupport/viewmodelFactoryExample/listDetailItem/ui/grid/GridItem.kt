@@ -15,7 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,7 +23,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.droiddevtips.multiscreensupport.common.extensions.clickableWithPrimaryColorRipple
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 
 /**
  * Created by Melchior Vrolijk
@@ -32,6 +33,7 @@ import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetail
 @Composable
 fun GridItem(
     item: ListDetailItem,
+    viewType: ViewType,
     modifier: Modifier = Modifier,
     onItemClicked: (ListDetailItem) -> Unit
 ) {
@@ -54,16 +56,16 @@ fun GridItem(
         ) {
 
             Image(
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp)
-                    .clip(RoundedCornerShape(12.dp)),
+                    .background(color = Color(0xFFE6E6E6), shape = RoundedCornerShape(12.dp))
+                    .height(150.dp),
                 painter = painterResource(id = item.image),
                 contentDescription = "Test"
             )
 
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = if (viewType == ViewType.Follower) Alignment.CenterHorizontally else Alignment.Start) {
                 Text(
                     item.title,
                     fontWeight = FontWeight.Bold,

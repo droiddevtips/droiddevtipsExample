@@ -35,6 +35,9 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.CustomListDetailView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.data.MainNestedNavRoute
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.data.TabItem
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.FollowerView
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.HomeView
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.NewsView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
 import kotlinx.coroutines.launch
@@ -120,27 +123,24 @@ fun MainNavigationSuiteScaffold(modifier: Modifier = Modifier, navigate: (ListDe
                     NavHost(nestedNavController, TabItem.Home.route) {
 
                         composable(route = TabItem.Home.route) {
-                            CustomListDetailView(viewType = ViewType.Home, navigate = navigate)
+//                            CustomListDetailView(viewType = ViewType.Home, navigate = navigate)
+                            HomeView(navigate = navigate)
                         }
 
                         composable(route = TabItem.News.route) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.Green)
-                            ) {
-                                Text("News")
-                            }
+                            NewsView(navigate = navigate)
                         }
 
                         composable(route = TabItem.Follower.route) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.LightGray)
-                            ) {
-                                Text("Follower")
-                            }
+                            FollowerView(navigate = navigate)
+
+//                            Column(
+//                                modifier = Modifier
+//                                    .fillMaxSize()
+//                                    .background(color = Color.LightGray)
+//                            ) {
+//                                Text("Follower")
+//                            }
                         }
 
                         composable(route = MainNestedNavRoute.ArticleDetail.route) {

@@ -3,11 +3,11 @@ package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIt
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ListDetailEvent
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ListDetailViewState
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ViewType
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepository
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepositoryImp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailEvent
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailViewState
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepository
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepositoryImp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -35,6 +35,12 @@ class ListDetailViewModel(
 
     private suspend fun loadData() {
         val itemList = repository.loadData(viewType = viewType)
+
+        if (itemList.isEmpty()) {
+            _listDetailViewState.update { it.copy(showEmptyView = true, showLoadingView = false) }
+            return
+        }
+
         _listDetailViewState.update { it.copy(itemsList = itemList, showLoadingView = false) }
         saveState()
     }

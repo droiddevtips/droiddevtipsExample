@@ -1,7 +1,8 @@
 package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home
 
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
-import com.droiddevtips.multiscreensupport.ui.viewmodelFactoryExample.listDetailItem.data.ViewType
+import com.droiddevtips.multiscreensupport.common.extensions.toListDetailItem
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -18,7 +19,7 @@ class HomeItemsDataSourceImp(private val viewType: ViewType): HomeItemsDataSourc
         val itemList = ArrayList<ListDetailItem>()
 
         for (item in 1..50) {
-//            itemList.add(item.createListDetailItem(viewType = viewType))
+            itemList.add(item.toListDetailItem(viewType = viewType))
         }
 
         itemList.toList()
