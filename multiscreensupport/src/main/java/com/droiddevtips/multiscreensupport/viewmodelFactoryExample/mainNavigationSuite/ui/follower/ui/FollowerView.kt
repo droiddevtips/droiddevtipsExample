@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news
+package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -7,17 +7,19 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.CustomListDetailView
 
 /**
+ * The follower composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Composable
-fun NewsView(
+fun FollowerView(
     modifier: Modifier = Modifier,
     navigate: (ListDetailItem) -> Unit
 ) {
     CustomListDetailView(
-        viewType = ViewType.News,
+        viewType = ViewType.Follower,
         modifier = modifier,
         navigate = navigate
     )
+
 }

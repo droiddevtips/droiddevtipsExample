@@ -1,6 +1,5 @@
 package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.main
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -16,6 +15,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOr
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
 
 /**
+ * The view model factory example main composable view.
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
@@ -31,7 +31,6 @@ fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
         startDestination = MainRoute.Main.route
     ) {
         composable(MainRoute.Main.route) {
-
             MainNavigationSuiteScaffold(navigate = { item ->
 
                 if (currentWindowSize.device == Device.Tablet && currentWindowSize.orientation == DeviceOrientation.Landscape)
@@ -43,9 +42,7 @@ fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
         }
 
         composable(route = MainRoute.Detail.route) {
-
             val listDetailItem = mainNavController.previousBackStackEntry?.savedStateHandle?.get<ListDetailItem>("item")
-            Log.i("TAG34","Article title: ${listDetailItem?.title}")
             DetailView(listDetailItem = listDetailItem)
         }
     }

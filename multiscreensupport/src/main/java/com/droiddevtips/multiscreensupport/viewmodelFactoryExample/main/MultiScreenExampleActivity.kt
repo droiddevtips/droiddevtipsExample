@@ -23,6 +23,11 @@ import com.droiddevtips.multiscreensupport.rememberExample.RememberExample
 import com.droiddevtips.multiscreensupport.rememberSaveableExample.RememberSaveableExample
 import com.droiddevtips.typography.DroidDevTipsTheme
 
+/**
+ * The main activity for the multi screen example.
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 class MultiScreenExampleActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

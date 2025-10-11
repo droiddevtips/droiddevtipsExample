@@ -21,6 +21,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOr
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
 
 /**
+ * The empty composable view placeholder
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

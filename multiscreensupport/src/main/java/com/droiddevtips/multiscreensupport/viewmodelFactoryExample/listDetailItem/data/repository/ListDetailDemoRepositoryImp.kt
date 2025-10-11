@@ -2,14 +2,15 @@ package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIt
 
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.FollowerDataSource
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.FollowerDataSourceImp
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.HomeItemsDataSource
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.HomeItemsDataSourceImp
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.NewsDataSource
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.NewsDataSourceImp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.data.FollowerDataSource
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.data.FollowerDataSourceImp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.data.HomeItemsDataSource
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.data.HomeItemsDataSourceImp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.data.NewsDataSource
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.data.NewsDataSourceImp
 
 /**
+ * The list detail demo repository implementation class, a sub class of [ListDetailDemoRepository].
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

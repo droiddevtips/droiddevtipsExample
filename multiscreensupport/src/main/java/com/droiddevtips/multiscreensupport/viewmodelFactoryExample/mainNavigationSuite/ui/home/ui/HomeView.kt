@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home
+package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -7,6 +7,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.CustomListDetailView
 
 /**
+ * The 'Home' composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

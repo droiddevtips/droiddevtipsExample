@@ -27,6 +27,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 
 /**
+ * The grid item composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower
+package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.data
 
 import com.droiddevtips.multiscreensupport.common.extensions.toListDetailItem
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
@@ -8,13 +8,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 /**
+ * The Home items data source implementation which implement the [HomeItemsDataSource] interface.
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-class FollowerDataSourceImp(private val viewType: ViewType): FollowerDataSource {
+class HomeItemsDataSourceImp(private val viewType: ViewType): HomeItemsDataSource {
 
-    override suspend fun loadFollowers(): List<ListDetailItem> = withContext(Dispatchers.Default) {
-
+    override suspend fun loadHomeItems(): List<ListDetailItem> = withContext(Dispatchers.Default) {
         delay(300) // Simulate remote api call
 
         val itemList = ArrayList<ListDetailItem>()
@@ -25,5 +25,4 @@ class FollowerDataSourceImp(private val viewType: ViewType): FollowerDataSource 
 
         itemList.toList()
     }
-
 }

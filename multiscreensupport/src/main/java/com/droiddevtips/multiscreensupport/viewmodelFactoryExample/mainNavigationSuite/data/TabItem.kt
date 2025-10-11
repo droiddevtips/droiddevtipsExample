@@ -3,6 +3,7 @@ package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigati
 import com.droiddevtips.multiscreensupport.R
 
 /**
+ * The tab items sealed class
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

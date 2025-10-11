@@ -1,6 +1,7 @@
 package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data
 
 /**
+ * The list detail event sealed interface.
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

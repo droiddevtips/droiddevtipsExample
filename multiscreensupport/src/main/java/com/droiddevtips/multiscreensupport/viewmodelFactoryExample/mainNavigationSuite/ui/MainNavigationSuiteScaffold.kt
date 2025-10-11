@@ -31,22 +31,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.multiscreensupport.common.extensions.navigateToView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.CustomListDetailView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.data.MainNestedNavRoute
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.data.TabItem
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.FollowerView
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.HomeView
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.NewsView
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.ui.FollowerView
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.ui.HomeView
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.ui.NewsView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
 import kotlinx.coroutines.launch
 
 /**
+ * The main navigation suite scaffold
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 @Composable
 fun MainNavigationSuiteScaffold(modifier: Modifier = Modifier, navigate: (ListDetailItem) -> Unit) {
 

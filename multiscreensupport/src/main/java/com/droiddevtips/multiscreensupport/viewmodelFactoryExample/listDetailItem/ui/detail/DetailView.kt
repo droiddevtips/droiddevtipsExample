@@ -31,6 +31,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailEvent
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
@@ -38,6 +39,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOr
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
 
 /**
+ * The generic detail composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

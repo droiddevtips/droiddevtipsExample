@@ -8,6 +8,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepository
 
 /**
+ * The list detail view model factory, a subclass of [ViewModelProvider.Factory]
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

@@ -22,10 +22,10 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.list.ListView
 
 /**
+ * This is the list detail view for the tablet devices in landscape orientation
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 @Composable
 fun ListDetailTabletLandscapeView(
     viewState: State<ListDetailViewState>,

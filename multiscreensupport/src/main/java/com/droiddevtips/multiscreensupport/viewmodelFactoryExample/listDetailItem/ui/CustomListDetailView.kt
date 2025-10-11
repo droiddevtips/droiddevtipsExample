@@ -18,6 +18,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOr
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
 
 /**
+ * The generic custom list detail view that handle all UI related logic
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
