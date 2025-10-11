@@ -36,6 +36,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.util.Device
 import com.droiddevtips.multiscreensupport.util.DeviceOrientation
 import com.droiddevtips.multiscreensupport.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.emptyView.NoItemSelected
 
 /**
  * The generic detail composable view
@@ -45,8 +46,10 @@ import com.droiddevtips.multiscreensupport.util.currentWindowSize
 @Composable
 fun DetailView(listDetailItem: ListDetailItem?, modifier: Modifier = Modifier) {
 
-    if (listDetailItem == null)
+    if (listDetailItem == null) {
+        NoItemSelected(modifier = Modifier.fillMaxSize())
         return
+    }
 
     val currentWindowSize = currentWindowSize()
     val density = LocalDensity.current
@@ -107,5 +110,4 @@ fun DetailView(listDetailItem: ListDetailItem?, modifier: Modifier = Modifier) {
         )
         Text(listDetailItem.description)
     }
-
 }

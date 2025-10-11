@@ -17,5 +17,6 @@
     <string name="remember_example">Remember example</string>
     <string name="remember_saveable_example">Remember saveable example</string>
     <string name="viewmodel_factory_example">Viewmodel factory example</string>
+    <string name="no_item_selected">No item selected</string>
 
 </resources>
