@@ -5,15 +5,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.window.core.layout.WindowHeightSizeClass
-import androidx.window.core.layout.WindowWidthSizeClass
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.AppWindowSize
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
 
 /**
  * The remember saveable composable example
@@ -23,23 +22,19 @@ import androidx.window.core.layout.WindowWidthSizeClass
 @Composable
 fun RememberSaveableExample(modifier: Modifier = Modifier) {
 
-    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+    val currentWindowSize = currentWindowSize()
     val number = rememberSaveable { mutableIntStateOf(1) }
 
-    val width = when (windowSizeClass.windowWidthSizeClass) {
-
-        WindowWidthSizeClass.COMPACT -> WindowWidthSizeClass.COMPACT.toString()
-        WindowWidthSizeClass.MEDIUM -> WindowWidthSizeClass.MEDIUM.toString()
-        WindowWidthSizeClass.EXPANDED -> WindowWidthSizeClass.EXPANDED.toString()
-        else -> "Unknown width"
+    val width = when(currentWindowSize.windowWidthSize)  {
+        AppWindowSize.Compact -> "Compact"
+        AppWindowSize.Medium -> "Medium"
+        AppWindowSize.Expanded -> "Expanded"
     }
 
-    val height = when (windowSizeClass.windowHeightSizeClass) {
-
-        WindowHeightSizeClass.COMPACT -> WindowHeightSizeClass.COMPACT.toString()
-        WindowHeightSizeClass.MEDIUM -> WindowHeightSizeClass.MEDIUM.toString()
-        WindowHeightSizeClass.EXPANDED -> WindowHeightSizeClass.EXPANDED.toString()
-        else -> "Unknown height"
+    val height = when(currentWindowSize.windowHeightSize) {
+        AppWindowSize.Compact -> "Compact"
+        AppWindowSize.Medium -> "Medium"
+        AppWindowSize.Expanded -> "Expanded"
     }
 
     Column(
