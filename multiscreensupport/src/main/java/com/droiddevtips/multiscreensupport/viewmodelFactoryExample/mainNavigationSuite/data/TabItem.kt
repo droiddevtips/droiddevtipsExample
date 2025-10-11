@@ -1,6 +1,5 @@
 package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.data
 
-import com.droiddevtips.multiscreensupport.R
 import com.droiddevtips.multiscreensupport.common.data.AppString
 import com.droiddevtips.multiscreensupport.common.data.Drawable
 
