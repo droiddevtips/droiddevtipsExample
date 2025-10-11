@@ -10,7 +10,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.multiscreensupport.common.data.AppString
 import com.droiddevtips.multiscreensupport.util.AppWindowSize
 import com.droiddevtips.multiscreensupport.util.currentWindowSize
 
@@ -25,16 +27,16 @@ fun RememberSaveableExample(modifier: Modifier = Modifier) {
     val currentWindowSize = currentWindowSize()
     val number = rememberSaveable { mutableIntStateOf(1) }
 
-    val width = when(currentWindowSize.windowWidthSize)  {
-        AppWindowSize.Compact -> "Compact"
-        AppWindowSize.Medium -> "Medium"
-        AppWindowSize.Expanded -> "Expanded"
+    val width = when (currentWindowSize.windowWidthSize) {
+        AppWindowSize.Compact -> stringResource(id = AppString.compact)
+        AppWindowSize.Medium -> stringResource(id = AppString.medium)
+        AppWindowSize.Expanded -> stringResource(id = AppString.expanded)
     }
 
-    val height = when(currentWindowSize.windowHeightSize) {
-        AppWindowSize.Compact -> "Compact"
-        AppWindowSize.Medium -> "Medium"
-        AppWindowSize.Expanded -> "Expanded"
+    val height = when (currentWindowSize.windowHeightSize) {
+        AppWindowSize.Compact -> stringResource(id = AppString.compact)
+        AppWindowSize.Medium -> stringResource(id = AppString.medium)
+        AppWindowSize.Expanded -> stringResource(id = AppString.expanded)
     }
 
     Column(
@@ -42,8 +44,14 @@ fun RememberSaveableExample(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(30.dp, alignment = Alignment.CenterVertically)
     ) {
+
         Text(
-            text = "$width\n$height",
+            text = "${String.format(stringResource(id = AppString.width), width)}\n${
+                String.format(
+                    stringResource(id = AppString.height),
+                    height
+                )
+            }",
             modifier = modifier
         )
 
@@ -54,7 +62,7 @@ fun RememberSaveableExample(modifier: Modifier = Modifier) {
         Button(onClick = {
             number.intValue = ++number.intValue
         }) {
-            Text("Increase number")
+            Text(text = stringResource(AppString.increase_number))
         }
     }
 }

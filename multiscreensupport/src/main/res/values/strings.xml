@@ -3,4 +3,10 @@
     <string name="home">Home</string>
     <string name="news">News</string>
     <string name="follower">Follower</string>
+    <string name="compact">Compact</string>
+    <string name="medium">Medium</string>
+    <string name="expanded">Expanded</string>
+    <string name="increase_number">Increase number</string>
+    <string name="width">Width: %1$s</string>
+    <string name="height">Height: %1$s</string>
 </resources>
