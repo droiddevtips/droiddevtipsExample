@@ -36,8 +36,8 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigatio
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.ui.FollowerView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.ui.HomeView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.ui.NewsView
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.util.Device
+import com.droiddevtips.multiscreensupport.util.currentWindowSize
 import kotlinx.coroutines.launch
 
 /**

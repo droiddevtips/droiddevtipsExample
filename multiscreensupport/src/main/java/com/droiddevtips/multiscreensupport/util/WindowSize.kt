@@ -1,4 +1,4 @@
-package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util
+package com.droiddevtips.multiscreensupport.util
 
 import android.content.res.Configuration
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo

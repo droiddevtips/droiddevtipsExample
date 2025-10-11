@@ -16,9 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.multiscreensupport.R
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOrientation
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.util.Device
+import com.droiddevtips.multiscreensupport.util.DeviceOrientation
+import com.droiddevtips.multiscreensupport.util.currentWindowSize
 
 /**
  * The empty composable view placeholder

@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.sp
 import com.droiddevtips.multiscreensupport.common.extensions.clickableWithPrimaryColorRipple
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOrientation
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.util.Device
+import com.droiddevtips.multiscreensupport.util.DeviceOrientation
+import com.droiddevtips.multiscreensupport.util.currentWindowSize
 
 /**
  * The list item composable view

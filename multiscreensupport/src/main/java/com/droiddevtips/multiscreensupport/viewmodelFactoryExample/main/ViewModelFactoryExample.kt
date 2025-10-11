@@ -10,9 +10,9 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.detail.DetailView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.data.MainRoute
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.MainNavigationSuiteScaffold
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOrientation
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.util.Device
+import com.droiddevtips.multiscreensupport.util.DeviceOrientation
+import com.droiddevtips.multiscreensupport.util.currentWindowSize
 
 /**
  * The view model factory example main composable view.

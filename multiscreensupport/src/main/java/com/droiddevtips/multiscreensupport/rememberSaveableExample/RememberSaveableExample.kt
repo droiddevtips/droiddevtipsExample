@@ -11,8 +11,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.AppWindowSize
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.util.AppWindowSize
+import com.droiddevtips.multiscreensupport.util.currentWindowSize
 
 /**
  * The remember saveable composable example

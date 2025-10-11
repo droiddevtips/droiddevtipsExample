@@ -13,9 +13,9 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.list.ListView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.viewmodel.ListDetailViewModel
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.viewmodel.ListDetailViewModelFactory
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.Device
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.DeviceOrientation
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.util.Device
+import com.droiddevtips.multiscreensupport.util.DeviceOrientation
+import com.droiddevtips.multiscreensupport.util.currentWindowSize
 
 /**
  * The generic custom list detail view that handle all UI related logic
