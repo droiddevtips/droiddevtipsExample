@@ -44,9 +44,9 @@ fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
 
         composable(route = MainRoute.Detail.route) {
 
-            val article = mainNavController.previousBackStackEntry?.savedStateHandle?.get<ListDetailItem>("item")
-            Log.i("TAG34","Article title: ${article?.title}")
-            DetailView()
+            val listDetailItem = mainNavController.previousBackStackEntry?.savedStateHandle?.get<ListDetailItem>("item")
+            Log.i("TAG34","Article title: ${listDetailItem?.title}")
+            DetailView(listDetailItem = listDetailItem)
         }
     }
 }

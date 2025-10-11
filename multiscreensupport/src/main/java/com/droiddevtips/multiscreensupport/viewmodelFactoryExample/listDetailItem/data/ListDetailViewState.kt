@@ -13,5 +13,6 @@ data class ListDetailViewState(
     val selectedItem:ListDetailItem? = null,
     val showEmptyView: Boolean = false,
     val showLoadingView: Boolean = true,
-    val visibleIndex: Int = 0
+    val visibleIndex: Int = 0,
+    val viewType: ViewType = ViewType.Home
 ): Parcelable

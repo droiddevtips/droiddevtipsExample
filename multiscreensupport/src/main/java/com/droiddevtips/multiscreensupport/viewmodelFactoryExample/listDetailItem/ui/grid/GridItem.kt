@@ -33,7 +33,6 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 @Composable
 fun GridItem(
     item: ListDetailItem,
-    viewType: ViewType,
     modifier: Modifier = Modifier,
     onItemClicked: (ListDetailItem) -> Unit
 ) {
@@ -65,7 +64,7 @@ fun GridItem(
                 contentDescription = "Test"
             )
 
-            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = if (viewType == ViewType.Follower) Alignment.CenterHorizontally else Alignment.Start) {
+            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = if (item.viewType == ViewType.Follower) Alignment.CenterHorizontally else Alignment.Start) {
                 Text(
                     item.title,
                     fontWeight = FontWeight.Bold,

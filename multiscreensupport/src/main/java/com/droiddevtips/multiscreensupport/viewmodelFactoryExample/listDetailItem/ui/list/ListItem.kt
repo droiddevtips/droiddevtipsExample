@@ -42,7 +42,6 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.util.currentW
 @Composable
 fun ListItem(
     item: ListDetailItem,
-    viewType: ViewType,
     modifier: Modifier = Modifier,
     onItemClicked: (ListDetailItem) -> Unit
 ) {
@@ -90,7 +89,7 @@ fun ListItem(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(actualBoxSize.intValue.dp).then(
-                        if (viewType == ViewType.Follower) {
+                        if ( item.viewType == ViewType.Follower) {
                             Modifier.clip(CircleShape)
                         } else {
                             Modifier.clip(RoundedCornerShape(12.dp))

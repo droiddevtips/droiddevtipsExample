@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailEvent
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailViewState
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.emptyView.EmptyView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.loading.ListDetailLoadingView
 import kotlinx.coroutines.FlowPreview
@@ -34,7 +33,6 @@ import kotlinx.coroutines.flow.debounce
 @Composable
 fun ListView(
     viewState: State<ListDetailViewState>,
-    viewType: ViewType,
     modifier: Modifier = Modifier,
     event: (ListDetailEvent) -> Unit
 ) {
@@ -52,7 +50,7 @@ fun ListView(
             contentPadding = PaddingValues(horizontal = 0.dp, vertical = 16.dp)
         ) {
             items(viewState.value.itemsList) { item ->
-                ListItem(item = item, viewType = viewType) {
+                ListItem(item = item) {
                     event(ListDetailEvent.NavigateToDetail(item = it))
                 }
             }

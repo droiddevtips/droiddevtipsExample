@@ -26,7 +26,7 @@ class ListDetailViewModel(
     private val repository: ListDetailDemoRepository = ListDetailDemoRepositoryImp()
 ): ViewModel() {
 
-    private val _listDetailViewState = MutableStateFlow<ListDetailViewState>( getSavedState() ?: ListDetailViewState())
+    private val _listDetailViewState = MutableStateFlow<ListDetailViewState>( getSavedState() ?: ListDetailViewState(viewType = viewType))
     val listDetailViewState: StateFlow<ListDetailViewState>
         get() = _listDetailViewState.asStateFlow().onStart {
             loadData()

@@ -8,4 +8,4 @@ import kotlinx.parcelize.Parcelize
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Parcelize
-data class ListDetailItem(val title:String, val description:String, val image:Int): Parcelable
+data class ListDetailItem(val title:String, val description:String, val image:Int, val viewType: ViewType): Parcelable

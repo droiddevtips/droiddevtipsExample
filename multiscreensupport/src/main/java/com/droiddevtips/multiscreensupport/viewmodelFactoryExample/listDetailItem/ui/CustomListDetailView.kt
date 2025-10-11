@@ -45,7 +45,6 @@ fun CustomListDetailView(
 
             DeviceOrientation.Landscape -> GridView(
                 viewState = viewState,
-                viewType = viewType,
                 modifier = modifier,
                 event = {
                     it.parseEvent(
@@ -56,7 +55,6 @@ fun CustomListDetailView(
 
             else -> ListView(
                 viewState = viewState,
-                viewType = viewType,
                 modifier = modifier,
                 event = {
                 it.parseEvent(
@@ -72,7 +70,6 @@ fun CustomListDetailView(
 
             DeviceOrientation.Landscape -> ListDetailTabletLandscapeView(
                 viewState = viewState,
-                viewType = viewType,
                 modifier = modifier,
                 event = {
                     it.parseEvent(
@@ -83,7 +80,6 @@ fun CustomListDetailView(
 
             else -> GridView(
                 viewState = viewState,
-                viewType = viewType,
                 modifier = modifier,
                 event = {
                     it.parseEvent(

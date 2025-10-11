@@ -32,7 +32,7 @@
       </SelectionState>
       <SelectionState runConfigName="multiscreensupport">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-10-09T19:32:21.720262Z">
+        <DropdownSelection timestamp="2025-10-11T18:04:12.482150Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=/Users/melchiorvrolijk/.android/avd/Pixel_Fold.avd" />

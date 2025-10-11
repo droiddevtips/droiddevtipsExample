@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailEvent
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailViewState
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.emptyView.EmptyView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.loading.ListDetailLoadingView
 import kotlinx.coroutines.FlowPreview
@@ -33,7 +32,6 @@ import kotlinx.coroutines.flow.debounce
 @Composable
 fun GridView(
     viewState: State<ListDetailViewState>,
-    viewType: ViewType,
     modifier: Modifier = Modifier,
     event: (ListDetailEvent) -> Unit
 ) {
@@ -47,7 +45,7 @@ fun GridView(
             columns = GridCells.Adaptive(minSize = 260.dp)
         ) {
             items(viewState.value.itemsList) { item ->
-                GridItem(item = item, viewType = viewType) {
+                GridItem(item = item) {
                     event(ListDetailEvent.NavigateToDetail(item = item))
                 }
             }
