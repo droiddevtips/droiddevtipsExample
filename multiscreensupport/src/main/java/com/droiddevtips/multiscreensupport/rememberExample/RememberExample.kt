@@ -25,9 +25,7 @@ fun RememberExample(modifier: Modifier = Modifier) {
 
     val currentWindowSize = currentWindowSize()
 
-    val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
     val number = remember { mutableIntStateOf(1) }
-
 
     val width = when(currentWindowSize.windowWidthSize)  {
         AppWindowSize.Compact -> "Compact"
