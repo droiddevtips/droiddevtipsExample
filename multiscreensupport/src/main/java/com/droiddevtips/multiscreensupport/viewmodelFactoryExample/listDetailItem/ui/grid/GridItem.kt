@@ -18,10 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.droiddevtips.multiscreensupport.common.data.AppString
 import com.droiddevtips.multiscreensupport.common.extensions.clickableWithPrimaryColorRipple
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
@@ -62,7 +64,11 @@ fun GridItem(
                     .background(color = Color(0xFFE6E6E6), shape = RoundedCornerShape(12.dp))
                     .height(150.dp),
                 painter = painterResource(id = item.image),
-                contentDescription = "Test"
+                contentDescription = when(item.viewType) {
+                    ViewType.Home -> stringResource(id = AppString.home_content_description)
+                    ViewType.News -> stringResource(id = AppString.news_content_description)
+                    ViewType.Follower -> stringResource(id = AppString.follower_content_description)
+                }
             )
 
             Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = if (item.viewType == ViewType.Follower) Alignment.CenterHorizontally else Alignment.Start) {

@@ -25,14 +25,19 @@ class ListDetailViewModel(
     private val viewType: ViewType,
     private val savedStateHandle: SavedStateHandle,
     private val repository: ListDetailDemoRepository = ListDetailDemoRepositoryImp()
-): ViewModel() {
+) : ViewModel() {
 
-    private val _listDetailViewState = MutableStateFlow<ListDetailViewState>( getSavedState() ?: ListDetailViewState(viewType = viewType))
+    private val _listDetailViewState = MutableStateFlow<ListDetailViewState>(
+        getSavedState() ?: ListDetailViewState(viewType = viewType)
+    )
     val listDetailViewState: StateFlow<ListDetailViewState>
         get() = _listDetailViewState.asStateFlow().onStart {
             loadData()
-        }.stateIn(scope = viewModelScope, started = SharingStarted.WhileSubscribed(5000),ListDetailViewState())
-
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            ListDetailViewState()
+        )
 
     private suspend fun loadData() {
         val itemList = repository.loadData(viewType = viewType)
@@ -53,9 +58,11 @@ class ListDetailViewModel(
             is ListDetailEvent.NavigateToDetail -> {
                 _listDetailViewState.update { it.copy(selectedItem = event.item) }
             }
+
             is ListDetailEvent.SetScrollPosition -> {
                 _listDetailViewState.update { it.copy(visibleIndex = event.index) }
             }
+
             is ListDetailEvent.ToggleLoadingView -> {
                 _listDetailViewState.update { it.copy(showLoadingView = event.visible) }
             }

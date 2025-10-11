@@ -9,4 +9,13 @@
     <string name="increase_number">Increase number</string>
     <string name="width">Width: %1$s</string>
     <string name="height">Height: %1$s</string>
+    <string name="no_article_found">No article found</string>
+    <string name="home_content_description">Home item icon</string>
+    <string name="news_content_description">News item icon</string>
+    <string name="follower_content_description">Follower item icon</string>
+    <string name="loading_items">Loading items.....</string>
+    <string name="remember_example">Remember example</string>
+    <string name="remember_saveable_example">Remember saveable example</string>
+    <string name="viewmodel_factory_example">Viewmodel factory example</string>
+
 </resources>

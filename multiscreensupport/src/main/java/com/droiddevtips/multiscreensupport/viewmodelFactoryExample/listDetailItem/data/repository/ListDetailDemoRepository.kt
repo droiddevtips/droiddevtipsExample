@@ -9,7 +9,6 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 interface ListDetailDemoRepository {
-
     suspend fun loadData(viewType: ViewType): List<ListDetailItem>
 
 }

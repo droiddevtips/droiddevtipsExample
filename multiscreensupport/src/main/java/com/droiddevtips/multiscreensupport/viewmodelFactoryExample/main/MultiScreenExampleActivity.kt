@@ -13,10 +13,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.droiddevtips.multiscreensupport.common.data.AppString
 import com.droiddevtips.multiscreensupport.common.data.MultiScreenSupportRoute
 import com.droiddevtips.multiscreensupport.common.extensions.navigateToView
 import com.droiddevtips.multiscreensupport.rememberExample.RememberExample
@@ -63,19 +65,19 @@ class MultiScreenExampleActivity : ComponentActivity() {
                                     Button(onClick = {
                                         navHostController.navigateToView(MultiScreenSupportRoute.RememberExample.route)
                                     }) {
-                                        Text("Remember example")
+                                        Text(text = stringResource(id = AppString.remember_example))
                                     }
 
                                     Button(onClick = {
                                         navHostController.navigateToView(MultiScreenSupportRoute.RememberSaveableExample.route)
                                     }) {
-                                        Text("Remember saveable example")
+                                        Text(text = stringResource(id = AppString.remember_saveable_example))
                                     }
 
                                     Button(onClick = {
                                         navHostController.navigateToView(MultiScreenSupportRoute.ViewModelFactoryExample.route)
                                     }) {
-                                        Text("Viewmodel factory example")
+                                        Text(text = stringResource(id = AppString.viewmodel_factory_example))
                                     }
                                 }
                             }

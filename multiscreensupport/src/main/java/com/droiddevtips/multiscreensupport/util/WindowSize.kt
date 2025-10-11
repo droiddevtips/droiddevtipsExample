@@ -27,7 +27,7 @@ fun currentWindowSize(): AppWindowSizeAndOrientation {
     val heightGreaterThanMedium =
         windowSizeClass.isHeightAtLeastBreakpoint(HEIGHT_DP_MEDIUM_LOWER_BOUND)
 
-    val width = when  {
+    val width = when {
         windowSizeClass.isWidthAtLeastBreakpoint(WIDTH_DP_EXPANDED_LOWER_BOUND) -> AppWindowSize.Expanded
         windowSizeClass.isWidthAtLeastBreakpoint(WIDTH_DP_MEDIUM_LOWER_BOUND) -> AppWindowSize.Medium
         else -> AppWindowSize.Compact
@@ -39,7 +39,7 @@ fun currentWindowSize(): AppWindowSizeAndOrientation {
         else -> AppWindowSize.Compact
     }
 
-    val orientation = when(configuration.orientation) {
+    val orientation = when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> DeviceOrientation.Landscape
         Configuration.ORIENTATION_PORTRAIT -> DeviceOrientation.Portrait
         else -> DeviceOrientation.Undefined
@@ -50,24 +50,34 @@ fun currentWindowSize(): AppWindowSizeAndOrientation {
         else -> Device.Mobile
     }
 
-    return AppWindowSizeAndOrientation(device = device, orientation = orientation, windowWidthSize = width, windowHeightSize = height)
+    return AppWindowSizeAndOrientation(
+        device = device,
+        orientation = orientation,
+        windowWidthSize = width,
+        windowHeightSize = height
+    )
 }
 
-data class AppWindowSizeAndOrientation(val device: Device, val orientation: DeviceOrientation, val windowWidthSize: AppWindowSize, val windowHeightSize: AppWindowSize)
+data class AppWindowSizeAndOrientation(
+    val device: Device,
+    val orientation: DeviceOrientation,
+    val windowWidthSize: AppWindowSize,
+    val windowHeightSize: AppWindowSize
+)
 
 sealed class Device {
-    object Mobile: Device()
-    object Tablet: Device()
+    object Mobile : Device()
+    object Tablet : Device()
 }
 
 sealed class DeviceOrientation {
-    object Portrait: DeviceOrientation()
-    object Landscape: DeviceOrientation()
-    object Undefined: DeviceOrientation()
+    object Portrait : DeviceOrientation()
+    object Landscape : DeviceOrientation()
+    object Undefined : DeviceOrientation()
 }
 
 sealed class AppWindowSize {
-    data object Compact: AppWindowSize()
-    data object Medium: AppWindowSize()
-    data object Expanded: AppWindowSize()
+    data object Compact : AppWindowSize()
+    data object Medium : AppWindowSize()
+    data object Expanded : AppWindowSize()
 }

@@ -3,7 +3,6 @@ package com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigati
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
@@ -30,14 +29,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.multiscreensupport.common.extensions.navigateToView
+import com.droiddevtips.multiscreensupport.util.Device
+import com.droiddevtips.multiscreensupport.util.currentWindowSize
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.data.MainNestedNavRoute
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.data.TabItem
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.ui.FollowerView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.ui.HomeView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.ui.NewsView
-import com.droiddevtips.multiscreensupport.util.Device
-import com.droiddevtips.multiscreensupport.util.currentWindowSize
 import kotlinx.coroutines.launch
 
 /**
@@ -103,7 +101,7 @@ fun MainNavigationSuiteScaffold(modifier: Modifier = Modifier, navigate: (ListDe
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.surfaceContainer) // Color(0xFFF8F8F8) MaterialTheme.colorScheme.surfaceContainer
+                    .background(color = MaterialTheme.colorScheme.surfaceContainer)
             ) {
 
                 Box(modifier = Modifier
@@ -121,7 +119,6 @@ fun MainNavigationSuiteScaffold(modifier: Modifier = Modifier, navigate: (ListDe
                     NavHost(nestedNavController, TabItem.Home.route) {
 
                         composable(route = TabItem.Home.route) {
-//                            CustomListDetailView(viewType = ViewType.Home, navigate = navigate)
                             HomeView(navigate = navigate)
                         }
 
@@ -131,24 +128,6 @@ fun MainNavigationSuiteScaffold(modifier: Modifier = Modifier, navigate: (ListDe
 
                         composable(route = TabItem.Follower.route) {
                             FollowerView(navigate = navigate)
-
-//                            Column(
-//                                modifier = Modifier
-//                                    .fillMaxSize()
-//                                    .background(color = Color.LightGray)
-//                            ) {
-//                                Text("Follower")
-//                            }
-                        }
-
-                        composable(route = MainNestedNavRoute.ArticleDetail.route) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = Color.DarkGray)
-                            ) {
-                                Text("Article detail")
-                            }
                         }
                     }
                 }

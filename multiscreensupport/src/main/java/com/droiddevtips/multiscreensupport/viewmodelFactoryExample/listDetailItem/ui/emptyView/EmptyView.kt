@@ -14,8 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.droiddevtips.multiscreensupport.R
+import com.droiddevtips.multiscreensupport.common.data.AppString
+import com.droiddevtips.multiscreensupport.common.data.Drawable
 import com.droiddevtips.multiscreensupport.util.Device
 import com.droiddevtips.multiscreensupport.util.DeviceOrientation
 import com.droiddevtips.multiscreensupport.util.currentWindowSize
@@ -61,12 +63,12 @@ fun EmptyView(modifier: Modifier = Modifier) {
         ) {
 
             Image(
-                painter = painterResource(R.drawable.empty_icon),
+                painter = painterResource(Drawable.empty_icon),
                 modifier = Modifier.size(60.dp),
                 contentDescription = null
             )
 
-            Text("No article found")
+            Text(text = stringResource(id = AppString.no_article_found))
         }
     }
 }

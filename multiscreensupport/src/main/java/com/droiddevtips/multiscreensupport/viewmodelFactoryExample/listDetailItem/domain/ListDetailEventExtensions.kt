@@ -8,7 +8,6 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 fun ListDetailEvent.parseEvent(
     updateViewModel: (ListDetailEvent) -> Unit,
     navigate: (ListDetailItem) -> Unit
