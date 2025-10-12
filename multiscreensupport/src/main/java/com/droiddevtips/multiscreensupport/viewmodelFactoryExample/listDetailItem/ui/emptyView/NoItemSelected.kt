@@ -21,13 +21,17 @@ import com.droiddevtips.multiscreensupport.common.data.Drawable
 import com.droiddevtips.multiscreensupport.util.Device
 import com.droiddevtips.multiscreensupport.util.DeviceOrientation
 import com.droiddevtips.multiscreensupport.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 
 /**
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Composable
-fun NoItemSelected(modifier: Modifier = Modifier) {
+fun NoItemSelected(
+    viewType: ViewType,
+    modifier: Modifier = Modifier
+) {
 
     val currentWindowSize = currentWindowSize()
 
@@ -61,13 +65,15 @@ fun NoItemSelected(modifier: Modifier = Modifier) {
             )
         ) {
 
-            Image(
-                painter = painterResource(Drawable.empty_icon),
-                modifier = Modifier.size(60.dp),
-                contentDescription = null
-            )
+            if (viewType != ViewType.Follower) {
+                Image(
+                    painter = painterResource(Drawable.empty_icon),
+                    modifier = Modifier.size(60.dp),
+                    contentDescription = null
+                )
+            }
 
-            Text(text = stringResource(id = AppString.no_item_selected))
+            Text(text = stringResource(id = if (viewType == ViewType.Follower) AppString.no_follower_selected else AppString.no_item_selected))
         }
     }
 }

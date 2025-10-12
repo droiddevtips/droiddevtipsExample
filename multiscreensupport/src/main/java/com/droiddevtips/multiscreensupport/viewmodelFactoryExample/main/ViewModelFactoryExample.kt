@@ -13,6 +13,7 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigatio
 import com.droiddevtips.multiscreensupport.util.Device
 import com.droiddevtips.multiscreensupport.util.DeviceOrientation
 import com.droiddevtips.multiscreensupport.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 
 /**
  * The view model factory example main composable view.
@@ -43,7 +44,7 @@ fun ViewModelFactoryExample(modifier: Modifier = Modifier) {
 
         composable(route = MainRoute.Detail.route) {
             val listDetailItem = mainNavController.previousBackStackEntry?.savedStateHandle?.get<ListDetailItem>("item")
-            DetailView(listDetailItem = listDetailItem)
+            DetailView(viewType = listDetailItem?.viewType ?: ViewType.Home,listDetailItem = listDetailItem)
         }
     }
 }

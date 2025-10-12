@@ -66,7 +66,7 @@ fun ListDetailTabletLandscapeView(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top)
             ) {
-                DetailView(listDetailItem = viewState.value.selectedItem)
+                DetailView(viewType = viewState.value.viewType,listDetailItem = viewState.value.selectedItem)
             }
         }
     }

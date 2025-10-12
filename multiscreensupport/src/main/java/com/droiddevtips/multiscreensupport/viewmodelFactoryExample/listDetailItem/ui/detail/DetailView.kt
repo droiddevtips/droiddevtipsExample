@@ -34,10 +34,14 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Composable
-fun DetailView(listDetailItem: ListDetailItem?, modifier: Modifier = Modifier) {
+fun DetailView(
+    listDetailItem: ListDetailItem?,
+    viewType: ViewType,
+    modifier: Modifier = Modifier
+) {
 
     if (listDetailItem == null) {
-        NoItemSelected(modifier = Modifier.fillMaxSize())
+        NoItemSelected(viewType = viewType, modifier = Modifier.fillMaxSize())
         return
     }
 

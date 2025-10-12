@@ -1,6 +1,6 @@
 package com.droiddevtips.multiscreensupport.common.extensions
 
-import com.droiddevtips.multiscreensupport.R
+import com.droiddevtips.multiscreensupport.common.data.Drawable
 import com.droiddevtips.multiscreensupport.common.data.Mipmap
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
@@ -13,22 +13,72 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 fun Int.toListDetailItem(viewType: ViewType): ListDetailItem? {
 
     return when (viewType) {
-        ViewType.Follower -> {
-
-            val followers = (50..200).random()
-
-            ListDetailItem(
-                title = "Follower $this",
-                description = " ${if (followers == 0) "no followers" else if (followers == 1) "${followers} follower" else "${followers} followers"}",
-                image = R.drawable.follower,
-                viewType = viewType
-            )
-        }
+        ViewType.Follower -> getFollowerListDetailItem(viewType = viewType)
 
         ViewType.News -> createNewsItem(viewType = viewType)
 
         else -> createHomeItem(viewType = viewType)
     }
+}
+
+private fun getFollowerListDetailItem(viewType: ViewType): ListDetailItem {
+
+    val options = listOf(
+        ListDetailItem(title = "Olivia", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Amelia", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Isla", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Charlotte", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Aurora", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Maeve", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Sophia", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Evelyn", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Luna", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Harper", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Mia", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Isabella", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Ava", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Eleanora", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Hazel", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Lily", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Chloe", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Penelope", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Willow", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Violet", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Scarlett", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Nova", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Aria", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Grace", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Elara", description = "", image = Drawable.female, viewType = viewType),
+        ListDetailItem(title = "Liam", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Noah", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Oliver", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "James", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Elijah", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "William", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Henry", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Theodore", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Benjamin", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Lucas", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Daniel", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Michael", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Alexander", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Ethan", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Matthew", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "David", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Joseph", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Samuel", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Jackson", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Leo", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Julian", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Sebastian", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Gabriel", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Caleb", description = "", image = Drawable.male, viewType = viewType),
+        ListDetailItem(title = "Ryan", description = "", image = Drawable.male, viewType = viewType),
+    )
+
+    val followers = (50..200).random()
+    val description = " ${if (followers == 0) "no followers" else if (followers == 1) "$followers follower" else "$followers followers"}"
+    return options.randomOrNull()?.copy(description = description) ?: options[0].copy(description = description)
 }
 
 private fun createHomeItem(viewType: ViewType): ListDetailItem? {
