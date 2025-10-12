@@ -10,3 +10,4 @@ import com.droiddevtips.multiscreensupport.R
  */
 typealias AppString = R.string
 typealias Drawable = R.drawable
+typealias Mipmap = R.mipmap

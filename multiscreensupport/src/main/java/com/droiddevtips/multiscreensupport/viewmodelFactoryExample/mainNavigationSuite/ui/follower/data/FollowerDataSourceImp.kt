@@ -21,7 +21,9 @@ class FollowerDataSourceImp(private val viewType: ViewType): FollowerDataSource 
         val itemList = ArrayList<ListDetailItem>()
 
         for (item in 1..50) {
-            itemList.add(item.toListDetailItem(viewType = viewType))
+            item.toListDetailItem(viewType = viewType)?.let {
+                itemList.add(it)
+            }
         }
 
         itemList.toList()

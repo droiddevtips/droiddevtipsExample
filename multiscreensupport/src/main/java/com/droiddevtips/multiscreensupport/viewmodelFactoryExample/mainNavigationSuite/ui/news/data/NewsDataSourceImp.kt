@@ -21,7 +21,9 @@ class NewsDataSourceImp(private val viewType: ViewType): NewsDataSource {
         val itemList = ArrayList<ListDetailItem>()
 
         for (item in 1..50) {
-            itemList.add(item.toListDetailItem(viewType = viewType))
+            item.toListDetailItem(viewType = viewType)?.let {
+                itemList.add(it)
+            }
         }
 
         itemList.toList()
