@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.droiddevtips.multiscreensupport.util.Device
+import com.droiddevtips.multiscreensupport.util.DeviceOrientation
+import com.droiddevtips.multiscreensupport.util.currentWindowSize
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailItem
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepositoryImp
@@ -13,9 +16,9 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.list.ListView
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.viewmodel.ListDetailViewModel
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.ui.viewmodel.ListDetailViewModelFactory
-import com.droiddevtips.multiscreensupport.util.Device
-import com.droiddevtips.multiscreensupport.util.DeviceOrientation
-import com.droiddevtips.multiscreensupport.util.currentWindowSize
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.follower.data.FollowerDataSourceImp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.home.data.HomeItemsDataSourceImp
+import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.mainNavigationSuite.ui.news.data.NewsDataSourceImp
 
 /**
  * The generic custom list detail view that handle all UI related logic
@@ -32,7 +35,11 @@ fun CustomListDetailView(
     val listDetailViewModel: ListDetailViewModel = viewModel(
         factory = ListDetailViewModelFactory(
             viewType = viewType,
-            repository = ListDetailDemoRepositoryImp()
+            repository = ListDetailDemoRepositoryImp(dataSource = when(viewType) {
+                ViewType.Home -> HomeItemsDataSourceImp()
+                ViewType.Follower -> FollowerDataSourceImp()
+                ViewType.News -> NewsDataSourceImp()
+            })
         )
     )
 

@@ -7,7 +7,6 @@ import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailIte
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ListDetailViewState
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.ViewType
 import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepository
-import com.droiddevtips.multiscreensupport.viewmodelFactoryExample.listDetailItem.data.repository.ListDetailDemoRepositoryImp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -24,7 +23,7 @@ import kotlinx.coroutines.flow.update
 class ListDetailViewModel(
     private val viewType: ViewType,
     private val savedStateHandle: SavedStateHandle,
-    private val repository: ListDetailDemoRepository = ListDetailDemoRepositoryImp()
+    private val repository: ListDetailDemoRepository
 ) : ViewModel() {
 
     private val _listDetailViewState = MutableStateFlow<ListDetailViewState>(
@@ -40,7 +39,7 @@ class ListDetailViewModel(
         )
 
     private suspend fun loadData() {
-        val itemList = repository.loadData(viewType = viewType)
+        val itemList = repository.loadData()
 
         if (itemList.isEmpty()) {
             _listDetailViewState.update { it.copy(showEmptyView = true, showLoadingView = false) }
