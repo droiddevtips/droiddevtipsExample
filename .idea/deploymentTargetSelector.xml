@@ -32,10 +32,10 @@
       </SelectionState>
       <SelectionState runConfigName="multiscreensupport">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-10-12T18:09:50.443923Z">
+        <DropdownSelection timestamp="2025-10-14T17:31:59.119114Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=R52Y707QM7V" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=RF8M222C6VY" />
             </handle>
           </Target>
         </DropdownSelection>

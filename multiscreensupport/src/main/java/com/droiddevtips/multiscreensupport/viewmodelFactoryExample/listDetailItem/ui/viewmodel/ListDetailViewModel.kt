@@ -39,6 +39,11 @@ class ListDetailViewModel(
         )
 
     private suspend fun loadData() {
+
+        if (_listDetailViewState.value.itemsList.isNotEmpty()) {
+            return
+        }
+
         val itemList = repository.loadData()
 
         if (itemList.isEmpty()) {
