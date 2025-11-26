@@ -27,9 +27,6 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="TestProgressIndicators">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="multiscreensupport">
         <option name="selectionMode" value="DROPDOWN" />
         <DropdownSelection timestamp="2025-10-14T17:31:59.119114Z">
@@ -60,6 +57,12 @@
         </DialogSelection>
       </SelectionState>
       <SelectionState runConfigName="TestLoadingView">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="livenotification">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="floatingtabbarandpip">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>
