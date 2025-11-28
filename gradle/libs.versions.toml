@@ -21,9 +21,9 @@ materialVersion = "1.8.2"
 navigationCompose = "2.9.0"
 playServicesAdsIdentifier = "18.2.0"
 appcompat = "1.7.1"
-material = "1.12.0"
-material3Version = "1.5.0-alpha03"
-adaptive = "1.1.0"
+material = "1.13.0"
+material3Version = "1.5.0-alpha09"
+adaptive = "1.2.0"
 
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerIndicators" }

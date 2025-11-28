@@ -1,7 +1,12 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":app")
+include(":admobnextgenads")
+include(":droidDevTipsTheme")
+include(":masteringcomposetheme")
+include(":multiscreensupport")
+include(":appWindowSizeAndOrientationDetector")
 include(":floatingtabbarandpip")
-
 
 pluginManagement {
     repositories {
@@ -25,8 +30,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "DroidDevTipsExamples"
-include(":app")
-include(":admobnextgenads")
-include(":droidDevTipsTheme")
-include(":masteringcomposetheme")
-include(":multiscreensupport")
+

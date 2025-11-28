@@ -123,7 +123,7 @@ class AdMobNextGenExample : ComponentActivity() {
                             )
                         ) {
                             CircularProgressIndicator(modifier = Modifier.size(50.dp))
-                            Text("Initializing adMob....", style = MaterialTheme.typography.bodyLarge)
+                            Text("Initializing adMob....", style = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.inversePrimary))
                         }
                     }
                 }
