@@ -1,16 +1,15 @@
-package com.droiddevtips.floatingtabbarandpip.feature.videos.data
+package com.droiddevtips.floatingtabbarandpip.common.videoList.data
 
 import android.os.Parcelable
-import com.droiddevtips.floatingtabbarandpip.common.videoItem.VideoItem
 import kotlinx.parcelize.Parcelize
 
 /**
- * The videos view state data model
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Parcelize
-data class VideosViewState(
+data class VideoListViewState(
     val isLoading: Boolean = true,
+    val visibleIndex: Int = 0,
     val videoList: List<VideoItem> = emptyList()
 ) : Parcelable

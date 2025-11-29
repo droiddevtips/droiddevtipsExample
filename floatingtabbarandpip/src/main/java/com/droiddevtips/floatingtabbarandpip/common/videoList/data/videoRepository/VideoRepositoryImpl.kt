@@ -1,6 +1,6 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoRepository
+package com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository
 
-import com.droiddevtips.floatingtabbarandpip.common.videoItem.VideoItem
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 import com.droiddevtips.floatingtabbarandpip.extensions.asVideoItem
 
 /**
@@ -18,7 +18,7 @@ object VideoRepositoryImpl: VideoRepository {
         if (videosList.isNotEmpty())
             return videosList
 
-        this.videosList = videoIds.map { it.asVideoItem() }
+        this.videosList = videoIds.map { it.asVideoItem(favorite = false) }
         return videosList
     }
 
@@ -27,7 +27,7 @@ object VideoRepositoryImpl: VideoRepository {
         if (favoriteVideosList.isNotEmpty())
             return favoriteVideosList
 
-        this.favoriteVideosList = videoIds.slice(0..4).map { it.asVideoItem() }
+        this.favoriteVideosList = videoIds.slice(0..4).map { it.asVideoItem(favorite = true) }
         return this.favoriteVideosList
     }
 

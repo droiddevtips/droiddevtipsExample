@@ -5,7 +5,7 @@ package com.droiddevtips.floatingtabbarandpip.feature.videos.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.droiddevtips.floatingtabbarandpip.common.videoRepository.VideoRepository
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepository
 
 /**
  * The video view model factory

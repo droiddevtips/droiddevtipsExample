@@ -23,18 +23,18 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
-import com.droiddevtips.floatingtabbarandpip.feature.floatingTabBar.ui.FloatingTabBar
+import com.droiddevtips.floatingtabbarandpip.common.videoList.ui.VideoListView
 import com.droiddevtips.floatingtabbarandpip.core.videosRepository
-import com.droiddevtips.floatingtabbarandpip.feature.favorites.FavoriteView
 import com.droiddevtips.floatingtabbarandpip.feature.favorites.FavoriteViewModel
 import com.droiddevtips.floatingtabbarandpip.feature.favorites.FavoriteViewModelFactory
+import com.droiddevtips.floatingtabbarandpip.feature.floatingTabBar.ui.FloatingTabBar
 import com.droiddevtips.floatingtabbarandpip.feature.profile.ProfileView
-import com.droiddevtips.floatingtabbarandpip.feature.videos.ui.VideosView
 import com.droiddevtips.floatingtabbarandpip.feature.videos.ui.VideosViewModel
 import com.droiddevtips.floatingtabbarandpip.feature.videos.ui.VideosViewModelFactory
 import kotlinx.coroutines.launch
 
 /**
+ * The main composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
@@ -63,13 +63,15 @@ fun MainView(modifier: Modifier = Modifier) {
 
         MainViewFloatingTabBar(
             selectedTabIndex = selectedTabIndex.value,
-            modifier = Modifier.navigationBarsPadding().then(
-                if (windowSize.device == Device.Tablet && windowSize.orientation == DeviceOrientation.Landscape) {
-                    Modifier.align(alignment = Alignment.CenterStart)
-                } else {
-                    Modifier.align(alignment = Alignment.BottomCenter)
-                }
-            ),
+            modifier = Modifier
+                .navigationBarsPadding()
+                .then(
+                    if (windowSize.device == Device.Tablet && windowSize.orientation == DeviceOrientation.Landscape) {
+                        Modifier.align(alignment = Alignment.CenterStart)
+                    } else {
+                        Modifier.align(alignment = Alignment.BottomCenter)
+                    }
+                ),
             onTabSelected = { tabIndex ->
                 selectedTabIndex.value = tabIndex
                 scope.launch {
@@ -90,18 +92,33 @@ private fun MainContentView(
         state = pagerState,
         modifier = modifier.background(color = if (!isSystemInDarkTheme()) Color(0xFFE3E3E3) else MaterialTheme.colorScheme.surfaceContainer)
     ) { page ->
+
         when (page) {
+
             0 -> {
-                val videosViewModel: VideosViewModel = viewModel(factory = VideosViewModelFactory(repository = videosRepository))
-                val viewState = videosViewModel.videosViewState.collectAsStateWithLifecycle()
-                VideosView(viewState = viewState.value, modifier = Modifier.fillMaxSize())
+
+                val videoListViewModel: VideosViewModel = viewModel(
+                    factory = VideosViewModelFactory(
+                        repository = videosRepository
+                    )
+                )
+                val videoListViewState = videoListViewModel.videoViewState.collectAsStateWithLifecycle()
+                VideoListView(viewState = videoListViewState.value, modifier = Modifier.fillMaxSize(), onScrollPositionChanged = videoListViewModel::performAction)
             }
+
             1 -> {
-                val favoriteViewModel: FavoriteViewModel = viewModel(factory = FavoriteViewModelFactory(repository = videosRepository))
-                val viewState = favoriteViewModel.profileViewState.collectAsStateWithLifecycle()
-                FavoriteView(viewState = viewState.value, modifier = Modifier.fillMaxSize())
+
+                val favoriteViewModel: FavoriteViewModel = viewModel(
+                    factory = FavoriteViewModelFactory(
+                        repository = videosRepository
+                    )
+                )
+                val videoListViewState = favoriteViewModel.videoViewState.collectAsStateWithLifecycle()
+                VideoListView(viewState = videoListViewState.value, modifier = Modifier.fillMaxSize(), onScrollPositionChanged = favoriteViewModel::performAction)
             }
+
             2 -> ProfileView()
+
             else -> Unit
         }
     }

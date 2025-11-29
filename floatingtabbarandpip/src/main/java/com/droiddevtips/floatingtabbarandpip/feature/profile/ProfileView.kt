@@ -57,9 +57,16 @@ fun ProfileView(
 
         Text(
             text = stringResource(id = R.string.user_name),
-            style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.inversePrimary)
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.inversePrimary
+            )
         )
 
-        Text(text = stringResource(id = R.string.name), style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.inversePrimary)
+        Text(
+            text = stringResource(id = R.string.name),
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.inversePrimary
+        )
     }
 }

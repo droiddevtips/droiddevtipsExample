@@ -5,7 +5,7 @@ package com.droiddevtips.floatingtabbarandpip.feature.favorites
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.droiddevtips.floatingtabbarandpip.common.videoRepository.VideoRepository
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepository
 
 /**
  * The favorite view model factory

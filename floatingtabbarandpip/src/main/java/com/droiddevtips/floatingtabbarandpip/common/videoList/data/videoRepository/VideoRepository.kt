@@ -1,6 +1,6 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoRepository
+package com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository
 
-import com.droiddevtips.floatingtabbarandpip.common.videoItem.VideoItem
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 
 /**
  * The videos repository

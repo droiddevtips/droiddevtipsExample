@@ -1,4 +1,4 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoItem
+package com.droiddevtips.floatingtabbarandpip.common.videoList.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
 import com.droiddevtips.floatingtabbarandpip.R
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 import com.droiddevtips.floatingtabbarandpip.extensions.shimmerEffect
 
 /**
@@ -37,7 +38,6 @@ import com.droiddevtips.floatingtabbarandpip.extensions.shimmerEffect
 @Composable
 fun VideoListDisplayItem(
     item: VideoItem,
-    favorite: Boolean = false,
     modifier: Modifier = Modifier
 ) {
 
@@ -96,7 +96,7 @@ fun VideoListDisplayItem(
             )
         }
 
-        if (favorite) {
+        if (item.favorite) {
             Image(
                 painter = painterResource(id = R.drawable.favorite_icon),
                 contentDescription = null,
