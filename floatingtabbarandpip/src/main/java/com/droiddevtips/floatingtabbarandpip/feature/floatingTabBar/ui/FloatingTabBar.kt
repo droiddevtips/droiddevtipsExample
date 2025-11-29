@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3ExpressiveApi::class)
 
-package com.droiddevtips.floatingtabbarandpip
+package com.droiddevtips.floatingtabbarandpip.feature.floatingTabBar.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -20,8 +20,10 @@ import androidx.compose.ui.unit.dp
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
+import com.droiddevtips.floatingtabbarandpip.feature.floatingTabBar.data.items
 
 /**
+ * The floating tab composable
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

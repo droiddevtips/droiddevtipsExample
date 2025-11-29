@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Floating</string>
+    <string name="user_name">Username</string>
+    <string name="name">Name</string>
+    <string name="videos">Videos</string>
+    <string name="favorite">Favorite</string>
+    <string name="profile">Profile</string>
 </resources>

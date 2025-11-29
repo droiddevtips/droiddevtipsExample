@@ -31,7 +31,6 @@ fun CustomListDetailView(
     modifier: Modifier = Modifier,
     navigate: (ListDetailItem) -> Unit
 ) {
-
     val listDetailViewModel: ListDetailViewModel = viewModel(
         factory = ListDetailViewModelFactory(
             viewType = viewType,
