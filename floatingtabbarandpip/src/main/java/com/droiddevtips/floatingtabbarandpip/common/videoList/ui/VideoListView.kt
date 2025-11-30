@@ -4,7 +4,6 @@ package com.droiddevtips.floatingtabbarandpip.common.videoList.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -22,15 +21,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
-import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListViewState
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListAction
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListViewState
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 
 /**
+ * The video list composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
@@ -48,33 +49,14 @@ fun VideoListView(
             .padding(horizontal = 16.dp)
     ) {
 
-        if (windowSize.orientation == DeviceOrientation.Landscape) {
+        if (windowSize.device == Device.Tablet) {
 
-            val lazyGridState =
-                rememberLazyGridState(initialFirstVisibleItemIndex = viewState.visibleIndex)
+            VideoListGridList(viewState = viewState, onScrollPositionChanged = onScrollPositionChanged)
 
-            Column {
-                LazyVerticalGrid(
-                    state = lazyGridState,
-                    contentPadding = PaddingValues(bottom = 120.dp),
-                    verticalArrangement = Arrangement.spacedBy(20.dp),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
-                    columns = GridCells.Adaptive(minSize = 350.dp)
-                ) {
-                    items(viewState.videoList) { item ->
-                        VideoListDisplayItem(item = item)
-                    }
-                }
-            }
+        } else if (windowSize.orientation == DeviceOrientation.Landscape) {
 
-            LaunchedEffect(lazyGridState) {
-                snapshotFlow {
-                    lazyGridState.firstVisibleItemIndex
-                }.debounce(500L)
-                    .collectLatest { index ->
-                        onScrollPositionChanged(VideoListAction.ScrollPosition(index = index))
-                    }
-            }
+            VideoListGridList(viewState = viewState, onScrollPositionChanged = onScrollPositionChanged)
+
         } else {
 
             val lazyListState =
@@ -101,5 +83,37 @@ fun VideoListView(
                     }
             }
         }
+    }
+}
+
+@Composable
+private fun VideoListGridList(
+    viewState: VideoListViewState,
+    modifier: Modifier = Modifier,
+    onScrollPositionChanged: (VideoListAction) -> Unit
+) {
+    val lazyGridState =
+        rememberLazyGridState(initialFirstVisibleItemIndex = viewState.visibleIndex)
+
+    LazyVerticalGrid(
+        modifier = modifier,
+        state = lazyGridState,
+        contentPadding = PaddingValues(bottom = 120.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
+        columns = GridCells.Adaptive(minSize = 350.dp)
+    ) {
+        items(viewState.videoList) { item ->
+            VideoListDisplayItem(item = item)
+        }
+    }
+
+    LaunchedEffect(lazyGridState) {
+        snapshotFlow {
+            lazyGridState.firstVisibleItemIndex
+        }.debounce(500L)
+            .collectLatest { index ->
+                onScrollPositionChanged(VideoListAction.ScrollPosition(index = index))
+            }
     }
 }

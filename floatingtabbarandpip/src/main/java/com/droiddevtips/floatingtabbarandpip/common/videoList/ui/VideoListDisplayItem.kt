@@ -26,6 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
+import com.droiddevtips.appwindowsizeandorientationdetector.Device
+import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.floatingtabbarandpip.R
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 import com.droiddevtips.floatingtabbarandpip.extensions.shimmerEffect
@@ -41,6 +43,7 @@ fun VideoListDisplayItem(
     modifier: Modifier = Modifier
 ) {
 
+    val windowSize = deviceDetectorCurrentWindowSize()
     val showLoadingShimmer = rememberSaveable { mutableStateOf(true) }
     val showFailedToLoadImage = rememberSaveable { mutableStateOf(false) }
 
@@ -85,14 +88,14 @@ fun VideoListDisplayItem(
         )
 
         IconButton(
-            modifier = Modifier.align(alignment = Alignment.Center),
+            modifier = Modifier.size( if (windowSize.device == Device.Mobile) 60.dp else 80.dp).align(alignment = Alignment.Center),
             onClick = {}
         ) {
             Image(
                 painter = painterResource(id = R.drawable.youtube),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(60.dp)
+                    .size(if (windowSize.device == Device.Mobile) 60.dp else 80.dp)
             )
         }
 
