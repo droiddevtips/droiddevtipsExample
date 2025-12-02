@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.debounce
 fun VideoListView(
     viewState: VideoListViewState,
     modifier: Modifier = Modifier,
-    onScrollPositionChanged: (VideoListAction) -> Unit
+    action: (VideoListAction) -> Unit
 ) {
     val windowSize = deviceDetectorCurrentWindowSize()
 
@@ -51,11 +51,11 @@ fun VideoListView(
 
         if (windowSize.device == Device.Tablet) {
 
-            VideoListGridList(viewState = viewState, onScrollPositionChanged = onScrollPositionChanged)
+            VideoListGridList(viewState = viewState, action = action)
 
         } else if (windowSize.orientation == DeviceOrientation.Landscape) {
 
-            VideoListGridList(viewState = viewState, onScrollPositionChanged = onScrollPositionChanged)
+            VideoListGridList(viewState = viewState, action = action)
 
         } else {
 
@@ -66,7 +66,7 @@ fun VideoListView(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(viewState.videoList) {
-                    VideoListDisplayItem(item = it)
+                    VideoListDisplayItem(item = it, action = action)
                 }
 
                 item {
@@ -79,7 +79,7 @@ fun VideoListView(
                     lazyListState.firstVisibleItemIndex
                 }.debounce(500L)
                     .collectLatest { index ->
-                        onScrollPositionChanged(VideoListAction.ScrollPosition(index = index))
+                        action(VideoListAction.ScrollPosition(index = index))
                     }
             }
         }
@@ -90,7 +90,7 @@ fun VideoListView(
 private fun VideoListGridList(
     viewState: VideoListViewState,
     modifier: Modifier = Modifier,
-    onScrollPositionChanged: (VideoListAction) -> Unit
+    action: (VideoListAction) -> Unit
 ) {
     val lazyGridState =
         rememberLazyGridState(initialFirstVisibleItemIndex = viewState.visibleIndex)
@@ -104,7 +104,7 @@ private fun VideoListGridList(
         columns = GridCells.Adaptive(minSize = 350.dp)
     ) {
         items(viewState.videoList) { item ->
-            VideoListDisplayItem(item = item)
+            VideoListDisplayItem(item = item, action = action)
         }
     }
 
@@ -113,7 +113,7 @@ private fun VideoListGridList(
             lazyGridState.firstVisibleItemIndex
         }.debounce(500L)
             .collectLatest { index ->
-                onScrollPositionChanged(VideoListAction.ScrollPosition(index = index))
+                action(VideoListAction.ScrollPosition(index = index))
             }
     }
 }

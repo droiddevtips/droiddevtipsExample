@@ -30,6 +30,7 @@ import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.floatingtabbarandpip.R
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListAction
 import com.droiddevtips.floatingtabbarandpip.extensions.shimmerEffect
 
 /**
@@ -40,7 +41,8 @@ import com.droiddevtips.floatingtabbarandpip.extensions.shimmerEffect
 @Composable
 fun VideoListDisplayItem(
     item: VideoItem,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    action: (VideoListAction) -> Unit
 ) {
 
     val windowSize = deviceDetectorCurrentWindowSize()
@@ -89,7 +91,9 @@ fun VideoListDisplayItem(
 
         IconButton(
             modifier = Modifier.size( if (windowSize.device == Device.Mobile) 60.dp else 80.dp).align(alignment = Alignment.Center),
-            onClick = {}
+            onClick = {
+                action(VideoListAction.LaunchYouTubePlayer(videoID = item.id))
+            }
         ) {
             Image(
                 painter = painterResource(id = R.drawable.youtube),

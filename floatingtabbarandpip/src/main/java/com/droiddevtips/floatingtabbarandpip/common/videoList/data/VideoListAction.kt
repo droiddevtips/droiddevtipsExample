@@ -6,4 +6,5 @@ package com.droiddevtips.floatingtabbarandpip.common.videoList.data
  */
 sealed interface VideoListAction {
     data class ScrollPosition(val index:Int): VideoListAction
+    data class LaunchYouTubePlayer(val videoID:String): VideoListAction
 }

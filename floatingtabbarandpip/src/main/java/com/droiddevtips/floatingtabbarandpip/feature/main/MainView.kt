@@ -1,5 +1,6 @@
 package com.droiddevtips.floatingtabbarandpip.feature.main
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -18,12 +19,16 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.UIEvent
 import com.droiddevtips.floatingtabbarandpip.common.videoList.ui.VideoListView
+import com.droiddevtips.floatingtabbarandpip.common.videoList.ui.VideoListViewModel
+import com.droiddevtips.floatingtabbarandpip.core.ObserveEvents
 import com.droiddevtips.floatingtabbarandpip.core.videosRepository
 import com.droiddevtips.floatingtabbarandpip.feature.favorites.FavoriteViewModel
 import com.droiddevtips.floatingtabbarandpip.feature.favorites.FavoriteViewModelFactory
@@ -102,8 +107,7 @@ private fun MainContentView(
                         repository = videosRepository
                     )
                 )
-                val videoListViewState = videoListViewModel.videoViewState.collectAsStateWithLifecycle()
-                VideoListView(viewState = videoListViewState.value, modifier = Modifier.fillMaxSize(), onScrollPositionChanged = videoListViewModel::performAction)
+                VideoList(videoListViewModel = videoListViewModel, modifier = Modifier.fillMaxSize())
             }
 
             1 -> {
@@ -113,8 +117,7 @@ private fun MainContentView(
                         repository = videosRepository
                     )
                 )
-                val videoListViewState = favoriteViewModel.videoViewState.collectAsStateWithLifecycle()
-                VideoListView(viewState = videoListViewState.value, modifier = Modifier.fillMaxSize(), onScrollPositionChanged = favoriteViewModel::performAction)
+                VideoList(videoListViewModel = favoriteViewModel, modifier = Modifier.fillMaxSize())
             }
 
             2 -> ProfileView()
@@ -141,4 +144,30 @@ private fun MainViewFloatingTabBar(
         modifier = modifier,
         onTabSelected = onTabSelected
     )
+}
+
+@Composable
+private fun VideoList(
+    videoListViewModel: VideoListViewModel,
+    modifier: Modifier = Modifier
+) {
+
+    val videoListViewState =
+        videoListViewModel.videoViewState.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
+
+    VideoListView(
+        viewState = videoListViewState.value,
+        modifier = modifier,
+        action = videoListViewModel::performAction
+    )
+
+    ObserveEvents(videoListViewModel.launchVideoPlayerEvent) { event ->
+        when(event) {
+            is UIEvent.LaunchVideoActivity -> {
+                Toast.makeText(context,"Launch video player view", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 }
