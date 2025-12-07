@@ -24,6 +24,10 @@ appcompat = "1.7.1"
 material = "1.13.0"
 material3Version = "1.5.0-alpha09"
 adaptive = "1.2.0"
+constraintlayout = "2.2.1"
+navigationFragmentKtx = "2.9.6"
+navigationUiKtx = "2.9.6"
+pierfrancescosoffritti = "13.0.0"
 
 [libraries]
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPagerIndicators" }
@@ -62,6 +66,10 @@ play-services-ads-identifier = { module = "com.google.android.gms:play-services-
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-compose-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive", version.ref = "adaptive" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+pierfrancescosoffritti-androidyoutubeplayer-core = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "pierfrancescosoffritti" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

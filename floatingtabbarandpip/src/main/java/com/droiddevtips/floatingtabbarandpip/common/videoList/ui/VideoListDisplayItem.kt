@@ -28,10 +28,10 @@ import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
-import com.droiddevtips.floatingtabbarandpip.R
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListAction
 import com.droiddevtips.floatingtabbarandpip.extensions.shimmerEffect
+import com.droiddevtips.floatingtabbarandpip.util.AppDrawable
 
 /**
  * The video display item composable view
@@ -96,7 +96,7 @@ fun VideoListDisplayItem(
             }
         ) {
             Image(
-                painter = painterResource(id = R.drawable.youtube),
+                painter = painterResource(id = AppDrawable.youtube),
                 contentDescription = null,
                 modifier = Modifier
                     .size(if (windowSize.device == Device.Mobile) 60.dp else 80.dp)
@@ -105,7 +105,7 @@ fun VideoListDisplayItem(
 
         if (item.favorite) {
             Image(
-                painter = painterResource(id = R.drawable.favorite_icon),
+                painter = painterResource(id = AppDrawable.favorite_icon),
                 contentDescription = null,
                 modifier = Modifier
                     .align(alignment = Alignment.BottomEnd)
@@ -142,7 +142,7 @@ fun VideoListDisplayItem(
             ) {
                 Image(
                     modifier = Modifier.size(100.dp),
-                    painter = painterResource(id = R.drawable.image_icon),
+                    painter = painterResource(id = AppDrawable.image_icon),
                     contentDescription = null
                 )
             }
