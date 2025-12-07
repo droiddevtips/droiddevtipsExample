@@ -1,8 +1,9 @@
-@file:Suppress("DEPRECATION", "COMPOSE_APPLIER_CALL_MISMATCH")
+@file:Suppress("COMPOSE_APPLIER_CALL_MISMATCH")
 
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
 
 import android.app.ComponentCaller
+import android.app.PictureInPictureParams
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -36,7 +37,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -47,6 +47,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListAction
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepositoryImpl
 import com.droiddevtips.floatingtabbarandpip.common.videoList.ui.VideoListDisplayItem
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.YouTubePlayerConfigAction
+import com.droiddevtips.floatingtabbarandpip.extensions.addYouTubePlayerFullscreenListener
+import com.droiddevtips.floatingtabbarandpip.extensions.configurePlayer
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.UIEvent
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerAction
 import com.droiddevtips.floatingtabbarandpip.core.ObserveEvents
 import com.droiddevtips.floatingtabbarandpip.util.AppDrawable
 import com.droiddevtips.floatingtabbarandpip.util.AppString
@@ -55,6 +60,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
+/**
+ * The video player activity
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 class VideoPlayerActivity : ComponentActivity() {
 
     companion object {
@@ -157,7 +167,7 @@ class VideoPlayerActivity : ComponentActivity() {
                                     )
                                 ) {
                                     IconButton(onClick = {
-                                        enterPictureInPictureMode()
+                                        enterPictureInPictureMode(PictureInPictureParams.Builder().build())
                                         this@VideoPlayerActivity.viewModel.handleAction(
                                             action = VideoPlayerAction.TogglePipButtonVisibility(
                                                 visibility = false
@@ -190,7 +200,8 @@ class VideoPlayerActivity : ComponentActivity() {
                                 Box(modifier = Modifier.padding(top = 6.dp)) {
                                     Image(
                                         painter = painterResource(id = AppDrawable.playlist_icon),
-                                        modifier = Modifier.align(alignment = Alignment.Center).size(24.dp),
+                                        modifier = Modifier.align(alignment = Alignment.Center)
+                                            .size(24.dp),
                                         contentDescription = null
                                     )
                                 }
@@ -213,6 +224,7 @@ class VideoPlayerActivity : ComponentActivity() {
                                     .fillMaxWidth(),
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
+
                                 items(videoState.value.items) { videoItem ->
                                     VideoListDisplayItem(
                                         isPlaying = videoState.value.videoID == videoItem.id,

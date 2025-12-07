@@ -1,6 +1,7 @@
 package com.droiddevtips.floatingtabbarandpip.common.videoList.data
 
 /**
+ * The video repository UI events
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

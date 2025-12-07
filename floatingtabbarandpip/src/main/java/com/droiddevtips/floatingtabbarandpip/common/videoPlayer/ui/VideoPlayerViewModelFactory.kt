@@ -1,6 +1,4 @@
-@file:Suppress("UNCHECKED_CAST")
-
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,6 +6,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepository
 
 /**
+ * The video player view model factory
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

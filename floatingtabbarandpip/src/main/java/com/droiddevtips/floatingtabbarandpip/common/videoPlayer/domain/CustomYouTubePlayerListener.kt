@@ -1,10 +1,12 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.domain
 
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.YouTubePlayerConfigAction
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
 /**
+ * The custom YouTube player listener, a subclass of [com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener]
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

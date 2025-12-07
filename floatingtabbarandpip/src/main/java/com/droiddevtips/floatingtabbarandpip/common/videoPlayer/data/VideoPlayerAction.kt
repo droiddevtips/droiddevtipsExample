@@ -1,9 +1,10 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data
 
 import android.content.Intent
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 
 /**
+ * The video player action interface
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

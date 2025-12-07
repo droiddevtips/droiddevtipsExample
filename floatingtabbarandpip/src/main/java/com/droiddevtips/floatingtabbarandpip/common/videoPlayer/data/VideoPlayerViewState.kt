@@ -1,4 +1,4 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data
 
 import android.os.Parcelable
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem

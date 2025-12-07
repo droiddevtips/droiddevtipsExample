@@ -1,12 +1,12 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
 
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepository
-import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.VideoPlayerActivity.Companion.FAVORITE
-import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.VideoPlayerActivity.Companion.VIDEOS
-import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.VideoPlayerActivity.Companion.VIDEO_ID
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerViewState
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.UIEvent
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerAction
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
+ * The video player view model
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
@@ -74,9 +75,9 @@ class VideoPlayerViewModel(private val repository: VideoRepository) : ViewModel(
 
         intent.extras?.let { intentBundle ->
 
-            val videoID = intentBundle.getString(VIDEO_ID) ?: ""
-            val favorite = intentBundle.getBoolean(FAVORITE)
-            val videos = intentBundle.getBoolean(VIDEOS)
+            val videoID = intentBundle.getString(VideoPlayerActivity.VIDEO_ID) ?: ""
+            val favorite = intentBundle.getBoolean(VideoPlayerActivity.FAVORITE)
+            val videos = intentBundle.getBoolean(VideoPlayerActivity.VIDEOS)
 
             if (_videoPlayerViewState.value.videoID.isBlank()) {
                 _videoPlayerViewState.update {

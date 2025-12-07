@@ -11,13 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DroidDevTipsExamples">
         <activity
-            android:name=".common.videoPlayer.VideoPlayerActivity"
+            android:name=".common.videoPlayer.ui.VideoPlayerActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:exported="true"
             android:launchMode="singleTask"
             android:supportsPictureInPicture="true"
             android:theme="@style/Theme.DroidDevTipsExamples"/>
-        <!--            android:launchMode="singleTask"-->
         <activity
             android:name=".FloatingTabBarAndPipMainActivity"
             android:exported="true"

@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 /**
+ * The video list view model
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

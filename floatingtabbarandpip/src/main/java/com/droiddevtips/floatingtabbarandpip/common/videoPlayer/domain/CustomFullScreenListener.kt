@@ -1,4 +1,4 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.domain
 
 import android.app.Activity
 import android.content.pm.ActivityInfo
@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
 
 /**
+ * The custom full screen listener
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

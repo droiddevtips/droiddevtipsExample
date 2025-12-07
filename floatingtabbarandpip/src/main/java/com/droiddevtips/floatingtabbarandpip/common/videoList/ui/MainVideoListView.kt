@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.UIEvent
-import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.VideoPlayerActivity
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.VideoPlayerActivity
 import com.droiddevtips.floatingtabbarandpip.core.ObserveEvents
 
 /**

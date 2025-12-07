@@ -1,11 +1,15 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
+package com.droiddevtips.floatingtabbarandpip.extensions
 
 import android.app.Activity
 import android.content.Context
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.YouTubePlayerConfigAction
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.domain.CustomFullScreenListener
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.domain.CustomYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 /**
+ * YouTube player extensions
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
