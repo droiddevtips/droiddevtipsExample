@@ -8,3 +8,4 @@ import com.droiddevtips.floatingtabbarandpip.R
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 typealias AppDrawable = R.drawable
+typealias AppString = R.string

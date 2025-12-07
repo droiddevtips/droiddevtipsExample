@@ -10,26 +10,35 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListAction
+import com.droiddevtips.floatingtabbarandpip.extensions.asVideoItem
 import com.droiddevtips.floatingtabbarandpip.extensions.shimmerEffect
 import com.droiddevtips.floatingtabbarandpip.util.AppDrawable
 
@@ -40,6 +49,7 @@ import com.droiddevtips.floatingtabbarandpip.util.AppDrawable
  */
 @Composable
 fun VideoListDisplayItem(
+    isPlaying: Boolean = false,
     item: VideoItem,
     modifier: Modifier = Modifier,
     action: (VideoListAction) -> Unit
@@ -56,7 +66,16 @@ fun VideoListDisplayItem(
     ) {
 
         AsyncImage(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .then(
+                    if (isPlaying) {
+                        Modifier.blur(radiusX = 45.dp, radiusY = 45.dp)
+                    } else {
+                        Modifier
+                    }
+                ),
             model = item.videoThumbnailUrl,
             onState = { state ->
 
@@ -86,30 +105,42 @@ fun VideoListDisplayItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(color = Color.Black.copy(alpha = 0.35f))
+                .background(color = Color.Black.copy(alpha = 0.55f))
         )
 
-        IconButton(
-            modifier = Modifier.size( if (windowSize.device == Device.Mobile) 60.dp else 80.dp).align(alignment = Alignment.Center),
-            onClick = {
-                action(VideoListAction.LaunchYouTubePlayer(videoID = item.id))
-            }
-        ) {
-            Image(
-                painter = painterResource(id = AppDrawable.youtube),
-                contentDescription = null,
+        if (isPlaying) {
+            Text(
+                "Is currently playing...",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier.align(alignment = Alignment.Center)
+            )
+        } else {
+            IconButton(
                 modifier = Modifier
                     .size(if (windowSize.device == Device.Mobile) 60.dp else 80.dp)
-            )
+                    .align(alignment = Alignment.Center),
+                onClick = {
+                    action(VideoListAction.LaunchYouTubePlayer(videoID = item.id))
+                }
+            ) {
+                Image(
+                    painter = painterResource(id = AppDrawable.youtube),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(if (windowSize.device == Device.Mobile) 60.dp else 80.dp)
+                )
+            }
         }
 
-        if (item.favorite) {
+        if (item.favorite && !isPlaying) {
             Image(
                 painter = painterResource(id = AppDrawable.favorite_icon),
                 contentDescription = null,
                 modifier = Modifier
                     .align(alignment = Alignment.BottomEnd)
-                    .padding(all = 10.dp)
+                    .padding(all = 15.dp)
                     .size(20.dp)
             )
         }
@@ -147,5 +178,30 @@ fun VideoListDisplayItem(
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun TestVideoListDisplayItem() {
+
+    val favoriteItem = "-GikklXjkgM".asVideoItem(favorite = true)
+    val videoItem = "-GikklXjkgM".asVideoItem(favorite = false)
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+
+        VideoListDisplayItem(item = favoriteItem, action = {})
+
+        VideoListDisplayItem(item = videoItem, action = {})
+
+        VideoListDisplayItem(isPlaying = true, item = favoriteItem, action = {})
+
+        VideoListDisplayItem(isPlaying = true, item = videoItem, action = {})
+
     }
 }

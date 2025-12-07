@@ -13,6 +13,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class VideoPlayerViewState(
     val videoID: String = "",
+    val nowPlayingVideoIndex: Int = 0,
     val videos: Boolean = true,
     val favorite: Boolean = false,
     val isLoading: Boolean = true,

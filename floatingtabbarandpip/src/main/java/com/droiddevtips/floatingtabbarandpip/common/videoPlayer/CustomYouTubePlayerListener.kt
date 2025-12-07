@@ -9,17 +9,21 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 class CustomYouTubePlayerListener(
-    private val onPlayerReady: (YouTubePlayer) -> Unit,
-    private val onStateChange: (PlayerConstants.PlayerState) -> Unit
+    private val action: (YouTubePlayerConfigAction) -> Unit,
 ) : AbstractYouTubePlayerListener() {
 
     override fun onReady(youTubePlayer: YouTubePlayer) {
         super.onReady(youTubePlayer)
-        onPlayerReady(youTubePlayer)
+        action(YouTubePlayerConfigAction.OnPlayerReady(youTubePlayer = youTubePlayer))
     }
 
     override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
         super.onStateChange(youTubePlayer, state)
-        onStateChange(state)
+        action(YouTubePlayerConfigAction.OnStateChanged(state = state))
+    }
+
+    override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
+        super.onVideoId(youTubePlayer, videoId)
+        action(YouTubePlayerConfigAction.OnVideoIDChanged(videoID = videoId))
     }
 }

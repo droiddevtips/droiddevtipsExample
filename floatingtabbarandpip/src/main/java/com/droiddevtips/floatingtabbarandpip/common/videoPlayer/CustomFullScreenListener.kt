@@ -2,7 +2,6 @@ package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
 
 import android.app.Activity
 import android.content.pm.ActivityInfo
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -46,13 +45,9 @@ class CustomFullScreenListener(private val activity: Activity): FullscreenListen
         controller.hide(WindowInsetsCompat.Type.systemBars())
         controller.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-        Log.i("TAG23", "enter full screen")
-
     }
 
     override fun onExitFullscreen() {
-        Log.i("TAG23", "exit full screen")
         val window = activity.window
         (window.decorView as FrameLayout).removeView(
             fullscreenView

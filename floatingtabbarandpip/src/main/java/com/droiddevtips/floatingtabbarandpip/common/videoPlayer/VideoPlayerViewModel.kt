@@ -2,33 +2,67 @@ package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
 
 import android.content.Intent
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepository
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.VideoPlayerActivity.Companion.FAVORITE
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.VideoPlayerActivity.Companion.VIDEOS
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.VideoPlayerActivity.Companion.VIDEO_ID
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 /**
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-class VideoPlayerViewModel : ViewModel() {
+class VideoPlayerViewModel(private val repository: VideoRepository) : ViewModel() {
 
     private var _videoPlayerViewState = MutableStateFlow(VideoPlayerViewState())
     val videoPlayerViewState: StateFlow<VideoPlayerViewState>
         get() = _videoPlayerViewState.asStateFlow()
 
+    private val _uiEvent = Channel<UIEvent>()
+    val uiEvents = _uiEvent.receiveAsFlow()
+
     fun handleAction(action: VideoPlayerAction) {
-        when(action) {
+        when (action) {
             is VideoPlayerAction.HandleIntent -> handleIntent(intent = action.intent)
             is VideoPlayerAction.PlayerStateUpdate -> {
-                //TODO: When player state ENDED go to next video item of the list
-                _videoPlayerViewState.update { it.copy(playerState = action.state) }
+                if (action.state == PlayerConstants.PlayerState.ENDED) {
+
+                    val items = _videoPlayerViewState.value.items
+
+                    if (_videoPlayerViewState.value.nowPlayingVideoIndex >= items.lastIndex) {
+
+                        val firstVideoID = if (items.isNotEmpty()) items[0].id else ""
+                        _videoPlayerViewState.update { it.copy(videoID = firstVideoID) }
+                    } else {
+                        val nextVideoID = items[_videoPlayerViewState.value.nowPlayingVideoIndex + 1].id
+                        _videoPlayerViewState.update { it.copy(videoID = nextVideoID) }
+                    }
+                } else {
+                    _videoPlayerViewState.update { it.copy(playerState = action.state) }
+                }
             }
+
             is VideoPlayerAction.TogglePipButtonVisibility -> {
                 _videoPlayerViewState.update { it.copy(showPipButton = action.visibility) }
+            }
+
+            is VideoPlayerAction.VideoIDUpdate -> {
+                val newVideoItem = _videoPlayerViewState.value.items.asSequence().filter { it.id == action.videoID }.firstOrNull()
+                val newVideoIndex = newVideoItem?.let {
+                   _videoPlayerViewState.value.items.indexOf(it)
+                }?:run {
+                  0
+                }
+                _videoPlayerViewState.update { it.copy(videoID = action.videoID, nowPlayingVideoIndex = newVideoIndex) }
             }
         }
     }
@@ -45,7 +79,19 @@ class VideoPlayerViewModel : ViewModel() {
             val videos = intentBundle.getBoolean(VIDEOS)
 
             if (_videoPlayerViewState.value.videoID.isBlank()) {
-                _videoPlayerViewState.update { it.copy(videoID = videoID, favorite = favorite, videos = videos) }
+                _videoPlayerViewState.update {
+                    it.copy(
+                        videoID = videoID,
+                        favorite = favorite,
+                        videos = videos
+                    )
+                }
+                this.updatedVideoItemList()
+
+                viewModelScope.launch {
+                    delay(500)
+                    _uiEvent.send(UIEvent.ScrollToIndex(index = _videoPlayerViewState.value.nowPlayingVideoIndex))
+                }
             } else {
 
                 if (videoID.isNotBlank() && videoID != _videoPlayerViewState.value.videoID) {
@@ -59,7 +105,26 @@ class VideoPlayerViewModel : ViewModel() {
                 if (videos != _videoPlayerViewState.value.videos) {
                     _videoPlayerViewState.update { it.copy(videos = videos) }
                 }
+
+                this.updatedVideoItemList()
+
+                viewModelScope.launch {
+                    delay(500)
+                    _uiEvent.send(UIEvent.ScrollToIndex(index = _videoPlayerViewState.value.nowPlayingVideoIndex))
+                }
             }
+        }
+    }
+
+    private fun updatedVideoItemList() {
+        if (_videoPlayerViewState.value.videos) {
+            val videoItemList = repository.getVideos()
+            val nowPlayingIndex = videoItemList.indexOfFirst { it.id == _videoPlayerViewState.value.videoID  }
+            _videoPlayerViewState.update { it.copy(items = videoItemList, nowPlayingVideoIndex = if (nowPlayingIndex < 0) 0 else nowPlayingIndex) }
+        } else {
+            val favoriteVideoItemList = repository.getFavoriteVideos()
+            val nowPlayingIndex = favoriteVideoItemList.indexOfFirst { it.id == _videoPlayerViewState.value.videoID  }
+            _videoPlayerViewState.update { it.copy(items = favoriteVideoItemList, nowPlayingVideoIndex = if (nowPlayingIndex < 0) 0 else nowPlayingIndex) }
         }
     }
 }

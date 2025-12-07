@@ -2,8 +2,6 @@ package com.droiddevtips.floatingtabbarandpip.common.videoPlayer
 
 import android.app.Activity
 import android.content.Context
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
@@ -13,8 +11,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
  */
 fun YouTubePlayerView.configurePlayer(
     context: Context,
-    onReady: (YouTubePlayer) -> Unit,
-    onStateChange: (PlayerConstants.PlayerState) -> Unit
+    action: (YouTubePlayerConfigAction) -> Unit
 ) {
     enableAutomaticInitialization = false
     val options =
@@ -25,8 +22,7 @@ fun YouTubePlayerView.configurePlayer(
 
     initialize(
         youTubePlayerListener = CustomYouTubePlayerListener(
-            onPlayerReady = onReady,
-            onStateChange = onStateChange
+            action = action
         ),
         options
     )
