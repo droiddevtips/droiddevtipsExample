@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,6 +42,7 @@ import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListActi
 import com.droiddevtips.floatingtabbarandpip.extensions.asVideoItem
 import com.droiddevtips.floatingtabbarandpip.extensions.shimmerEffect
 import com.droiddevtips.floatingtabbarandpip.util.AppDrawable
+import com.droiddevtips.floatingtabbarandpip.util.AppString
 
 /**
  * The video display item composable view
@@ -105,12 +107,12 @@ fun VideoListDisplayItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .background(color = Color.Black.copy(alpha = 0.55f))
+                .background(color = Color.Black.copy(alpha = 0.35f))
         )
 
         if (isPlaying) {
             Text(
-                "Is currently playing...",
+                text = stringResource(id = AppString.playing),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,

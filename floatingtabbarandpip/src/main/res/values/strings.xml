@@ -7,5 +7,6 @@
     <string name="profile">Profile</string>
     <string name="other_videos">Other videos</string>
     <string name="favorite_videos">Favorite videos</string>
+    <string name="playing">Is currently playing...</string>
 
 </resources>

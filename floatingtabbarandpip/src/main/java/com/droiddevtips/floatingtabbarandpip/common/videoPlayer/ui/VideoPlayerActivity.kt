@@ -5,6 +5,7 @@ package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
 import android.app.ComponentCaller
 import android.app.PictureInPictureParams
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -44,15 +45,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.droiddevtips.floatingtabbarandpip.common.pipManager.PipManager
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListAction
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepositoryImpl
 import com.droiddevtips.floatingtabbarandpip.common.videoList.ui.VideoListDisplayItem
-import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.YouTubePlayerConfigAction
-import com.droiddevtips.floatingtabbarandpip.extensions.addYouTubePlayerFullscreenListener
-import com.droiddevtips.floatingtabbarandpip.extensions.configurePlayer
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.UIEvent
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerAction
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.YouTubePlayerConfigAction
 import com.droiddevtips.floatingtabbarandpip.core.ObserveEvents
+import com.droiddevtips.floatingtabbarandpip.extensions.addYouTubePlayerFullscreenListener
+import com.droiddevtips.floatingtabbarandpip.extensions.configurePlayer
 import com.droiddevtips.floatingtabbarandpip.util.AppDrawable
 import com.droiddevtips.floatingtabbarandpip.util.AppString
 import com.droiddevtips.typography.DroidDevTipsTheme
@@ -167,7 +169,37 @@ class VideoPlayerActivity : ComponentActivity() {
                                     )
                                 ) {
                                     IconButton(onClick = {
-                                        enterPictureInPictureMode(PictureInPictureParams.Builder().build())
+
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                                            //TODO: Wrap-up explanation on the options
+
+                                            /*
+                                        val mainActivity = Intent(this@VideoPlayerActivity,FloatingTabBarAndPipMainActivity::class.java)
+                                        val pendingIntent = PendingIntent.getBroadcast(this@VideoPlayerActivity,101,mainActivity, PendingIntent.FLAG_IMMUTABLE)
+                                        val icon = Icon.createWithResource(this@VideoPlayerActivity,
+                                            AppDrawable.favorite_icon)
+                                        val closeAction = RemoteAction(icon, "Close","Close action", pendingIntent)
+
+                                            .setAutoEnterEnabled(true)
+                                            .setSeamlessResizeEnabled(true)
+                                            .setTitle("Title")
+                                            .setSubtitle("Sub title")
+                                            .setActions(listOf(closeAction))
+                                            .setCloseAction(closeAction)
+                                            .setAspectRatio(
+                                                Rational(16, 9)
+                                            )
+
+                                        */
+
+                                            val pipParams =
+                                                PictureInPictureParams.Builder().build()
+                                            enterPictureInPictureMode(pipParams)
+                                        } else {
+                                            enterPictureInPictureMode()
+                                        }
+                                        PipManager.updatePipModeState(pipMode = true)
                                         this@VideoPlayerActivity.viewModel.handleAction(
                                             action = VideoPlayerAction.TogglePipButtonVisibility(
                                                 visibility = false
@@ -199,13 +231,13 @@ class VideoPlayerActivity : ComponentActivity() {
                             ) {
                                 Box(modifier = Modifier.padding(top = 6.dp)) {
                                     Image(
-                                        painter = painterResource(id = AppDrawable.playlist_icon),
-                                        modifier = Modifier.align(alignment = Alignment.Center)
+                                        painter = painterResource(id = if (videoState.value.favorite) AppDrawable.fav_list_icon else AppDrawable.playlist_icon),
+                                        modifier = Modifier
+                                            .align(alignment = Alignment.Center)
                                             .size(24.dp),
                                         contentDescription = null
                                     )
                                 }
-
 
                                 Text(
                                     text = if (videoState.value.videos) stringResource(id = AppString.other_videos) else stringResource(
@@ -295,5 +327,6 @@ class VideoPlayerActivity : ComponentActivity() {
     private fun releasePlayer() {
         this.youTubePlayerView?.release()
         this.youTubePlayerView = null
+        PipManager.updatePipModeState(pipMode = false)
     }
 }
