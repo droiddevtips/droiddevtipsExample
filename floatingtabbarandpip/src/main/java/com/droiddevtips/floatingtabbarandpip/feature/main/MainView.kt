@@ -89,7 +89,7 @@ private fun MainContentView(
 ) {
     HorizontalPager(
         state = pagerState,
-        modifier = modifier.background(color = if (!isSystemInDarkTheme()) Color(0xFFE3E3E3) else MaterialTheme.colorScheme.surfaceContainer)
+        modifier = modifier.background(color = MaterialTheme.colorScheme.background)
     ) { page ->
 
         when (page) {

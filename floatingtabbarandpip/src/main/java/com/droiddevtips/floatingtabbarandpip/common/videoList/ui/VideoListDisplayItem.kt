@@ -66,6 +66,7 @@ fun VideoListDisplayItem(
         modifier = modifier
             .fillMaxWidth()
             .height(220.dp)
+            .background(color = MaterialTheme.colorScheme.background) //MaterialTheme.colorScheme.background
     ) {
 
         AsyncImage(
@@ -104,14 +105,14 @@ fun VideoListDisplayItem(
             contentDescription = null
         )
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(color = Color.Black.copy(alpha = 0.35f))
-        )
-
         if (isPlaying) {
+            Box(
+                modifier = modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .background(color = Color.Black.copy(alpha = 0.35f))
+            )
+
             Text(
                 text = stringResource(id = AppString.playing),
                 fontSize = 16.sp,
@@ -170,7 +171,10 @@ fun VideoListDisplayItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .background(color = MaterialTheme.colorScheme.background, shape = RoundedCornerShape(8.dp)),
+                    .background(
+                        color = MaterialTheme.colorScheme.background,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {

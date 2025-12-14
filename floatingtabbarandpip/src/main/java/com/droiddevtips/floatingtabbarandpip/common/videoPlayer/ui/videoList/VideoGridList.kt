@@ -6,9 +6,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListAction
@@ -32,7 +32,7 @@ fun VideoGridList(
         state = lazyGridState,
         columns = GridCells.Adaptive(minSize = 230.dp),
         modifier = modifier
-            .background(color = Color.Black),
+            .background(color = MaterialTheme.colorScheme.background),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
 
