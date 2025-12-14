@@ -11,6 +11,7 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import android.util.Rational
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -48,7 +49,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Composable
-fun YouTubePlayerView(
+fun YouTubePlayerContainerView(
     activity: Activity,
     videoState: State<VideoPlayerViewState>,
     viewModel: VideoPlayerViewModel,
@@ -80,50 +81,7 @@ fun YouTubePlayerView(
                 IconButton(onClick = {
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-                        val pipParams =
-                            PictureInPictureParams.Builder().setAspectRatio(
-                                Rational(16, 9)
-                            )
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            val mainActivity = Intent(
-                                activity,
-                                RemoteViewBroadcastReceiver::class.java
-                            ).apply {
-                                action =
-                                    RemoteViewBroadcastReceiver.CUSTOM_ACTION_BUTTON
-                            }
-                            val pendingIntent = PendingIntent.getBroadcast(
-                                activity,
-                                101,
-                                mainActivity,
-                                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                            )
-                            val icon = Icon.createWithResource(
-                                activity,
-                                AppDrawable.favorite_icon
-                            )
-                            val customAction = RemoteAction(
-                                icon,
-                                "Custom",
-                                "Custom action",
-                                pendingIntent
-                            )
-                            pipParams.apply {
-                                setAutoEnterEnabled(true)
-                                setSeamlessResizeEnabled(true)
-                                setActions(listOf(customAction))
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                    setCloseAction(customAction) // Combine this with a action button from the list and a red circle appear around the action button indicating it is close button.
-                                    setTitle("Tit") // is not working at the time of writing this article
-                                    setSubtitle("Sub") // is not working at the time of writing this article
-                                }
-                            }
-                        }
-
-                        activity.enterPictureInPictureMode(pipParams.build())
+                        activity.enterPictureInPictureMode(createRemoteActionPendingIntent(activity = activity))
                     } else {
                         activity.enterPictureInPictureMode()
                     }
@@ -143,6 +101,52 @@ fun YouTubePlayerView(
             }
         }
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+private fun createRemoteActionPendingIntent(activity: Activity): PictureInPictureParams {
+
+    val pipParams =
+        PictureInPictureParams.Builder().setAspectRatio(
+            Rational(16, 9)
+        )
+
+    val mainActivity = Intent(
+        activity,
+        RemoteViewBroadcastReceiver::class.java
+    ).apply {
+        action =
+            RemoteViewBroadcastReceiver.CUSTOM_ACTION_BUTTON
+    }
+    val pendingIntent = PendingIntent.getBroadcast(
+        activity,
+        101,
+        mainActivity,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+    val icon = Icon.createWithResource(
+        activity,
+        AppDrawable.favorite_icon
+    )
+    val customAction = RemoteAction(
+        icon,
+        "Custom",
+        "Custom action",
+        pendingIntent
+    )
+    pipParams.apply {
+        setAutoEnterEnabled(true)
+        setSeamlessResizeEnabled(true)
+        setActions(listOf(customAction))
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            setCloseAction(customAction) // Combine this with a action button from the list and a red circle appear around the action button indicating it is close button.
+            setTitle("Tit") // is not working at the time of writing this article
+            setSubtitle("Sub") // is not working at the time of writing this article
+        }
+    }
+
+    return pipParams.build()
 }
 
 
