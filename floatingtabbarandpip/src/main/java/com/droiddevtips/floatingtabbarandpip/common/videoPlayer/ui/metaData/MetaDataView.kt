@@ -92,5 +92,11 @@ fun MetaDataView(
                 }
             }
         }
+
+        Text(
+            text = "Source: YouTube",
+            style = MaterialTheme.typography.titleSmall,
+            color = if (isSystemInDarkTheme()) Color.White else Color.Black
+        )
     }
 }
