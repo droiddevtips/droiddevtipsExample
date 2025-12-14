@@ -1,7 +1,19 @@
 package com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository
 
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoDetails
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 import com.droiddevtips.floatingtabbarandpip.extensions.asVideoItem
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.get
+import io.ktor.http.isSuccess
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 
 /**
  * The videos repository implementation
@@ -9,6 +21,16 @@ import com.droiddevtips.floatingtabbarandpip.extensions.asVideoItem
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 object VideoRepositoryImpl: VideoRepository {
+
+
+    val httpClient = HttpClient(Android) {
+        install(HttpTimeout) {
+            requestTimeoutMillis = 10000
+        }
+        install(ContentNegotiation) {
+            json()
+        }
+    }
 
     private var favoriteVideosList: List<VideoItem> = emptyList()
     private var videosList: List<VideoItem> = emptyList()
@@ -29,6 +51,29 @@ object VideoRepositoryImpl: VideoRepository {
 
         this.favoriteVideosList = videoIds.slice(0..4).map { it.asVideoItem(favorite = true) }
         return this.favoriteVideosList
+    }
+
+    override suspend fun loadVideoDetail(videoID: String): VideoDetails? = withContext(Dispatchers.IO) {
+
+        try {
+            val requestUrl = "https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=$videoID&format=json"
+            val videoDetailResponse = httpClient.get(requestUrl)
+
+            withContext(Dispatchers.Main) {
+                if (videoDetailResponse.status.isSuccess()) {
+                    val json = Json { ignoreUnknownKeys = true }
+                    val videoDetailResponse = json.decodeFromString<VideoDetails>(videoDetailResponse.body())
+                    videoDetailResponse
+                } else {
+                    null
+                }
+            }
+        }catch (e: Exception) {
+            println("Error requesting video detail: ${e.message}")
+            withContext(Dispatchers.Main) {
+                null
+            }
+        }
     }
 
     private val videoIds = listOf(

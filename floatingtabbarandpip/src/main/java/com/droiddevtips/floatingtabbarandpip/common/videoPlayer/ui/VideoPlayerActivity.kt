@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,7 +23,6 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -91,47 +89,46 @@ class VideoPlayerActivity : ComponentActivity() {
                         .background(color = MaterialTheme.colorScheme.background)
                 ) { padding ->
 
-                    Log.i("TAG23", "Orientation: ${windowSize.orientation}")
-                    Log.i("TAG23", "Device: ${windowSize.device}")
-
                     Column(
                         modifier = Modifier
                             .padding(paddingValues = padding)
-                            .background(color = Color.Cyan)
                     ) {
 
                         Row(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(color = Color.Yellow)
                         ) {
 
                             Column(
                                 modifier = Modifier
                                     .then(
-                                        if (windowSize.device == Device.Tablet) {
 
-                                            if (windowSize.orientation == DeviceOrientation.Landscape) {
-                                                Modifier
-                                                    .fillMaxWidth(fraction = 0.65f)
-                                                    .background(color = Color.Yellow)
-                                            } else {
-                                                Modifier
-                                                    .fillMaxWidth()
-                                                    .background(color = Color.Blue)
-                                            }
+                                        if (videoState.value.isInPip) {
+                                            Modifier.fillMaxWidth()
                                         } else {
-                                            if (windowSize.orientation == DeviceOrientation.Landscape) {
-                                                Modifier
-                                                    .fillMaxWidth(fraction = 0.65f)
+                                            if (windowSize.device == Device.Tablet) {
 
+                                                if (windowSize.orientation == DeviceOrientation.Landscape) {
+                                                    Modifier
+                                                        .fillMaxWidth(fraction = 0.65f)
+                                                        .background(color = Color.Yellow)
+                                                } else {
+                                                    Modifier
+                                                        .fillMaxWidth()
+                                                        .background(color = Color.Blue)
+                                                }
                                             } else {
-                                                Modifier
-                                                    .fillMaxWidth()
+                                                if (windowSize.orientation == DeviceOrientation.Landscape) {
+                                                    Modifier
+                                                        .fillMaxWidth(fraction = 0.65f)
+
+                                                } else {
+                                                    Modifier
+                                                        .fillMaxWidth()
+                                                }
                                             }
                                         }
                                     )
-                                    .background(color = Color.Yellow)
                             ) {
 
                                 YouTubePlayerView(
@@ -141,25 +138,29 @@ class VideoPlayerActivity : ComponentActivity() {
                                     modifier = Modifier
                                         .then(
 
-                                            if (windowSize.device == Device.Tablet) {
-
-                                                if (windowSize.orientation == DeviceOrientation.Landscape) {
-                                                    Modifier
-                                                        .fillMaxWidth()
-                                                        .background(color = Color.Yellow)
-                                                } else {
-                                                    Modifier
-                                                        .fillMaxWidth()
-                                                }
+                                            if (videoState.value.isInPip) {
+                                                Modifier.fillMaxWidth()
                                             } else {
-                                                if (windowSize.orientation == DeviceOrientation.Landscape) {
-                                                    Modifier
-                                                        .fillMaxWidth()
-                                                        .fillMaxHeight(fraction = 0.76f)
-                                                        .background(color = Color.Green)
+                                                if (windowSize.device == Device.Tablet) {
+
+                                                    if (windowSize.orientation == DeviceOrientation.Landscape) {
+                                                        Modifier
+                                                            .fillMaxWidth()
+                                                            .background(color = Color.Yellow)
+                                                    } else {
+                                                        Modifier
+                                                            .fillMaxWidth()
+                                                    }
                                                 } else {
-                                                    Modifier
-                                                        .fillMaxWidth()
+                                                    if (windowSize.orientation == DeviceOrientation.Landscape) {
+                                                        Modifier
+                                                            .fillMaxWidth()
+                                                            .fillMaxHeight(fraction = 0.76f)
+                                                            .background(color = Color.Green)
+                                                    } else {
+                                                        Modifier
+                                                            .fillMaxWidth()
+                                                    }
                                                 }
                                             }
                                         ),
@@ -174,11 +175,10 @@ class VideoPlayerActivity : ComponentActivity() {
                                 Column(
                                     modifier = Modifier
                                         .fillMaxSize()
-                                        .background(color = Color.DarkGray)
+                                        .background(color = MaterialTheme.colorScheme.background)
                                 ) {
-                                    Text("Title")
-                                    Text("Author")
-                                    Text("Author page")
+
+                                    MetaDataView(metaData = videoState.value.videoDetail)
 
                                     if (windowSize.orientation == DeviceOrientation.Portrait) {
 
@@ -219,7 +219,7 @@ class VideoPlayerActivity : ComponentActivity() {
                                 }
                             }
 
-                            if (windowSize.orientation == DeviceOrientation.Landscape) {
+                            if (windowSize.orientation == DeviceOrientation.Landscape && !videoState.value.isInPip) {
                                 VideoLazyList(
                                     listState = listState,
                                     nowPlayingVideoID = videoState.value.videoID,
@@ -242,11 +242,14 @@ class VideoPlayerActivity : ComponentActivity() {
 
                 LaunchedEffect(pipUiState) {
                     pipUiState?.let { state ->
-                        this@VideoPlayerActivity.viewModel.handleAction(
-                            action = VideoPlayerAction.TogglePipButtonVisibility(
-                                visibility = !state.isInPictureInPictureMode
+                        this@VideoPlayerActivity.viewModel.apply {
+                            handleAction(
+                                action = VideoPlayerAction.TogglePipButtonVisibility(
+                                    visibility = !state.isInPictureInPictureMode
+                                )
                             )
-                        )
+                            handleAction(action = VideoPlayerAction.TogglePipModeState(isInPipMode = state.isInPictureInPictureMode))
+                        }
                     }
                 }
 

@@ -3,10 +3,12 @@ package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoDetails
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepository
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerViewState
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.UIEvent
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerAction
+import com.droiddevtips.floatingtabbarandpip.core.videosRepository
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -64,7 +66,29 @@ class VideoPlayerViewModel(private val repository: VideoRepository) : ViewModel(
                   0
                 }
                 _videoPlayerViewState.update { it.copy(videoID = action.videoID, nowPlayingVideoIndex = newVideoIndex) }
+                loadVideoDetail(videoID = action.videoID)
             }
+
+            is VideoPlayerAction.TogglePipModeState -> {
+                _videoPlayerViewState.update { it.copy(isInPip = action.isInPipMode) }
+            }
+        }
+    }
+
+    fun loadVideoDetail(videoID:String) {
+
+        if (videoID.isBlank())
+            return
+
+        if (!_videoPlayerViewState.value.isLoadingDetail) {
+            _videoPlayerViewState.update { it.copy(isLoadingDetail = true) }
+        }
+
+        viewModelScope.launch {
+            val videoDetail = videosRepository.loadVideoDetail(videoID = videoID)
+            _videoPlayerViewState.update { it.copy(videoDetail = videoDetail ?: VideoDetails()) }
+            delay(500)
+            _videoPlayerViewState.update { it.copy(isLoadingDetail = false) }
         }
     }
 
@@ -93,10 +117,12 @@ class VideoPlayerViewModel(private val repository: VideoRepository) : ViewModel(
                     delay(500)
                     _uiEvent.send(UIEvent.ScrollToIndex(index = _videoPlayerViewState.value.nowPlayingVideoIndex))
                 }
+                loadVideoDetail(videoID = videoID)
             } else {
 
                 if (videoID.isNotBlank() && videoID != _videoPlayerViewState.value.videoID) {
                     _videoPlayerViewState.update { it.copy(videoID = videoID) }
+                    loadVideoDetail(videoID = videoID)
                 }
 
                 if (favorite != _videoPlayerViewState.value.favorite) {

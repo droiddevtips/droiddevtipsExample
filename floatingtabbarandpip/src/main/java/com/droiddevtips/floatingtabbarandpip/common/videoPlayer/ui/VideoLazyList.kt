@@ -14,6 +14,7 @@ import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListActi
 import com.droiddevtips.floatingtabbarandpip.common.videoList.ui.VideoListDisplayItem
 
 /**
+ * The video lazy list view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */

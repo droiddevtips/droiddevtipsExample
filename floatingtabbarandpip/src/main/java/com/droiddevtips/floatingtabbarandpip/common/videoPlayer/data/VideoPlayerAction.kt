@@ -13,6 +13,7 @@ sealed interface VideoPlayerAction {
     data class PlayerStateUpdate(val state: PlayerConstants.PlayerState): VideoPlayerAction
     data class HandleIntent(val intent: Intent): VideoPlayerAction
     data class TogglePipButtonVisibility(val visibility: Boolean): VideoPlayerAction
+    data class TogglePipModeState(val isInPipMode: Boolean): VideoPlayerAction
     data class VideoIDUpdate(val videoID: String): VideoPlayerAction
 
 }

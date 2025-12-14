@@ -39,10 +39,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 /**
+ * The YouTube player view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-
 @Composable
 fun YouTubePlayerView(
     activity: Activity,
@@ -231,6 +231,6 @@ private fun YouTubePlayer(
 
                 addYouTubePlayerFullscreenListener(activity = activity)
             }
-        })
-
+        }
+    )
 }

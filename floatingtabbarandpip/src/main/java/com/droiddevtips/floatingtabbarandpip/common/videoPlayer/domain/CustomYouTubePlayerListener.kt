@@ -1,6 +1,5 @@
 package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.domain
 
-import android.util.Log
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.YouTubePlayerConfigAction
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer

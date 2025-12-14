@@ -1,5 +1,6 @@
 package com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository
 
+import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoDetails
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 
 /**
@@ -10,4 +11,5 @@ import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoItem
 interface VideoRepository {
     fun getVideos(): List<VideoItem>
     fun getFavoriteVideos(): List<VideoItem>
+    suspend fun loadVideoDetail(videoID:String): VideoDetails?
 }
