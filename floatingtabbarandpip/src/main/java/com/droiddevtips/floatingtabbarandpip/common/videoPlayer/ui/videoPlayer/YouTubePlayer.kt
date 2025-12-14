@@ -81,29 +81,6 @@ fun YouTubePlayerView(
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                        //TODO: Wrap-up explanation on the options
-                        //TODO: Implement pending intent for remote action
-                        //TODO: Fix the tablet UI issue
-
-                        /*
-                    val mainActivity = Intent(this@VideoPlayerActivity,FloatingTabBarAndPipMainActivity::class.java)
-                    val pendingIntent = PendingIntent.getBroadcast(this@VideoPlayerActivity,101,mainActivity, PendingIntent.FLAG_IMMUTABLE)
-                    val icon = Icon.createWithResource(this@VideoPlayerActivity,
-                        AppDrawable.favorite_icon)
-                    val closeAction = RemoteAction(icon, "Close","Close action", pendingIntent)
-
-                        .setAutoEnterEnabled(true)
-                        .setSeamlessResizeEnabled(true)
-                        .setTitle("Title")
-                        .setSubtitle("Sub title")
-                        .setActions(listOf(closeAction))
-                        .setCloseAction(closeAction)
-                        .setAspectRatio(
-                            Rational(16, 9)
-                        )
-
-                    */
-
                         val pipParams =
                             PictureInPictureParams.Builder().setAspectRatio(
                                 Rational(16, 9)
@@ -115,7 +92,7 @@ fun YouTubePlayerView(
                                 RemoteViewBroadcastReceiver::class.java
                             ).apply {
                                 action =
-                                    RemoteViewBroadcastReceiver.customActionButton
+                                    RemoteViewBroadcastReceiver.CUSTOM_ACTION_BUTTON
                             }
                             val pendingIntent = PendingIntent.getBroadcast(
                                 activity,
@@ -127,21 +104,21 @@ fun YouTubePlayerView(
                                 activity,
                                 AppDrawable.favorite_icon
                             )
-                            val closeAction = RemoteAction(
+                            val customAction = RemoteAction(
                                 icon,
-                                "Close",
-                                "Close action",
+                                "Custom",
+                                "Custom action",
                                 pendingIntent
                             )
                             pipParams.apply {
                                 setAutoEnterEnabled(true)
                                 setSeamlessResizeEnabled(true)
-//                                                    setActions(listOf(closeAction))
+                                setActions(listOf(customAction))
 
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                    setCloseAction(closeAction)
-                                    setTitle("Tit")
-                                    setSubtitle("Sub")
+                                    setCloseAction(customAction) // Combine this with a action button from the list and a red circle appear around the action button indicating it is close button.
+                                    setTitle("Tit") // is not working at the time of writing this article
+                                    setSubtitle("Sub") // is not working at the time of writing this article
                                 }
                             }
                         }
