@@ -61,14 +61,27 @@
       </SelectionState>
       <SelectionState runConfigName="floatingtabbarandpip">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-11-28T20:37:52.047277Z">
+        <DropdownSelection timestamp="2025-12-13T21:47:02.841242Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=RF8M222C6VY" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/melchiorvrolijk/.android/avd/Pixel_9_Pro_Fold_36.avd" />
             </handle>
           </Target>
         </DropdownSelection>
-        <DialogSelection />
+        <DialogSelection>
+          <targets>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="PhysicalDevice" identifier="serial=R52Y707QM7V" />
+              </handle>
+            </Target>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="LocalEmulator" identifier="path=/Users/melchiorvrolijk/.android/avd/Pixel_9_Pro_Fold_36.avd" />
+              </handle>
+            </Target>
+          </targets>
+        </DialogSelection>
       </SelectionState>
       <SelectionState runConfigName="TestVideoListDisplayItem">
         <option name="selectionMode" value="DROPDOWN" />

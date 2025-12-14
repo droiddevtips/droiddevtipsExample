@@ -3,60 +3,43 @@
 package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
 
 import android.app.ComponentCaller
-import android.app.PictureInPictureParams
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.droiddevtips.appwindowsizeandorientationdetector.Device
+import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
+import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.floatingtabbarandpip.common.pipManager.PipManager
-import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoListAction
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepositoryImpl
-import com.droiddevtips.floatingtabbarandpip.common.videoList.ui.VideoListDisplayItem
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.UIEvent
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerAction
-import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.YouTubePlayerConfigAction
 import com.droiddevtips.floatingtabbarandpip.core.ObserveEvents
-import com.droiddevtips.floatingtabbarandpip.extensions.addYouTubePlayerFullscreenListener
-import com.droiddevtips.floatingtabbarandpip.extensions.configurePlayer
-import com.droiddevtips.floatingtabbarandpip.util.AppDrawable
-import com.droiddevtips.floatingtabbarandpip.util.AppString
 import com.droiddevtips.typography.DroidDevTipsTheme
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -83,6 +66,12 @@ class VideoPlayerActivity : ComponentActivity() {
         )
     })
 
+    private val remoteViewActionReceiver = RemoteViewBroadcastReceiver()
+    private val filter = IntentFilter().apply {
+        addAction(RemoteViewBroadcastReceiver.closeActionButton)
+        addAction(RemoteViewBroadcastReceiver.customActionButton)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.viewModel.handleAction(action = VideoPlayerAction.HandleIntent(intent = intent))
@@ -90,192 +79,162 @@ class VideoPlayerActivity : ComponentActivity() {
         setContent {
             DroidDevTipsTheme {
 
+                val windowSize = deviceDetectorCurrentWindowSize()
                 val videoState = viewModel.videoPlayerViewState.collectAsStateWithLifecycle()
                 val listState = rememberLazyListState()
+                val gridState = rememberLazyGridState()
                 val pipUiState by rememberPipUiState()
 
                 Scaffold(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(color = MaterialTheme.colorScheme.background)
-                        .navigationBarsPadding()
                 ) { padding ->
-                    Column(modifier = Modifier.padding(paddingValues = padding)) {
 
-                        Box {
-                            AndroidView(
-                                modifier = Modifier.fillMaxWidth(),
-                                factory = { context ->
-                                    YouTubePlayerView(context = context).apply {
+                    Log.i("TAG23", "Orientation: ${windowSize.orientation}")
+                    Log.i("TAG23", "Device: ${windowSize.device}")
 
-                                        this@VideoPlayerActivity.youTubePlayerView = this
+                    Column(
+                        modifier = Modifier
+                            .padding(paddingValues = padding)
+                            .background(color = Color.Cyan)
+                    ) {
 
-                                        configurePlayer(
-                                            context = context,
-                                            action = { action ->
-
-                                                when (action) {
-                                                    is YouTubePlayerConfigAction.OnPlayerReady -> {
-                                                        this@VideoPlayerActivity.youTubePlayer =
-                                                            action.youTubePlayer
-                                                        if (videoState.value.videoID.isNotBlank()) {
-                                                            action.youTubePlayer.loadVideo(
-                                                                videoState.value.videoID,
-                                                                0f
-                                                            )
-                                                        }
-                                                    }
-
-                                                    is YouTubePlayerConfigAction.OnStateChanged -> {
-                                                        this@VideoPlayerActivity.viewModel.apply {
-                                                            handleAction(
-                                                                action = VideoPlayerAction.PlayerStateUpdate(
-                                                                    state = action.state
-                                                                )
-                                                            )
-                                                            handleAction(
-                                                                action = VideoPlayerAction.TogglePipButtonVisibility(
-                                                                    visibility = action.state == PlayerConstants.PlayerState.PLAYING
-                                                                )
-                                                            )
-                                                        }
-                                                    }
-
-                                                    is YouTubePlayerConfigAction.OnVideoIDChanged -> {
-                                                        this@VideoPlayerActivity.viewModel.apply {
-                                                            handleAction(
-                                                                action = VideoPlayerAction.VideoIDUpdate(
-                                                                    videoID = action.videoID
-                                                                )
-                                                            )
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        )
-
-                                        addYouTubePlayerFullscreenListener(activity = this@VideoPlayerActivity)
-                                    }
-                                })
-
-                            Column(
-                                modifier = Modifier.align(Alignment.TopStart)
-                            ) {
-                                AnimatedVisibility(
-                                    visible = videoState.value.showPipButton,
-                                    enter = fadeIn(),
-                                    exit = fadeOut(
-                                        tween(500)
-                                    )
-                                ) {
-                                    IconButton(onClick = {
-
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-                                            //TODO: Wrap-up explanation on the options
-
-                                            /*
-                                        val mainActivity = Intent(this@VideoPlayerActivity,FloatingTabBarAndPipMainActivity::class.java)
-                                        val pendingIntent = PendingIntent.getBroadcast(this@VideoPlayerActivity,101,mainActivity, PendingIntent.FLAG_IMMUTABLE)
-                                        val icon = Icon.createWithResource(this@VideoPlayerActivity,
-                                            AppDrawable.favorite_icon)
-                                        val closeAction = RemoteAction(icon, "Close","Close action", pendingIntent)
-
-                                            .setAutoEnterEnabled(true)
-                                            .setSeamlessResizeEnabled(true)
-                                            .setTitle("Title")
-                                            .setSubtitle("Sub title")
-                                            .setActions(listOf(closeAction))
-                                            .setCloseAction(closeAction)
-                                            .setAspectRatio(
-                                                Rational(16, 9)
-                                            )
-
-                                        */
-
-                                            val pipParams =
-                                                PictureInPictureParams.Builder().build()
-                                            enterPictureInPictureMode(pipParams)
-                                        } else {
-                                            enterPictureInPictureMode()
-                                        }
-                                        PipManager.updatePipModeState(pipMode = true)
-                                        this@VideoPlayerActivity.viewModel.handleAction(
-                                            action = VideoPlayerAction.TogglePipButtonVisibility(
-                                                visibility = false
-                                            )
-                                        )
-                                    }) {
-                                        Image(
-                                            painter = painterResource(id = AppDrawable.pip_icon),
-                                            contentDescription = null,
-                                            modifier = Modifier.size(24.dp)
-                                        )
-                                    }
-                                }
-                            }
-                        }
-
-                        Column(
+                        Row(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight()
-                                .padding(horizontal = 8.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                                .fillMaxSize()
+                                .background(color = Color.Yellow)
                         ) {
 
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Box(modifier = Modifier.padding(top = 6.dp)) {
-                                    Image(
-                                        painter = painterResource(id = if (videoState.value.favorite) AppDrawable.fav_list_icon else AppDrawable.playlist_icon),
-                                        modifier = Modifier
-                                            .align(alignment = Alignment.Center)
-                                            .size(24.dp),
-                                        contentDescription = null
-                                    )
-                                }
-
-                                Text(
-                                    text = if (videoState.value.videos) stringResource(id = AppString.other_videos) else stringResource(
-                                        id = AppString.favorite_videos
-                                    ),
-                                    fontSize = 16.sp,
-                                    lineHeight = 28.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier.padding(top = 8.dp)
-                                )
-                            }
-
-                            LazyColumn(
-                                state = listState,
+                            Column(
                                 modifier = Modifier
-                                    .fillMaxWidth(),
-                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                                    .then(
+                                        if (windowSize.device == Device.Tablet) {
+
+                                            if (windowSize.orientation == DeviceOrientation.Landscape) {
+                                                Modifier
+                                                    .fillMaxWidth(fraction = 0.65f)
+                                                    .background(color = Color.Yellow)
+                                            } else {
+                                                Modifier
+                                                    .fillMaxWidth()
+                                                    .background(color = Color.Blue)
+                                            }
+                                        } else {
+                                            if (windowSize.orientation == DeviceOrientation.Landscape) {
+                                                Modifier
+                                                    .fillMaxWidth(fraction = 0.65f)
+
+                                            } else {
+                                                Modifier
+                                                    .fillMaxWidth()
+                                            }
+                                        }
+                                    )
+                                    .background(color = Color.Yellow)
                             ) {
 
-                                items(videoState.value.items) { videoItem ->
-                                    VideoListDisplayItem(
-                                        isPlaying = videoState.value.videoID == videoItem.id,
-                                        item = videoItem,
-                                        action = {
+                                YouTubePlayerView(
+                                    activity = this@VideoPlayerActivity,
+                                    videoState = videoState,
+                                    viewModel = viewModel,
+                                    modifier = Modifier
+                                        .then(
 
-                                            when (it) {
-                                                is VideoListAction.LaunchYouTubePlayer -> {
+                                            if (windowSize.device == Device.Tablet) {
+
+                                                if (windowSize.orientation == DeviceOrientation.Landscape) {
+                                                    Modifier
+                                                        .fillMaxWidth()
+                                                        .background(color = Color.Yellow)
+                                                } else {
+                                                    Modifier
+                                                        .fillMaxWidth()
+                                                }
+                                            } else {
+                                                if (windowSize.orientation == DeviceOrientation.Landscape) {
+                                                    Modifier
+                                                        .fillMaxWidth()
+                                                        .fillMaxHeight(fraction = 0.76f)
+                                                        .background(color = Color.Green)
+                                                } else {
+                                                    Modifier
+                                                        .fillMaxWidth()
+                                                }
+                                            }
+                                        ),
+                                    youTubePlayerView = { playerView ->
+                                        this@VideoPlayerActivity.youTubePlayerView = playerView
+                                    },
+                                    youTubePlayer = { youTubePlayer ->
+                                        this@VideoPlayerActivity.youTubePlayer = youTubePlayer
+                                    }
+                                )
+
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(color = Color.DarkGray)
+                                ) {
+                                    Text("Title")
+                                    Text("Author")
+                                    Text("Author page")
+
+                                    if (windowSize.orientation == DeviceOrientation.Portrait) {
+
+                                        if (windowSize.device == Device.Tablet) {
+
+                                            VideoGridList(
+                                                lazyGridState = gridState,
+                                                nowPlayingID = videoState.value.videoID,
+                                                videoItems = videoState.value.items,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .fillMaxHeight(),
+                                                onLoadNewVideoID = { videoID ->
                                                     youTubePlayer?.loadVideo(
-                                                        videoId = it.videoID,
+                                                        videoId = videoID,
                                                         0f
                                                     )
                                                 }
+                                            )
+                                        } else {
 
-                                                else -> Unit
-                                            }
+                                            VideoLazyList(
+                                                listState = listState,
+                                                nowPlayingVideoID = videoState.value.videoID,
+                                                videoItems = videoState.value.items,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .fillMaxHeight(),
+                                                onNewVideoLoaded = { videoID ->
+                                                    youTubePlayer?.loadVideo(
+                                                        videoId = videoID,
+                                                        0f
+                                                    )
+                                                }
+                                            )
                                         }
-                                    )
+                                    }
                                 }
+                            }
+
+                            if (windowSize.orientation == DeviceOrientation.Landscape) {
+                                VideoLazyList(
+                                    listState = listState,
+                                    nowPlayingVideoID = videoState.value.videoID,
+                                    videoItems = videoState.value.items,
+                                    verticalArrangement = Arrangement.spacedBy(if (windowSize.device == Device.Tablet) 8.dp else 0.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .fillMaxHeight(),
+                                    onNewVideoLoaded = { videoID ->
+                                        youTubePlayer?.loadVideo(
+                                            videoId = videoID,
+                                            0f
+                                        )
+                                    }
+                                )
                             }
                         }
                     }
@@ -301,6 +260,7 @@ class VideoPlayerActivity : ComponentActivity() {
                     when (event) {
                         is UIEvent.ScrollToIndex -> {
                             listState.animateScrollToItem(event.index)
+                            gridState.animateScrollToItem(event.index)
                         }
                     }
                 }
@@ -313,6 +273,20 @@ class VideoPlayerActivity : ComponentActivity() {
         this.viewModel.handleAction(action = VideoPlayerAction.HandleIntent(intent = intent))
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N) {
+            ContextCompat.registerReceiver(
+                this,
+                remoteViewActionReceiver,
+                filter,
+                RECEIVER_NOT_EXPORTED
+            )
+        } else {
+            registerReceiver(remoteViewActionReceiver, filter, RECEIVER_NOT_EXPORTED)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         releasePlayer()
@@ -320,8 +294,10 @@ class VideoPlayerActivity : ComponentActivity() {
 
     override fun onStop() {
         super.onStop()
-        if (isInPictureInPictureMode)
-            releasePlayer()
+        unregisterReceiver(remoteViewActionReceiver)
+        if (PipManager.isInPipMode) {
+            finish()
+        }
     }
 
     private fun releasePlayer() {

@@ -1,5 +1,6 @@
 package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.domain
 
+import android.util.Log
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.YouTubePlayerConfigAction
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -24,6 +25,13 @@ class CustomYouTubePlayerListener(
         action(YouTubePlayerConfigAction.OnStateChanged(state = state))
     }
 
+    override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
+        super.onError(youTubePlayer, error)
+    }
+
+    override fun onApiChange(youTubePlayer: YouTubePlayer) {
+        super.onApiChange(youTubePlayer)
+    }
     override fun onVideoId(youTubePlayer: YouTubePlayer, videoId: String) {
         super.onVideoId(youTubePlayer, videoId)
         action(YouTubePlayerConfigAction.OnVideoIDChanged(videoID = videoId))

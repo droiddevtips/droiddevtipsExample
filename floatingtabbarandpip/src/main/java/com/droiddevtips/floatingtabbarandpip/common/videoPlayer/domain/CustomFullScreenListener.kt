@@ -56,7 +56,7 @@ class CustomFullScreenListener(private val activity: Activity): FullscreenListen
 
         fullscreenView = null
         activity.requestedOrientation =
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            ActivityInfo.SCREEN_ORIENTATION_SENSOR
 
         WindowCompat.setDecorFitsSystemWindows(window, true)
         val controller = WindowInsetsControllerCompat(
