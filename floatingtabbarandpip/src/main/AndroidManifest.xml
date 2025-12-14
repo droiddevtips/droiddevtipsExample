@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".common.videoPlayer.ui.RemoteViewBroadcastReceiver"
+        <receiver android:name=".common.videoPlayer.ui.receiver.RemoteViewBroadcastReceiver"
             android:enabled="true"
             android:exported="false">
         </receiver>

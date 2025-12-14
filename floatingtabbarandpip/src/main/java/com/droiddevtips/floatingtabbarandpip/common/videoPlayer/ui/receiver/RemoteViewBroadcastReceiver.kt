@@ -1,4 +1,4 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

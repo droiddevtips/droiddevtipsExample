@@ -1,4 +1,4 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.pipState
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity

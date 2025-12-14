@@ -1,13 +1,14 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.viewModel
 
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.VideoDetails
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepository
-import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerViewState
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.UIEvent
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerAction
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerViewState
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.VideoPlayerActivity
 import com.droiddevtips.floatingtabbarandpip.core.videosRepository
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import kotlinx.coroutines.channels.Channel

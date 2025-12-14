@@ -1,4 +1,6 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
+@file:Suppress("DEPRECATION")
+
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.videoPlayer
 
 import android.app.Activity
 import android.app.PendingIntent
@@ -31,6 +33,8 @@ import com.droiddevtips.floatingtabbarandpip.common.pipManager.PipManager
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerAction
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerViewState
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.YouTubePlayerConfigAction
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.receiver.RemoteViewBroadcastReceiver
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.viewModel.VideoPlayerViewModel
 import com.droiddevtips.floatingtabbarandpip.extensions.addYouTubePlayerFullscreenListener
 import com.droiddevtips.floatingtabbarandpip.extensions.configurePlayer
 import com.droiddevtips.floatingtabbarandpip.util.AppDrawable

@@ -1,4 +1,4 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.metaData
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

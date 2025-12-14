@@ -37,6 +37,13 @@ import com.droiddevtips.floatingtabbarandpip.common.pipManager.PipManager
 import com.droiddevtips.floatingtabbarandpip.common.videoList.data.videoRepository.VideoRepositoryImpl
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.UIEvent
 import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.data.VideoPlayerAction
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.metaData.MetaDataView
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.pipState.rememberPipUiState
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.receiver.RemoteViewBroadcastReceiver
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.videoList.VideoGridList
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.videoList.VideoLazyList
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.viewModel.VideoPlayerViewModel
+import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.viewModel.VideoPlayerViewModelFactory
 import com.droiddevtips.floatingtabbarandpip.core.ObserveEvents
 import com.droiddevtips.typography.DroidDevTipsTheme
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
@@ -131,7 +138,7 @@ class VideoPlayerActivity : ComponentActivity() {
                                     )
                             ) {
 
-                                YouTubePlayerView(
+                                com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.videoPlayer.YouTubePlayerView(
                                     activity = this@VideoPlayerActivity,
                                     videoState = videoState,
                                     viewModel = viewModel,

@@ -1,4 +1,6 @@
-package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui
+@file:Suppress("UNCHECKED_CAST")
+
+package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
