@@ -19,7 +19,7 @@ import com.droiddevtips.typography.DroidDevTipsTheme
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-class FloatingTabBarAndPipMainActivity : ComponentActivity() {
+class PipExampleMainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

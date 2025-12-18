@@ -28,7 +28,7 @@ import com.droiddevtips.floatingtabbarandpip.feature.floatingTabBar.data.items
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 @Composable
-fun FloatingTabBar(
+fun FloatingToolBar(
     selectedTabIndex: Int,
     modifier: Modifier = Modifier,
     onTabSelected: (Int) -> Unit
@@ -37,13 +37,13 @@ fun FloatingTabBar(
     val windowSize = deviceDetectorCurrentWindowSize()
 
     if (windowSize.device == Device.Tablet && windowSize.orientation == DeviceOrientation.Landscape) {
-        VerticalTabBar(
+        VerticalToolBar(
             selectedTabIndex = selectedTabIndex,
             modifier = modifier,
             onTabSelected = onTabSelected
         )
     } else {
-        HorizontalTabBar(
+        HorizontalToolBar(
             selectedTabIndex = selectedTabIndex,
             modifier = modifier,
             onTabSelected = onTabSelected
@@ -52,7 +52,7 @@ fun FloatingTabBar(
 }
 
 @Composable
-fun HorizontalTabBar(
+fun HorizontalToolBar(
     selectedTabIndex: Int,
     modifier: Modifier = Modifier,
     onTabSelected: (Int) -> Unit
@@ -91,7 +91,7 @@ fun HorizontalTabBar(
 }
 
 @Composable
-fun VerticalTabBar(
+fun VerticalToolBar(
     selectedTabIndex: Int,
     modifier: Modifier = Modifier,
     onTabSelected: (Int) -> Unit

@@ -120,11 +120,9 @@ class VideoPlayerActivity : ComponentActivity() {
                                                 if (windowSize.orientation == DeviceOrientation.Landscape) {
                                                     Modifier
                                                         .fillMaxWidth(fraction = 0.65f)
-                                                        .background(color = Color.Yellow)
                                                 } else {
                                                     Modifier
                                                         .fillMaxWidth()
-                                                        .background(color = Color.Blue)
                                                 }
                                             } else {
                                                 if (windowSize.orientation == DeviceOrientation.Landscape) {
@@ -151,21 +149,12 @@ class VideoPlayerActivity : ComponentActivity() {
                                                 Modifier.fillMaxWidth()
                                             } else {
                                                 if (windowSize.device == Device.Tablet) {
-
-                                                    if (windowSize.orientation == DeviceOrientation.Landscape) {
-                                                        Modifier
-                                                            .fillMaxWidth()
-                                                            .background(color = Color.Yellow)
-                                                    } else {
-                                                        Modifier
-                                                            .fillMaxWidth()
-                                                    }
+                                                    Modifier.fillMaxWidth()
                                                 } else {
                                                     if (windowSize.orientation == DeviceOrientation.Landscape) {
                                                         Modifier
                                                             .fillMaxWidth()
                                                             .fillMaxHeight(fraction = 0.76f)
-                                                            .background(color = Color.Green)
                                                     } else {
                                                         Modifier
                                                             .fillMaxWidth()
@@ -264,6 +253,8 @@ class VideoPlayerActivity : ComponentActivity() {
                         }
                     }
                 }
+
+
 
                 LaunchedEffect(videoState.value.videoID) {
                     if (videoState.value.videoID.isNotBlank() && videoState.value.playerState == PlayerConstants.PlayerState.PLAYING) {

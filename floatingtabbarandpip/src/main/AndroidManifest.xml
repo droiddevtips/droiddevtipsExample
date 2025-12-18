@@ -18,7 +18,7 @@
             android:supportsPictureInPicture="true"
             android:theme="@style/Theme.DroidDevTipsExamples"/>
         <activity
-            android:name=".FloatingTabBarAndPipMainActivity"
+            android:name=".PipExampleMainActivity"
             android:exported="true"
             android:theme="@style/Theme.DroidDevTipsExamples">
             <intent-filter>

@@ -24,7 +24,7 @@ import com.droiddevtips.floatingtabbarandpip.common.videoList.ui.MainVideoListVi
 import com.droiddevtips.floatingtabbarandpip.core.videosRepository
 import com.droiddevtips.floatingtabbarandpip.feature.favorites.FavoriteViewModel
 import com.droiddevtips.floatingtabbarandpip.feature.favorites.FavoriteViewModelFactory
-import com.droiddevtips.floatingtabbarandpip.feature.floatingTabBar.ui.FloatingTabBar
+import com.droiddevtips.floatingtabbarandpip.feature.floatingTabBar.ui.FloatingToolBar
 import com.droiddevtips.floatingtabbarandpip.feature.profile.ProfileView
 import com.droiddevtips.floatingtabbarandpip.feature.videos.ui.VideosViewModel
 import com.droiddevtips.floatingtabbarandpip.feature.videos.ui.VideosViewModelFactory
@@ -58,7 +58,7 @@ fun MainView(modifier: Modifier = Modifier) {
             }
         )
 
-        MainViewFloatingTabBar(
+        MainViewFloatingToolBar(
             selectedTabIndex = selectedTabIndex.value,
             modifier = Modifier
                 .navigationBarsPadding()
@@ -126,12 +126,12 @@ private fun MainContentView(
 }
 
 @Composable
-private fun MainViewFloatingTabBar(
+private fun MainViewFloatingToolBar(
     selectedTabIndex: Int,
     modifier: Modifier = Modifier,
     onTabSelected: (Int) -> Unit
 ) {
-    FloatingTabBar(
+    FloatingToolBar(
         selectedTabIndex = selectedTabIndex,
         modifier = modifier,
         onTabSelected = onTabSelected
