@@ -1,5 +1,6 @@
 package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.pipState
 
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ fun rememberPipUiState(): State<PictureInPictureModeChangedInfo?> {
     DisposableEffect(activity) {
 
         val listener = Consumer<PictureInPictureModeChangedInfo> { newState ->
+            Log.i("TAG23","PIP new state: $newState")
             pipUiState.value = newState
         }
 

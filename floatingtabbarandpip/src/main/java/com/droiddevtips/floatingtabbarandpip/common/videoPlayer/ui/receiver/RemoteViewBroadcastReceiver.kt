@@ -3,6 +3,7 @@ package com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 
 /**
@@ -13,10 +14,13 @@ import android.widget.Toast
 class RemoteViewBroadcastReceiver: BroadcastReceiver() {
 
     companion object {
-        const val CUSTOM_ACTION_BUTTON = "customAction"
+        const val ACTION_CLOSE_BUTTON = "closeAction"
+        const val ACTION_PLAY_BUTTON = "playAction"
+        const val ACTION_PAUSE_BUTTON = "pauseAction"
     }
 
     override fun onReceive(p0: Context?, p1: Intent?) {
+        Log.i("TAG23","On receive bc with intent: $p1")
         if (p0 == null || p1 == null)
             return
 

@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.app.PictureInPictureParams
 import android.app.RemoteAction
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.util.Rational
@@ -78,25 +79,31 @@ fun YouTubePlayerContainerView(
                     tween(500)
                 )
             ) {
-                IconButton(onClick = {
+                if (activity.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)) {
+                    IconButton(onClick = {
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        activity.enterPictureInPictureMode(createRemoteActionPendingIntent(activity = activity))
-                    } else {
-                        activity.enterPictureInPictureMode()
-                    }
-                    PipManager.updatePipModeState(pipMode = true)
-                    viewModel.handleAction(
-                        action = VideoPlayerAction.TogglePipButtonVisibility(
-                            visibility = false
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            activity.enterPictureInPictureMode(
+                                createRemoteActionPendingIntent(
+                                    activity = activity
+                                )
+                            )
+                        } else {
+                            activity.enterPictureInPictureMode()
+                        }
+                        PipManager.updatePipModeState(pipMode = true)
+                        viewModel.handleAction(
+                            action = VideoPlayerAction.TogglePipButtonVisibility(
+                                visibility = false
+                            )
                         )
-                    )
-                }) {
-                    Image(
-                        painter = painterResource(id = AppDrawable.pip_icon),
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
-                    )
+                    }) {
+                        Image(
+                            painter = painterResource(id = AppDrawable.pip_icon),
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
                 }
             }
         }
@@ -111,36 +118,18 @@ private fun createRemoteActionPendingIntent(activity: Activity): PictureInPictur
             Rational(16, 9)
         )
 
-    val mainActivity = Intent(
-        activity,
-        RemoteViewBroadcastReceiver::class.java
-    ).apply {
-        action =
-            RemoteViewBroadcastReceiver.CUSTOM_ACTION_BUTTON
-    }
-    val pendingIntent = PendingIntent.getBroadcast(
-        activity,
-        101,
-        mainActivity,
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
-    val icon = Icon.createWithResource(
-        activity,
-        AppDrawable.favorite_icon
-    )
-    val customAction = RemoteAction(
-        icon,
-        "Custom",
-        "Custom action",
-        pendingIntent
-    )
+    val playRemoteAction = createRemoteAction(activity = activity, icon = AppDrawable.play, title = "Play", contentDescription = "PIP window play button", remoteIntentAction = RemoteViewBroadcastReceiver.ACTION_PLAY_BUTTON)
+    val pauseRemoteAction = createRemoteAction(activity = activity, icon = AppDrawable.pause, title = "Pause", contentDescription = "PIP window pause button", remoteIntentAction = RemoteViewBroadcastReceiver.ACTION_PAUSE_BUTTON)
+    val closeRemoteAction = createRemoteAction(activity = activity, icon = AppDrawable.close_icon, title = "Close", contentDescription = "PIP window close button", remoteIntentAction = RemoteViewBroadcastReceiver.ACTION_CLOSE_BUTTON)
+
     pipParams.apply {
         setAutoEnterEnabled(true)
-        setSeamlessResizeEnabled(true)
-        setActions(listOf(customAction))
+        setSeamlessResizeEnabled(false)
+        setAspectRatio(Rational(16, 9))
+        setActions(listOf(playRemoteAction, pauseRemoteAction, closeRemoteAction))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            setCloseAction(customAction) // Combine this with a action button from the list and a red circle appear around the action button indicating it is close button.
+            setCloseAction(closeRemoteAction) // Combine this with a action button from the list and a red circle appear around the action button indicating it is close button.
             setTitle("Tit") // is not working at the time of writing this article
             setSubtitle("Sub") // is not working at the time of writing this article
         }
@@ -149,6 +138,45 @@ private fun createRemoteActionPendingIntent(activity: Activity): PictureInPictur
     return pipParams.build()
 }
 
+private fun createRemoteAction(
+    activity: Activity,
+    icon: Int,
+    title: String,
+    contentDescription: String,
+    remoteIntentAction: String
+): RemoteAction {
+
+    val intent = createRemoteActionPendingIntent(activity = activity, remoteAction = remoteIntentAction)
+
+    val pendingIntent = PendingIntent.getBroadcast(
+        activity,
+        101,
+        intent,
+        PendingIntent.FLAG_IMMUTABLE
+    )
+    val icon = Icon.createWithResource(
+        activity,
+        icon
+    )
+    return RemoteAction(
+        icon,
+        title,
+        contentDescription,
+        pendingIntent
+    )
+}
+
+private fun createRemoteActionPendingIntent(
+    activity: Activity,
+    remoteAction: String
+): Intent {
+    return Intent(
+        activity,
+        RemoteViewBroadcastReceiver::class.java
+    ).apply {
+        action = remoteAction
+    }
+}
 
 @Composable
 private fun YouTubePlayer(

@@ -76,7 +76,9 @@ class VideoPlayerActivity : ComponentActivity() {
 
     private val remoteViewActionReceiver = RemoteViewBroadcastReceiver()
     private val filter = IntentFilter().apply {
-        addAction(RemoteViewBroadcastReceiver.CUSTOM_ACTION_BUTTON)
+        addAction(RemoteViewBroadcastReceiver.ACTION_CLOSE_BUTTON)
+        addAction(RemoteViewBroadcastReceiver.ACTION_PLAY_BUTTON)
+        addAction(RemoteViewBroadcastReceiver.ACTION_PAUSE_BUTTON)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
