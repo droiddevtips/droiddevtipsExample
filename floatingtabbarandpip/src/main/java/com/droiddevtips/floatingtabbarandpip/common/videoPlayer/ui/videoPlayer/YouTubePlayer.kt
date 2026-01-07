@@ -12,7 +12,6 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import android.util.Rational
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -40,7 +39,6 @@ import com.droiddevtips.floatingtabbarandpip.common.videoPlayer.ui.viewModel.Vid
 import com.droiddevtips.floatingtabbarandpip.extensions.addYouTubePlayerFullscreenListener
 import com.droiddevtips.floatingtabbarandpip.extensions.configurePlayer
 import com.droiddevtips.floatingtabbarandpip.util.AppDrawable
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
@@ -82,21 +80,12 @@ fun YouTubePlayerContainerView(
                 if (activity.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)) {
                     IconButton(onClick = {
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            activity.enterPictureInPictureMode(
-                                createRemoteActionPendingIntent(
-                                    activity = activity
-                                )
-                            )
-                        } else {
-                            activity.enterPictureInPictureMode()
-                        }
-                        PipManager.updatePipModeState(pipMode = true)
-                        viewModel.handleAction(
-                            action = VideoPlayerAction.TogglePipButtonVisibility(
-                                visibility = false
+                        activity.enterPictureInPictureMode(
+                            createRemoteActionPendingIntent(
+                                activity = activity
                             )
                         )
+                        PipManager.updatePipModeState(pipMode = true)
                     }) {
                         Image(
                             painter = painterResource(id = AppDrawable.pip_icon),
@@ -110,7 +99,6 @@ fun YouTubePlayerContainerView(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 private fun createRemoteActionPendingIntent(activity: Activity): PictureInPictureParams {
 
     val pipParams =
@@ -123,8 +111,10 @@ private fun createRemoteActionPendingIntent(activity: Activity): PictureInPictur
     val closeRemoteAction = createRemoteAction(activity = activity, icon = AppDrawable.close_icon, title = "Close", contentDescription = "PIP window close button", remoteIntentAction = RemoteViewBroadcastReceiver.ACTION_CLOSE_BUTTON)
 
     pipParams.apply {
-        setAutoEnterEnabled(true)
-        setSeamlessResizeEnabled(false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            setAutoEnterEnabled(true)
+            setSeamlessResizeEnabled(false)
+        }
         setAspectRatio(Rational(16, 9))
         setActions(listOf(playRemoteAction, pauseRemoteAction, closeRemoteAction))
 
@@ -219,11 +209,6 @@ private fun YouTubePlayer(
                                     handleAction(
                                         action = VideoPlayerAction.PlayerStateUpdate(
                                             state = action.state
-                                        )
-                                    )
-                                    handleAction(
-                                        action = VideoPlayerAction.TogglePipButtonVisibility(
-                                            visibility = action.state == PlayerConstants.PlayerState.PLAYING
                                         )
                                     )
                                 }

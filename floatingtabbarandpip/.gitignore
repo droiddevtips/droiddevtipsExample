@@ -1,3 +1,5 @@
 /build
 */build
-.gradle/buildOutputCleanup
+.gradle/buildOutputCleanup/*
+.gradle/*
+.idea/*

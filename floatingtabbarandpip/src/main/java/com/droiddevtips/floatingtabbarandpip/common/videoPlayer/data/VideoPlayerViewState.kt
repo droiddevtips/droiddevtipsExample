@@ -22,7 +22,7 @@ data class VideoPlayerViewState(
     val isLoading: Boolean = true,
     val isLoadingDetail: Boolean = true,
     val videoDetail: @RawValue VideoDetails = VideoDetails(),
-    val showPipButton: Boolean = false,
+    val showPipButton: Boolean = true,
     val playerState: PlayerConstants.PlayerState = PlayerConstants.PlayerState.UNKNOWN,
     val items: List<VideoItem> = emptyList()
 ) : Parcelable

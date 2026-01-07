@@ -55,10 +55,6 @@ class VideoPlayerViewModel(private val repository: VideoRepository) : ViewModel(
                 }
             }
 
-            is VideoPlayerAction.TogglePipButtonVisibility -> {
-                _videoPlayerViewState.update { it.copy(showPipButton = action.visibility) }
-            }
-
             is VideoPlayerAction.VideoIDUpdate -> {
                 val newVideoItem = _videoPlayerViewState.value.items.asSequence().filter { it.id == action.videoID }.firstOrNull()
                 val newVideoIndex = newVideoItem?.let {
@@ -71,7 +67,7 @@ class VideoPlayerViewModel(private val repository: VideoRepository) : ViewModel(
             }
 
             is VideoPlayerAction.TogglePipModeState -> {
-                _videoPlayerViewState.update { it.copy(isInPip = action.isInPipMode) }
+                _videoPlayerViewState.update { it.copy(isInPip = action.isInPipMode, showPipButton = !action.isInPipMode) }
             }
         }
     }

@@ -246,17 +246,10 @@ class VideoPlayerActivity : ComponentActivity() {
                 LaunchedEffect(pipUiState) {
                     pipUiState?.let { state ->
                         this@VideoPlayerActivity.viewModel.apply {
-                            handleAction(
-                                action = VideoPlayerAction.TogglePipButtonVisibility(
-                                    visibility = !state.isInPictureInPictureMode
-                                )
-                            )
                             handleAction(action = VideoPlayerAction.TogglePipModeState(isInPipMode = state.isInPictureInPictureMode))
                         }
                     }
                 }
-
-
 
                 LaunchedEffect(videoState.value.videoID) {
                     if (videoState.value.videoID.isNotBlank() && videoState.value.playerState == PlayerConstants.PlayerState.PLAYING) {
