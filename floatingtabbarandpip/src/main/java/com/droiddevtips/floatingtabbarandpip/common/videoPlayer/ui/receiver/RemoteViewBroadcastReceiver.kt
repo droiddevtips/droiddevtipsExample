@@ -20,7 +20,6 @@ class RemoteViewBroadcastReceiver: BroadcastReceiver() {
     }
 
     override fun onReceive(p0: Context?, p1: Intent?) {
-        Log.i("TAG23","On receive bc with intent: $p1")
         if (p0 == null || p1 == null)
             return
 
