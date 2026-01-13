@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.droiddevtips.musicplayer.ui.theme.DroidDevTipsExamplesTheme
 import com.droiddevtips.typography.DroidDevTipsTheme
 
 class MusicPlayerActivity : ComponentActivity() {
