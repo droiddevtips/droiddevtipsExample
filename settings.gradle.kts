@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":musicplayer")
+
+
 include(":app")
 include(":admobnextgenads")
 include(":droidDevTipsTheme")
