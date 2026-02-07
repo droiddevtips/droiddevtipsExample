@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -54,6 +55,14 @@ dependencies {
     implementation(libs.androidx.exo.player.dash)
     implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.media3.ui.compose)
+    implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.adaptive)
+    implementation(libs.androidx.compose.adaptive.layout)
+    implementation(libs.androidx.compose.adaptive.navigation)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation("com.google.guava:guava:31.0.1-android")
+    implementation("androidx.concurrent:concurrent-futures:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.6.0")
     implementation(project(":droidDevTipsTheme"))
     implementation(project(":appWindowSizeAndOrientationDetector"))
     testImplementation(libs.junit)

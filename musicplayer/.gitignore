@@ -1,1 +1,5 @@
 /build
+.gradle/*
+assetWizardSettings.xml
+deploymentTargetSelector.xml
+*.probe

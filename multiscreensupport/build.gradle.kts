@@ -58,7 +58,6 @@ dependencies {
     implementation(libs.androidx.compose.adaptive.layout)
     implementation(libs.androidx.compose.adaptive.navigation)
     implementation(project(":droidDevTipsTheme"))
-    implementation(libs.androidx.compose.adaptive)
     implementation(libs.coil.kt.coil.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
