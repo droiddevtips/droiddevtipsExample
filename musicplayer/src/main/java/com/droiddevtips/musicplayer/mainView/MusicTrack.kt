@@ -15,5 +15,6 @@ data class MusicTrack(
     val composer: String,
     @field:RawRes val songFile: Int,
     @field:RawRes val thumbnail: Int,
+    @field:RawRes val thumbnailLarge: Int,
     val credit: String
 ) : Parcelable

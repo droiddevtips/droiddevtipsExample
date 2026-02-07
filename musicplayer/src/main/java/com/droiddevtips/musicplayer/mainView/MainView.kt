@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -55,12 +56,23 @@ fun MainMusicPlayerView(modifier: Modifier = Modifier) {
             }
         },
         detailPane = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .background(color = Color.Red)
-            )
+            AnimatedPane {
+
+                val selectedMusicTrack = navigator.currentDestination?.contentKey
+                if (selectedMusicTrack != null) {
+                    MusicPlayerView(musicTrack = selectedMusicTrack, modifier = Modifier.fillMaxSize())
+                } else {
+                    Box(modifier = Modifier.fillMaxSize().background(color = Color.Blue))
+                }
+
+                /*
+                navigator.currentDestination?.contentKey?.let { musicTrack ->
+                    MusicPlayerView(musicTrack = musicTrack, modifier = Modifier.fillMaxSize())
+                    return@let
+                }
+                Box(modifier = Modifier.fillMaxSize().background(color = Color.Blue))
+                */
+            }
         }
     )
 }

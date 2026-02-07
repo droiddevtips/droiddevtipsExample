@@ -38,6 +38,7 @@ class MusicPlayerViewModel : ViewModel() {
             composer = "Alex Productions",
             songFile = R.raw.alone,
             thumbnail = R.mipmap.alone,
+            thumbnailLarge = R.drawable.alone_large,
             credit = "Music powered by BreakingCopyright"
         ),
         MusicTrack(
@@ -45,6 +46,7 @@ class MusicPlayerViewModel : ViewModel() {
             composer = "Scott Buckley",
             songFile = R.raw.filaments,
             thumbnail = R.mipmap.filaments_thumb,
+            thumbnailLarge = R.drawable.filaments_thumb_large,
             credit = "Music powered by BreakingCopyright"
         ),
         MusicTrack(
@@ -52,6 +54,7 @@ class MusicPlayerViewModel : ViewModel() {
             composer = "Makai Symphony",
             songFile = R.raw.dragon_castle,
             thumbnail = R.mipmap.dragon_castle_thumb,
+            thumbnailLarge = R.drawable.dragon_castle_thumb_large,
             credit = "Music powered by BreakingCopyright"
         ),
         MusicTrack(
@@ -59,6 +62,7 @@ class MusicPlayerViewModel : ViewModel() {
             composer = "Tokyo Music Walker",
             songFile = R.raw.way_home,
             thumbnail = R.mipmap.way_home_thumb,
+            thumbnailLarge = R.drawable.way_home_thumb_large,
             credit = "Music powered by BreakingCopyright"
         ),
         MusicTrack(
@@ -66,6 +70,7 @@ class MusicPlayerViewModel : ViewModel() {
             composer = "Shahed",
             songFile = R.raw.indian_fusion,
             thumbnail = R.mipmap.indian_fusion_thumb,
+            thumbnailLarge = R.drawable.indian_fusion_thumb_large,
             credit = "Music powered by BreakingCopyright"
         ),
         MusicTrack(
@@ -73,6 +78,7 @@ class MusicPlayerViewModel : ViewModel() {
             composer = "Keys Of Moon",
             songFile = R.raw.epic_hero,
             thumbnail = R.mipmap.epic_hero_thumb,
+            thumbnailLarge = R.drawable.epic_hero_thumb_large,
             credit = "Music powered by BreakingCopyright"
         )
     )

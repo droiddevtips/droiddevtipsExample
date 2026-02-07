@@ -16,6 +16,7 @@ class MusicListItemPreviewProvider : PreviewParameterProvider<MusicTrack> {
                 composer = "Alex Productions",
                 songFile = R.raw.alone,
                 thumbnail = R.mipmap.dawn_thumb,
+                thumbnailLarge = R.drawable.dragon_castle_thumb_large,
                 credit = "Music powered by BreakingCopyright"
             )
         )
