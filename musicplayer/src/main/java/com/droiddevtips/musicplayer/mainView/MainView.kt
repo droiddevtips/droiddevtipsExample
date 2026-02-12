@@ -2,6 +2,7 @@
 
 package com.droiddevtips.musicplayer.mainView
 
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,10 +17,14 @@ import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
@@ -29,14 +34,17 @@ import kotlinx.coroutines.launch
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
 @Composable
-fun MainMusicPlayerView(modifier: Modifier = Modifier) {
-
+fun MainMusicPlayerView(
+    application: Application,
+    modifier: Modifier = Modifier
+) {
     val musicPlayerViewModel: MusicPlayerViewModel =
-        viewModel(factory = MusicPlayerViewModelFactory())
+        viewModel(factory = MusicPlayerViewModelFactory(application = application))
     val musicPlayerViewState =
         musicPlayerViewModel.musicPlayerViewState.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val navigator = rememberListDetailPaneScaffoldNavigator<MusicTrack>()
+//    val lifecycleOwner = LocalLifecycleOwner.current
     NavigableListDetailPaneScaffold(
         modifier = modifier,
         navigator = navigator,
@@ -49,6 +57,11 @@ fun MainMusicPlayerView(modifier: Modifier = Modifier) {
                         .fillMaxHeight(),
                     onMusicTrackSelected = { musicTrack ->
                         scope.launch {
+                            musicPlayerViewModel.performAction(
+                                MusicPlayerAction.ChangeMusicTrack(
+                                    track = musicTrack
+                                )
+                            )
                             navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, musicTrack)
                         }
                     }
@@ -59,22 +72,37 @@ fun MainMusicPlayerView(modifier: Modifier = Modifier) {
             AnimatedPane {
 
                 val selectedMusicTrack = navigator.currentDestination?.contentKey
-                if (selectedMusicTrack != null) {
-                    MusicPlayerView(musicTrack = selectedMusicTrack, modifier = Modifier.fillMaxSize())
+                if (selectedMusicTrack != null && musicPlayerViewState.value.currentlyPlaying != null) {
+                    MusicPlayerView(
+                        viewState = musicPlayerViewState.value,
+                        modifier = Modifier.fillMaxSize(),
+                        action = musicPlayerViewModel::performAction
+                    )
                 } else {
-                    Box(modifier = Modifier.fillMaxSize().background(color = Color.Blue))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(color = Color.Blue)
+                    )
                 }
-
-                /*
-                navigator.currentDestination?.contentKey?.let { musicTrack ->
-                    MusicPlayerView(musicTrack = musicTrack, modifier = Modifier.fillMaxSize())
-                    return@let
-                }
-                Box(modifier = Modifier.fillMaxSize().background(color = Color.Blue))
-                */
             }
         }
     )
+
+//    DisposableEffect(lifecycleOwner) {
+//
+//        val observer = LifecycleEventObserver { _, event ->
+//            if (event == Lifecycle.Event.ON_DESTROY) {
+//                musicPlayerViewModel.performAction(MusicPlayerAction.DestroyMediaPlayer)
+//            }
+//        }
+//
+//        lifecycleOwner.lifecycle.addObserver(observer)
+//
+//        onDispose {
+//            lifecycleOwner.lifecycle.removeObserver(observer)
+//        }
+//    }
 }
 
 @Composable

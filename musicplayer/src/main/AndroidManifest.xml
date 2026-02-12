@@ -17,6 +17,7 @@
         android:theme="@style/Theme.DroidDevTipsExamples">
         <activity
             android:name=".MusicPlayerActivity"
+            android:launchMode="singleTop"
             android:exported="true"
             android:theme="@style/Theme.DroidDevTipsExamples">
             <intent-filter>

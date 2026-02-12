@@ -11,6 +11,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class MusicTrack(
+    val id: String,
     val song: String,
     val composer: String,
     @field:RawRes val songFile: Int,

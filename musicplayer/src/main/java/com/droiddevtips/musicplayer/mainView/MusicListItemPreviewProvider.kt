@@ -12,6 +12,7 @@ class MusicListItemPreviewProvider : PreviewParameterProvider<MusicTrack> {
     override val values: Sequence<MusicTrack>
         get() = sequenceOf(
             MusicTrack(
+                id = "1",
                 song = "Alone",
                 composer = "Alex Productions",
                 songFile = R.raw.alone,

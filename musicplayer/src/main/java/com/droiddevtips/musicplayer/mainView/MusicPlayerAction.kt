@@ -5,6 +5,9 @@ package com.droiddevtips.musicplayer.mainView
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
 sealed interface MusicPlayerAction {
+    data object Play : MusicPlayerAction
+    data object Pause : MusicPlayerAction
+    data object Previous : MusicPlayerAction
+    data object Next : MusicPlayerAction
     data class ChangeMusicTrack(val track: MusicTrack) : MusicPlayerAction
-    data object ClearMusicTrack : MusicPlayerAction
 }
