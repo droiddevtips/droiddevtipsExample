@@ -3,6 +3,7 @@
 package com.droiddevtips.musicplayer.mainView
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,7 +50,11 @@ fun MusicPlayerView(
 
     val musicTrack = viewState.currentlyPlaying ?: return
 
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = if (isSystemInDarkTheme()) Color.Black else colorResource(id = R.color.light_grey))
+    ) {
 
         Column(
             modifier = Modifier
@@ -100,9 +106,20 @@ fun MusicPlayerView(
                     drawStopIndicator = {}
                 )
 
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(viewState.positionDisplayText, fontSize = 11.sp, fontWeight = FontWeight.Bold)
-                    Text(viewState.totalDurationDisplayText, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        viewState.positionDisplayText,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        viewState.totalDurationDisplayText,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
 

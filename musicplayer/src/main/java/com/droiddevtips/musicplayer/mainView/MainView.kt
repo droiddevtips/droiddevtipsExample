@@ -17,14 +17,10 @@ import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
@@ -44,7 +40,6 @@ fun MainMusicPlayerView(
         musicPlayerViewModel.musicPlayerViewState.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
     val navigator = rememberListDetailPaneScaffoldNavigator<MusicTrack>()
-//    val lifecycleOwner = LocalLifecycleOwner.current
     NavigableListDetailPaneScaffold(
         modifier = modifier,
         navigator = navigator,
@@ -88,21 +83,6 @@ fun MainMusicPlayerView(
             }
         }
     )
-
-//    DisposableEffect(lifecycleOwner) {
-//
-//        val observer = LifecycleEventObserver { _, event ->
-//            if (event == Lifecycle.Event.ON_DESTROY) {
-//                musicPlayerViewModel.performAction(MusicPlayerAction.DestroyMediaPlayer)
-//            }
-//        }
-//
-//        lifecycleOwner.lifecycle.addObserver(observer)
-//
-//        onDispose {
-//            lifecycleOwner.lifecycle.removeObserver(observer)
-//        }
-//    }
 }
 
 @Composable
