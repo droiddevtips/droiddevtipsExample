@@ -12,6 +12,8 @@ data class MusicPlayerViewState(
     val currentlyPlaying: MusicTrack? = null,
     val showPlayButton: Boolean = true,
     val showPauseButton: Boolean = false,
+    val showMiniPlayer: Boolean = false,
+    val expandMiniPlayer: Boolean = false,
     val shuffled: Boolean = false,
     val muted: Boolean = false,
     val enablePreviousButton: Boolean = false,

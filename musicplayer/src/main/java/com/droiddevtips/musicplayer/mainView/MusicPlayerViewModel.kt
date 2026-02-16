@@ -19,6 +19,7 @@ import androidx.media3.common.Player.STATE_ENDED
 import androidx.media3.common.Player.STATE_IDLE
 import androidx.media3.common.Player.STATE_READY
 import androidx.media3.common.Timeline
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.droiddevtips.musicplayer.MusicPlayerService
@@ -203,12 +204,14 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
             state.copy(
                 showPauseButton = isPlaying,
                 showPlayButton = !isPlaying,
+                showMiniPlayer = if (_musicPlayerViewState.value.showMiniPlayer) true else isPlaying,
                 enablePreviousButton = mediaController?.hasPreviousMediaItem() ?: false,
                 enableNextButton = mediaController?.hasNextMediaItem() ?: false
             )
         }
     }
 
+    @UnstableApi
     override fun onMetadata(metadata: Metadata) {
         super.onMetadata(metadata)
         Log.i("TAG23", "On meta data: $metadata \n\n")
@@ -262,6 +265,8 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
 
     fun performAction(action: MusicPlayerAction) {
 
+        Log.i("TAG23","Perform action -> $action")
+
         when (action) {
             is MusicPlayerAction.ChangeMusicTrack -> {
 
@@ -271,7 +276,6 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                 mediaController?.apply {
                     seekTo(index, 0)
                     play()
-//                    Log.i("TAG23","Current position: ${currentPosition} - duration: ${duration}")
                 }
             }
 
@@ -296,7 +300,8 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                         _musicPlayerViewState.update { state ->
                             state.copy(
                                 showPauseButton = true,
-                                showPlayButton = false
+                                showPlayButton = false,
+                                showMiniPlayer = true
                             )
                         }
                     }
@@ -337,6 +342,19 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                         }
                     }
                 }
+            }
+
+            MusicPlayerAction.CloseMiniPlayer -> {
+                mediaController?.apply {
+                    if (isPlaying) {
+                        stop()
+                    }
+                }
+                _musicPlayerViewState.update { it.copy(showMiniPlayer = false) }
+            }
+
+            is MusicPlayerAction.ToggleMiniPlayerView -> {
+                _musicPlayerViewState.update { it.copy(expandMiniPlayer = !_musicPlayerViewState.value.expandMiniPlayer) }
             }
         }
     }

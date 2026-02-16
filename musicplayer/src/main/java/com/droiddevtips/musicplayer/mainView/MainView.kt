@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3AdaptiveApi::class)
+@file:OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class)
 
 package com.droiddevtips.musicplayer.mainView
 
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
@@ -18,11 +19,15 @@ import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneSca
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.droiddevtips.appwindowsizeandorientationdetector.Device
+import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
+import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import kotlinx.coroutines.launch
 
 /**
@@ -59,7 +64,8 @@ fun MainMusicPlayerView(
                             )
                             navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, musicTrack)
                         }
-                    }
+                    },
+                    onViewAction = musicPlayerViewModel::performAction
                 )
             }
         },
@@ -89,17 +95,31 @@ fun MainMusicPlayerView(
 private fun TrackListView(
     viewState: MusicPlayerViewState,
     modifier: Modifier = Modifier,
+    onViewAction: (MusicPlayerAction) -> Unit,
     onMusicTrackSelected: (MusicTrack) -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(viewState.musicList) { musicTrack ->
-            MusicTrackListItem(
-                musicTrack = musicTrack,
-                modifier = Modifier.fillMaxWidth(),
-                onMusicTrackSelected = onMusicTrackSelected
+
+    val windowSize = deviceDetectorCurrentWindowSize()
+
+    Box {
+        LazyColumn(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(viewState.musicList) { musicTrack ->
+                MusicTrackListItem(
+                    musicTrack = musicTrack,
+                    modifier = Modifier.fillMaxWidth(),
+                    onMusicTrackSelected = onMusicTrackSelected
+                )
+            }
+        }
+
+        if (windowSize.orientation == DeviceOrientation.Portrait && windowSize.device == Device.Mobile && viewState.showMiniPlayer) {
+            MiniPlayerContainer(
+                modifier = Modifier.align(alignment = Alignment.BottomCenter),
+                viewState = viewState,
+                onViewAction = onViewAction
             )
         }
     }
