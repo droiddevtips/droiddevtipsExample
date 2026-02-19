@@ -1,4 +1,4 @@
-package com.droiddevtips.musicplayer
+package com.droiddevtips.musicplayer.core
 
 import android.app.PendingIntent
 import android.content.Intent
@@ -6,6 +6,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
+import com.droiddevtips.musicplayer.ui.MusicPlayerActivity
 
 /**
  * Created by Melchior Vrolijk

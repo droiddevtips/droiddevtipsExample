@@ -1,4 +1,4 @@
-package com.droiddevtips.musicplayer.mainView
+package com.droiddevtips.musicplayer.ui.miniplayer
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateDpAsState
@@ -41,6 +41,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.droiddevtips.musicplayer.R
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerViewState
+import com.droiddevtips.musicplayer.ui.audioVisualizer.AudioVisualizer
 import com.droiddevtips.typography.extensions.clickableWithPrimaryColorRipple
 
 /**

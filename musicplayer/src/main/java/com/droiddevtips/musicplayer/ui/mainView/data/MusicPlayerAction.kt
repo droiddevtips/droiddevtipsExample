@@ -1,4 +1,4 @@
-package com.droiddevtips.musicplayer.mainView
+package com.droiddevtips.musicplayer.ui.mainView.data
 
 /**
  * Created by Melchior Vrolijk

@@ -9,14 +9,14 @@
 
     <application
         android:allowBackup="true"
-        android:name=".MusicPlayerApp"
+        android:name=".core.MusicPlayerApp"
         android:icon="@mipmap/app_icon_background"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/app_icon_background_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DroidDevTipsExamples">
         <activity
-            android:name=".MusicPlayerActivity"
+            android:name=".ui.MusicPlayerActivity"
             android:launchMode="singleTop"
             android:exported="true"
             android:theme="@style/Theme.DroidDevTipsExamples">
@@ -28,7 +28,7 @@
         </activity>
 
         <service
-            android:name=".MusicPlayerService"
+            android:name=".core.MusicPlayerService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>

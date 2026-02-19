@@ -1,4 +1,4 @@
-package com.droiddevtips.musicplayer.mainView
+package com.droiddevtips.musicplayer.ui
 
 import android.app.Application
 import android.content.ComponentName
@@ -10,21 +10,16 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Metadata
 import androidx.media3.common.PlaybackParameters
 import androidx.media3.common.Player
-import androidx.media3.common.Player.MEDIA_ITEM_TRANSITION_REASON_AUTO
-import androidx.media3.common.Player.MEDIA_ITEM_TRANSITION_REASON_PLAYLIST_CHANGED
-import androidx.media3.common.Player.MEDIA_ITEM_TRANSITION_REASON_REPEAT
-import androidx.media3.common.Player.MEDIA_ITEM_TRANSITION_REASON_SEEK
-import androidx.media3.common.Player.STATE_BUFFERING
-import androidx.media3.common.Player.STATE_ENDED
-import androidx.media3.common.Player.STATE_IDLE
-import androidx.media3.common.Player.STATE_READY
 import androidx.media3.common.Timeline
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import com.droiddevtips.musicplayer.MusicPlayerService
 import com.droiddevtips.musicplayer.R
+import com.droiddevtips.musicplayer.core.MusicPlayerService
 import com.droiddevtips.musicplayer.extensions.asMediaItemList
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerViewState
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicTrack
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
 import com.google.common.util.concurrent.MoreExecutors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,7 +46,10 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
     val musicPlayerViewState: StateFlow<MusicPlayerViewState>
         get() = _musicPlayerViewState.asStateFlow().onStart {
             _musicPlayerViewState.update { it.copy(musicList = musicList) }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MusicPlayerViewState())
+        }.stateIn(
+            viewModelScope, SharingStarted.Companion.WhileSubscribed(5000),
+            MusicPlayerViewState()
+        )
 
     init {
         sessionToken = SessionToken(
@@ -222,10 +220,10 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
         Log.i(
             "TAG23", "On media item transition: $mediaItem, reason: ${
                 when (reason) {
-                    MEDIA_ITEM_TRANSITION_REASON_REPEAT -> "Reason repeat"
-                    MEDIA_ITEM_TRANSITION_REASON_AUTO -> "Reason auto"
-                    MEDIA_ITEM_TRANSITION_REASON_SEEK -> "Reason seek"
-                    MEDIA_ITEM_TRANSITION_REASON_PLAYLIST_CHANGED -> "Reason playlist changed"
+                    Player.MEDIA_ITEM_TRANSITION_REASON_REPEAT -> "Reason repeat"
+                    Player.MEDIA_ITEM_TRANSITION_REASON_AUTO -> "Reason auto"
+                    Player.MEDIA_ITEM_TRANSITION_REASON_SEEK -> "Reason seek"
+                    Player.MEDIA_ITEM_TRANSITION_REASON_PLAYLIST_CHANGED -> "Reason playlist changed"
                     else -> "Unknown"
                 }
             } \n\n"
@@ -245,19 +243,19 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
         Log.i("TAG23", "Playback state: $playbackState \n\n")
         when (playbackState) {
 
-            STATE_IDLE -> {
+            Player.STATE_IDLE -> {
                 Log.i("TAG23", "Playback state -> STATE_IDLE")
             }
 
-            STATE_BUFFERING -> {
+            Player.STATE_BUFFERING -> {
                 Log.i("TAG23", "Playback state -> STATE_BUFFERING")
             }
 
-            STATE_READY -> {
+            Player.STATE_READY -> {
                 Log.i("TAG23", "Playback state -> STATE_READY")
             }
 
-            STATE_ENDED -> {
+            Player.STATE_ENDED -> {
                 Log.i("TAG23", "Playback state -> STATE_ENDED")
             }
         }

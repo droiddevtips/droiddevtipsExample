@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.MediaMetadata.MEDIA_TYPE_MUSIC
-import com.droiddevtips.musicplayer.mainView.MusicTrack
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicTrack
 
 /**
  * Created by Melchior Vrolijk

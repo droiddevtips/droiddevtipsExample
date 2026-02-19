@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.droiddevtips.musicplayer.mainView
+package com.droiddevtips.musicplayer.ui.musicPlayerView
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,6 +36,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.droiddevtips.musicplayer.R
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerViewState
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
 
 /**
  * Created by Melchior Vrolijk

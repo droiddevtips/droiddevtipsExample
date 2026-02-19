@@ -1,4 +1,4 @@
-package com.droiddevtips.musicplayer.mainView
+package com.droiddevtips.musicplayer.ui.mainView.data
 
 import android.os.Parcelable
 import androidx.annotation.RawRes

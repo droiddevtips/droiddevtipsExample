@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class)
 
-package com.droiddevtips.musicplayer.mainView
+package com.droiddevtips.musicplayer.ui.mainView.ui
 
 import android.app.Application
 import androidx.compose.foundation.background
@@ -28,6 +28,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
+import com.droiddevtips.musicplayer.ui.MusicPlayerViewModel
+import com.droiddevtips.musicplayer.ui.MusicPlayerViewModelFactory
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerViewState
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicTrack
+import com.droiddevtips.musicplayer.ui.mediaListIem.MusicTrackListItem
+import com.droiddevtips.musicplayer.ui.miniplayer.MiniPlayerContainer
+import com.droiddevtips.musicplayer.ui.musicPlayerView.MusicPlayerView
 import kotlinx.coroutines.launch
 
 /**

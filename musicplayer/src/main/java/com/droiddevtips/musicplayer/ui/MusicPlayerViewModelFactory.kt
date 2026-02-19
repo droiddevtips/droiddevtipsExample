@@ -1,6 +1,4 @@
-@file:Suppress("UNCHECKED_CAST")
-
-package com.droiddevtips.musicplayer.mainView
+package com.droiddevtips.musicplayer.ui
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package com.droiddevtips.musicplayer.mainView
+package com.droiddevtips.musicplayer.ui.mainView.data
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.droiddevtips.musicplayer.R
