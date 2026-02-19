@@ -40,6 +40,11 @@ android {
     buildFeatures {
         compose = true
     }
+
+    lint {
+        disable.add("ModifierParameter")
+    }
+
 }
 
 dependencies {

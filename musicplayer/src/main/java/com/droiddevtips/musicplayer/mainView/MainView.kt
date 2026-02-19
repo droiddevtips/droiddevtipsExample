@@ -71,9 +71,7 @@ fun MainMusicPlayerView(
         },
         detailPane = {
             AnimatedPane {
-
-                val selectedMusicTrack = navigator.currentDestination?.contentKey
-                if (selectedMusicTrack != null && musicPlayerViewState.value.currentlyPlaying != null) {
+                if (musicPlayerViewState.value.currentlyPlaying != null) {
                     MusicPlayerView(
                         viewState = musicPlayerViewState.value,
                         modifier = Modifier.fillMaxSize(),
@@ -109,6 +107,7 @@ private fun TrackListView(
             items(viewState.musicList) { musicTrack ->
                 MusicTrackListItem(
                     musicTrack = musicTrack,
+                    currentlyPlaying = viewState.currentlyPlaying?.id ?: "",
                     modifier = Modifier.fillMaxWidth(),
                     onMusicTrackSelected = onMusicTrackSelected
                 )

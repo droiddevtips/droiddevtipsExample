@@ -273,6 +273,7 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                 val index = musicList.indexOf(action.track)
                 Log.i("TAG23", "Track index: $index")
 
+                _musicPlayerViewState.update { it.copy(currentlyPlaying = action.track) }
                 mediaController?.apply {
                     seekTo(index, 0)
                     play()
@@ -350,7 +351,7 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                         stop()
                     }
                 }
-                _musicPlayerViewState.update { it.copy(showMiniPlayer = false) }
+                _musicPlayerViewState.update { it.copy(showMiniPlayer = false, currentlyPlaying = null) }
             }
 
             is MusicPlayerAction.ToggleMiniPlayerView -> {

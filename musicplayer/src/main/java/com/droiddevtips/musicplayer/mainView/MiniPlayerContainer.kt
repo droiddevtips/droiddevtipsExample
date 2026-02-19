@@ -1,25 +1,23 @@
 package com.droiddevtips.musicplayer.mainView
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -37,7 +35,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -45,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.droiddevtips.musicplayer.R
 import com.droiddevtips.typography.extensions.clickableWithPrimaryColorRipple
-import com.droiddevtips.typography.extensions.dpToPx
 
 /**
  * Created by Melchior Vrolijk
@@ -106,10 +102,7 @@ fun MiniPlayerContainer(
         } else {
             MiniPlayerExpandedView(
                 viewState = viewState,
-                onCollapsed = {
-                    miniPlayerViewState.value = PlayerUiState.MINI
-                },
-                onViewAction = { }
+                onViewAction = onViewAction
             )
         }
     }
@@ -263,29 +256,123 @@ fun MiniPlayer(
 fun MiniPlayerExpandedView(
     viewState: MusicPlayerViewState,
     modifier: Modifier = Modifier,
-    onCollapsed: () -> Unit,
     onViewAction: (MusicPlayerAction) -> Unit
 ) {
+
+    val currentlyPlaying = viewState.currentlyPlaying
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = Color.DarkGray)
+            .background(color = MaterialTheme.colorScheme.background)
     ) {
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp)
-                .background(Color.Black)
-        )
+                .background(color = MaterialTheme.colorScheme.background)
+        ) {
+            currentlyPlaying?.let {
+                Image(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
+                    painter = painterResource(id = it.thumbnailLarge),
+                    contentDescription = null
+                )
+            }
+        }
 
-        Text("Video title", style = MaterialTheme.typography.titleLarge)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(all = 8.dp)
+        ) {
 
-        Button(onClick = {
-            onViewAction(MusicPlayerAction.ToggleMiniPlayerView(expanded = false))
-        }) {
-            Text("Collapse")
+            Column {
+                Text(
+                    text = currentlyPlaying?.song ?: "",
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = currentlyPlaying?.composer ?: "",
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = currentlyPlaying?.credit ?: "",
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            }
+
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp, alignment = Alignment.CenterVertically)
+            ) {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    IconButton(
+                        modifier = Modifier.size(50.dp),
+                        enabled = viewState.enablePreviousButton,
+                        onClick = {
+                            onViewAction(MusicPlayerAction.Previous)
+                        }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.prev_button),
+                            modifier = Modifier.size(50.dp),
+                            contentDescription = null
+                        )
+                    }
+
+                    IconButton(modifier = Modifier.size(50.dp), onClick = {
+                        if (viewState.showPauseButton) {
+                            onViewAction(MusicPlayerAction.Pause)
+                        } else {
+                            onViewAction(MusicPlayerAction.Play)
+                        }
+                    }) {
+                        Icon(
+                            painter = painterResource(id = if (viewState.showPauseButton) R.drawable.pause_button else R.drawable.play_button),
+                            modifier = Modifier.size(50.dp),
+                            contentDescription = null
+                        )
+                    }
+
+                    IconButton(
+                        enabled = viewState.enableNextButton,
+                        modifier = Modifier.size(50.dp),
+                        onClick = {
+                            onViewAction(MusicPlayerAction.Next)
+                        }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.next_button),
+                            modifier = Modifier.size(45.dp),
+                            contentDescription = null
+                        )
+                    }
+                }
+
+                AudioVisualizer(modifier = Modifier.height(45.dp), barCount = 30)
+            }
         }
     }
 }
