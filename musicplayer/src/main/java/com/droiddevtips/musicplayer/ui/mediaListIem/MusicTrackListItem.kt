@@ -48,6 +48,7 @@ import com.droiddevtips.typography.extensions.clickableWithPrimaryColorRipple
 @Composable
 fun MusicTrackListItem(
     @PreviewParameter(MusicListItemPreviewProvider::class) musicTrack: MusicTrack,
+    showAudioVisualizer: Boolean = false,
     currentlyPlaying: String = "",
     textColor: Color = if (isSystemInDarkTheme()) Color.White else Color.Black,
     modifier: Modifier = Modifier,
@@ -85,7 +86,7 @@ fun MusicTrackListItem(
                 .width(50.dp)
                 .height(50.dp)
             ) {
-                if (currentlyPlaying == musicTrack.id) {
+                if (currentlyPlaying == musicTrack.id && showAudioVisualizer) {
                     AudioVisualizer(
                         modifier = Modifier
                             .fillMaxWidth().align(alignment = Alignment.Bottom)

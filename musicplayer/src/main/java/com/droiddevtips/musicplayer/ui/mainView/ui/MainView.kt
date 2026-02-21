@@ -116,6 +116,7 @@ private fun TrackListView(
                 MusicTrackListItem(
                     musicTrack = musicTrack,
                     currentlyPlaying = viewState.currentlyPlaying?.id ?: "",
+                    showAudioVisualizer = viewState.showAudioVisualizer,
                     modifier = Modifier.fillMaxWidth(),
                     onMusicTrackSelected = onMusicTrackSelected
                 )

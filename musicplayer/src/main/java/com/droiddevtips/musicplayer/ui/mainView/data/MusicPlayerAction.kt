@@ -6,7 +6,8 @@ package com.droiddevtips.musicplayer.ui.mainView.data
  */
 sealed interface MusicPlayerAction {
     data object Play : MusicPlayerAction
-    data object Pause : MusicPlayerAction
+    data class Pause(val fromMusicPlayerView: Boolean = false) : MusicPlayerAction
+    data object StopPlayerIfNeeded : MusicPlayerAction
     data object Previous : MusicPlayerAction
     data object Next : MusicPlayerAction
     data object CloseMiniPlayer : MusicPlayerAction

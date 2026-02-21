@@ -208,14 +208,14 @@ fun MiniPlayer(
                         }
 
                         IconButton(modifier = Modifier.size(25.dp), onClick = {
-                            if (viewState.showPauseButton) {
-                                onViewAction(MusicPlayerAction.Pause)
+                            if (viewState.isPlaying) {
+                                onViewAction(MusicPlayerAction.Pause())
                             } else {
                                 onViewAction(MusicPlayerAction.Play)
                             }
                         }) {
                             Icon(
-                                painter = painterResource(id = if (viewState.showPauseButton) R.drawable.pause_button else R.drawable.play_button),
+                                painter = painterResource(id = if (viewState.isPlaying) R.drawable.pause_button else R.drawable.play_button),
                                 modifier = Modifier.size(25.dp),
                                 contentDescription = null
                             )
@@ -347,14 +347,14 @@ fun MiniPlayerExpandedView(
                     }
 
                     IconButton(modifier = Modifier.size(50.dp), onClick = {
-                        if (viewState.showPauseButton) {
-                            onViewAction(MusicPlayerAction.Pause)
+                        if (viewState.isPlaying) {
+                            onViewAction(MusicPlayerAction.Pause())
                         } else {
                             onViewAction(MusicPlayerAction.Play)
                         }
                     }) {
                         Icon(
-                            painter = painterResource(id = if (viewState.showPauseButton) R.drawable.pause_button else R.drawable.play_button),
+                            painter = painterResource(id = if (viewState.isPlaying) R.drawable.pause_button else R.drawable.play_button),
                             modifier = Modifier.size(50.dp),
                             contentDescription = null
                         )

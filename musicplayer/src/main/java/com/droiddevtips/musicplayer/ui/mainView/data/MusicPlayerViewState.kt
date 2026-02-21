@@ -7,11 +7,16 @@ import kotlinx.parcelize.Parcelize
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
+
+//TODO: Swap show 'play' and 'pause' button with a single Boolean state
+
 @Parcelize
 data class MusicPlayerViewState(
     val currentlyPlaying: MusicTrack? = null,
-    val showPlayButton: Boolean = true,
-    val showPauseButton: Boolean = false,
+    val showAudioVisualizer: Boolean = false,
+    val isPlaying: Boolean = false,
+//    val showPlayButton: Boolean = true,
+//    val showPauseButton: Boolean = false,
     val showMiniPlayer: Boolean = false,
     val expandMiniPlayer: Boolean = false,
     val shuffled: Boolean = false,

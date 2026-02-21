@@ -19,10 +19,10 @@ class MusicPlayerActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DroidDevTipsTheme {
-                Scaffold(modifier = Modifier.Companion.fillMaxSize()) { innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MainMusicPlayerView(
                         application = application,
-                        modifier = Modifier.Companion.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }

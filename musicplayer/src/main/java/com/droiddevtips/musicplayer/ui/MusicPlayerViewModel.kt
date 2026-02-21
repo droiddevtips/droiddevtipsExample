@@ -2,24 +2,18 @@ package com.droiddevtips.musicplayer.ui
 
 import android.app.Application
 import android.content.ComponentName
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
-import androidx.media3.common.MediaMetadata
-import androidx.media3.common.Metadata
-import androidx.media3.common.PlaybackParameters
 import androidx.media3.common.Player
-import androidx.media3.common.Timeline
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.droiddevtips.musicplayer.R
 import com.droiddevtips.musicplayer.core.MusicPlayerService
 import com.droiddevtips.musicplayer.extensions.asMediaItemList
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
 import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerViewState
 import com.droiddevtips.musicplayer.ui.mainView.data.MusicTrack
-import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
 import com.google.common.util.concurrent.MoreExecutors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -93,13 +87,6 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                                 percentage = percentage
                             )
                         }
-
-
-                        Log.i(
-                            "TAG35",
-                            "Current: $currentPositionText - total duration: $totalDurationString - percentage: ${percentage}"
-                        )
-
                     }
                 }
                 delay(1.seconds)
@@ -121,87 +108,12 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
         sessionToken = null
     }
 
-    override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
-        super.onMediaMetadataChanged(mediaMetadata)
-        Log.i(
-            "TAG23",
-            "Media meta data changed: ${mediaMetadata.composer}\n media type: ${mediaMetadata.mediaType}\n Artwork Uri: ${mediaMetadata.artworkUri}\nArtist: ${mediaMetadata.artist}\nTitle: ${mediaMetadata.title}\nSubtitle: ${mediaMetadata.subtitle}\nPosition: ${mediaController?.currentPosition}\nDuration: ${mediaController?.duration}"
-        )
-    }
-
-    override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
-        super.onPlayWhenReadyChanged(playWhenReady, reason)
-        Log.i("TAG23", "On play when ready changed: $playWhenReady -> reason: $reason")
-    }
-
-    override fun onIsLoadingChanged(isLoading: Boolean) {
-        super.onIsLoadingChanged(isLoading)
-        Log.i("TAG23", "On is loading changed -> $isLoading \n\n")
-    }
-
-    override fun onPlaylistMetadataChanged(mediaMetadata: MediaMetadata) {
-        super.onPlaylistMetadataChanged(mediaMetadata)
-        Log.i("TAG23", "On play list meta data changed -> $mediaMetadata \n\n")
-    }
-
-    override fun onPositionDiscontinuity(
-        oldPosition: Player.PositionInfo,
-        newPosition: Player.PositionInfo,
-        reason: Int
-    ) {
-        super.onPositionDiscontinuity(oldPosition, newPosition, reason)
-        Log.i(
-            "TAG23",
-            "On position discontinuity -> old: ${oldPosition.positionMs}, new: ${newPosition.positionMs}, reason: ${reason} \n\n"
-        )
-    }
-
-
-    override fun onRepeatModeChanged(repeatMode: Int) {
-        super.onRepeatModeChanged(repeatMode)
-        Log.i("TAG23", "On repeat mode changed -> $repeatMode \n\n")
-    }
-
-    override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {
-        super.onShuffleModeEnabledChanged(shuffleModeEnabled)
-        Log.i("TAG23", "On shuffle mode enable changed -> $shuffleModeEnabled \n\n")
-    }
-
-    override fun onTimelineChanged(timeline: Timeline, reason: Int) {
-        super.onTimelineChanged(timeline, reason)
-        Log.i(
-            "TAG23",
-            "On timeline changed -> period ${timeline.periodCount}, window: ${timeline.windowCount} \n\n"
-        )
-
-        if (reason == Player.TIMELINE_CHANGE_REASON_SOURCE_UPDATE) {
-            Log.i(
-                "TAG23",
-                "Position: ${mediaController?.currentPosition} - duration: ${mediaController?.duration}"
-            )
-        }
-
-    }
-
-    override fun onAvailableCommandsChanged(availableCommands: Player.Commands) {
-        super.onAvailableCommandsChanged(availableCommands)
-        Log.i("TAG23", "On available command changed -> $availableCommands \n\n")
-
-    }
-
-    override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters) {
-        super.onPlaybackParametersChanged(playbackParameters)
-        Log.i("TAG23", "On playback parameters changed -> parameters: ${playbackParameters} \n\n")
-    }
-
     override fun onIsPlayingChanged(isPlaying: Boolean) {
         super.onIsPlayingChanged(isPlaying)
-        Log.i("TAG23", "Is playing: $isPlaying \n\n")
 
         _musicPlayerViewState.update { state ->
             state.copy(
-                showPauseButton = isPlaying,
-                showPlayButton = !isPlaying,
+                isPlaying = isPlaying,
                 showMiniPlayer = if (_musicPlayerViewState.value.showMiniPlayer) true else isPlaying,
                 enablePreviousButton = mediaController?.hasPreviousMediaItem() ?: false,
                 enableNextButton = mediaController?.hasNextMediaItem() ?: false
@@ -209,69 +121,23 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-    @UnstableApi
-    override fun onMetadata(metadata: Metadata) {
-        super.onMetadata(metadata)
-        Log.i("TAG23", "On meta data: $metadata \n\n")
-    }
-
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
         super.onMediaItemTransition(mediaItem, reason)
-        Log.i(
-            "TAG23", "On media item transition: $mediaItem, reason: ${
-                when (reason) {
-                    Player.MEDIA_ITEM_TRANSITION_REASON_REPEAT -> "Reason repeat"
-                    Player.MEDIA_ITEM_TRANSITION_REASON_AUTO -> "Reason auto"
-                    Player.MEDIA_ITEM_TRANSITION_REASON_SEEK -> "Reason seek"
-                    Player.MEDIA_ITEM_TRANSITION_REASON_PLAYLIST_CHANGED -> "Reason playlist changed"
-                    else -> "Unknown"
-                }
-            } \n\n"
-        )
 
-        val newItem = musicList.asSequence().filter { it.id == mediaItem?.mediaId }.firstOrNull()
-        Log.i("TAG23", "new item: $newItem")
-        newItem?.let {
-            _musicPlayerViewState.update { it.copy(currentlyPlaying = newItem) }
-        }
-
-
-    }
-
-    override fun onPlaybackStateChanged(playbackState: Int) {
-        super.onPlaybackStateChanged(playbackState)
-        Log.i("TAG23", "Playback state: $playbackState \n\n")
-        when (playbackState) {
-
-            Player.STATE_IDLE -> {
-                Log.i("TAG23", "Playback state -> STATE_IDLE")
+        val newMediaItem = mediaItem ?: return
+        musicList.asSequence().filter { it.id == newMediaItem.mediaId }
+            .firstOrNull()?.let { newTrack ->
+                _musicPlayerViewState.update { it.copy(currentlyPlaying = newTrack, showAudioVisualizer = true) }
             }
 
-            Player.STATE_BUFFERING -> {
-                Log.i("TAG23", "Playback state -> STATE_BUFFERING")
-            }
-
-            Player.STATE_READY -> {
-                Log.i("TAG23", "Playback state -> STATE_READY")
-            }
-
-            Player.STATE_ENDED -> {
-                Log.i("TAG23", "Playback state -> STATE_ENDED")
-            }
-        }
     }
 
     fun performAction(action: MusicPlayerAction) {
 
-        Log.i("TAG23","Perform action -> $action")
-
         when (action) {
             is MusicPlayerAction.ChangeMusicTrack -> {
-
                 val index = musicList.indexOf(action.track)
-                Log.i("TAG23", "Track index: $index")
-
-                _musicPlayerViewState.update { it.copy(currentlyPlaying = action.track) }
+                _musicPlayerViewState.update { it.copy(currentlyPlaying = action.track, showAudioVisualizer = false) }
                 mediaController?.apply {
                     seekTo(index, 0)
                     play()
@@ -282,11 +148,24 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                 mediaController?.apply {
                     if (isPlaying) {
                         pause()
-                        _musicPlayerViewState.update { state ->
-                            state.copy(
-                                showPauseButton = false,
-                                showPlayButton = true
-                            )
+                        if (action.fromMusicPlayerView) {
+                            _musicPlayerViewState.update { state ->
+                                state.copy(
+                                    isPlaying = isPlaying,
+//                                    showPauseButton = false,
+//                                    showPlayButton = true,
+                                    showMiniPlayer = false,
+                                    showAudioVisualizer = false
+                                )
+                            }
+                        } else {
+                            _musicPlayerViewState.update { state ->
+                                state.copy(
+                                    isPlaying = isPlaying,
+//                                    showPauseButton = false,
+//                                    showPlayButton = true
+                                )
+                            }
                         }
                     }
                 }
@@ -298,8 +177,9 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                         play()
                         _musicPlayerViewState.update { state ->
                             state.copy(
-                                showPauseButton = true,
-                                showPlayButton = false,
+//                                showPauseButton = true,
+//                                showPlayButton = false,
+                                isPlaying = isPlaying,
                                 showMiniPlayer = true
                             )
                         }
@@ -311,11 +191,9 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                 mediaController?.let { player ->
                     if (player.hasNextMediaItem()) {
                         mediaController?.currentMediaItem?.let { currentMediaItem ->
-
                             musicList.asSequence().filter { it.id == currentMediaItem.mediaId }
-                                .firstOrNull()?.let { currentTrack ->
-
-                                    val index = musicList.indexOf(currentTrack)
+                                .firstOrNull()?.let { newTrack ->
+                                    val index = musicList.indexOf(newTrack)
                                     if (index != -1) {
                                         mediaController?.seekTo(index + 1, 0)
                                     }
@@ -329,11 +207,9 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                 mediaController?.let { player ->
                     if (player.hasPreviousMediaItem()) {
                         mediaController?.currentMediaItem?.let { currentMediaItem ->
-
                             musicList.asSequence().filter { it.id == currentMediaItem.mediaId }
-                                .firstOrNull()?.let { currentTrack ->
-
-                                    val index = musicList.indexOf(currentTrack)
+                                .firstOrNull()?.let { previousTrack ->
+                                    val index = musicList.indexOf(previousTrack)
                                     if (index != -1) {
                                         mediaController?.seekTo(index - 1, 0)
                                     }
@@ -343,18 +219,32 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                 }
             }
 
-            MusicPlayerAction.CloseMiniPlayer -> {
-                mediaController?.apply {
-                    if (isPlaying) {
-                        stop()
-                    }
-                }
-                _musicPlayerViewState.update { it.copy(showMiniPlayer = false, currentlyPlaying = null) }
-            }
+            MusicPlayerAction.CloseMiniPlayer -> closeMiniPlayer()
 
             is MusicPlayerAction.ToggleMiniPlayerView -> {
                 _musicPlayerViewState.update { it.copy(expandMiniPlayer = !_musicPlayerViewState.value.expandMiniPlayer) }
             }
+
+            is MusicPlayerAction.StopPlayerIfNeeded -> mediaController?.apply {
+                if (!isPlaying) {
+                    stop()
+                    _musicPlayerViewState.update { it.copy(currentlyPlaying = null, showAudioVisualizer = false) }
+                }
+            }
+        }
+    }
+
+    private fun closeMiniPlayer() {
+        mediaController?.apply {
+            if (isPlaying) {
+                stop()
+            }
+        }
+        _musicPlayerViewState.update {
+            it.copy(
+                showMiniPlayer = false,
+                currentlyPlaying = null
+            )
         }
     }
 

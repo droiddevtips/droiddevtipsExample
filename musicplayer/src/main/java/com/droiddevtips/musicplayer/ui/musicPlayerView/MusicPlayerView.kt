@@ -2,6 +2,7 @@
 
 package com.droiddevtips.musicplayer.ui.musicPlayerView
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -22,6 +23,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -35,9 +37,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.droiddevtips.musicplayer.R
-import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerViewState
 import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
+import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerViewState
 
 /**
  * Created by Melchior Vrolijk
@@ -45,12 +49,15 @@ import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
  */
 @Composable
 fun MusicPlayerView(
+    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     viewState: MusicPlayerViewState,
     modifier: Modifier = Modifier,
     action: (MusicPlayerAction) -> Unit
 ) {
 
     val musicTrack = viewState.currentlyPlaying ?: return
+
+    Log.i("TAG23","Music player view state: $viewState")
 
     Box(
         modifier = modifier
@@ -141,9 +148,9 @@ fun MusicPlayerView(
                     )
                 }
 
-                if (viewState.showPauseButton) {
+                if (viewState.isPlaying) {
                     IconButton(onClick = {
-                        action(MusicPlayerAction.Pause)
+                        action(MusicPlayerAction.Pause(fromMusicPlayerView = true))
                     }) {
                         Image(
                             painter = painterResource(id = R.drawable.pause_button),
@@ -154,7 +161,7 @@ fun MusicPlayerView(
                     }
                 }
 
-                if (viewState.showPlayButton) {
+                if (!viewState.isPlaying) {
                     IconButton(onClick = {
                         action(MusicPlayerAction.Play)
                     }) {
@@ -181,6 +188,12 @@ fun MusicPlayerView(
                     )
                 }
             }
+        }
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        onDispose {
+            action(MusicPlayerAction.StopPlayerIfNeeded)
         }
     }
 }
