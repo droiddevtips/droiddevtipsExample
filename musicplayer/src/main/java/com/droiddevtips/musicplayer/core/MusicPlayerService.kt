@@ -2,6 +2,7 @@ package com.droiddevtips.musicplayer.core
 
 import android.app.PendingIntent
 import android.content.Intent
+import androidx.media3.common.AudioAttributes
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
@@ -14,23 +15,32 @@ import com.droiddevtips.musicplayer.ui.MusicPlayerActivity
  */
 class MusicPlayerService : MediaSessionService() {
 
-   private var mediaSession: MediaSession? = null
-   private var mediaPlayer: ExoPlayer? = null
+    private var mediaSession: MediaSession? = null
+    private var mediaPlayer: ExoPlayer? = null
 
     @UnstableApi
     override fun onCreate() {
         super.onCreate()
-        ExoPlayer.Builder(this).build().also { mediaPlayer ->
+        ExoPlayer.Builder(this).setAudioAttributes(AudioAttributes.DEFAULT, true)
+            .setHandleAudioBecomingNoisy(true).build().also { mediaPlayer ->
             val openAppIntent = Intent(this, MusicPlayerActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
 
-            val openAppPendingIntent = PendingIntent.getActivity(this,0,openAppIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-            mediaSession = MediaSession.Builder(this, mediaPlayer).setSessionActivity(openAppPendingIntent).build()
+            val openAppPendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                openAppIntent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            mediaSession =
+                MediaSession.Builder(this, mediaPlayer).setSessionActivity(openAppPendingIntent)
+                    .build()
         }
     }
 
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = mediaSession
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? =
+        mediaSession
 
     override fun onDestroy() {
         mediaSession?.run {

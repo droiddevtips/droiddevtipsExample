@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.droiddevtips.musicplayer.ui
 
 import android.app.Application
@@ -37,11 +39,12 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
     private var mediaController: MediaController? = null
     private var sessionToken: SessionToken? = null
     private val _musicPlayerViewState = MutableStateFlow(MusicPlayerViewState())
+
     val musicPlayerViewState: StateFlow<MusicPlayerViewState>
         get() = _musicPlayerViewState.asStateFlow().onStart {
             _musicPlayerViewState.update { it.copy(musicList = musicList) }
         }.stateIn(
-            viewModelScope, SharingStarted.Companion.WhileSubscribed(5000),
+            viewModelScope, SharingStarted.WhileSubscribed(5000),
             MusicPlayerViewState()
         )
 
@@ -61,8 +64,86 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
                 }
             }, MoreExecutors.directExecutor())
         }
-
         trackProgress()
+    }
+
+    fun performAction(action: MusicPlayerAction) {
+
+        when (action) {
+            is MusicPlayerAction.ChangeMusicTrack -> {
+                val index = musicList.indexOf(action.track)
+                mediaController?.apply {
+                    seekTo(index, 0)
+                    play()
+                }
+            }
+
+            is MusicPlayerAction.Pause -> pause(fromMusicPlayerView = action.fromMusicPlayerView)
+
+            is MusicPlayerAction.Play -> {
+                mediaController?.apply {
+                    if (!isPlaying) {
+                        play()
+                        _musicPlayerViewState.update { state ->
+                            state.copy(
+                                isPlaying = isPlaying,
+                                showMiniPlayer = true
+                            )
+                        }
+                    }
+                }
+            }
+
+            is MusicPlayerAction.Next -> {
+                mediaController?.let { player ->
+                    if (player.hasNextMediaItem()) {
+                        mediaController?.currentMediaItem?.let { currentMediaItem ->
+                            musicList.firstOrNull { it.id == currentMediaItem.mediaId }
+                                ?.let { newTrack ->
+                                    val index = musicList.indexOf(newTrack)
+                                    if (index != -1) {
+                                        mediaController?.seekTo(index + 1, 0)
+                                    }
+                                }
+                        }
+                    }
+                }
+            }
+
+            is MusicPlayerAction.Previous -> {
+                mediaController?.let { player ->
+                    if (player.hasPreviousMediaItem()) {
+                        mediaController?.currentMediaItem?.let { currentMediaItem ->
+                            musicList.firstOrNull { it.id == currentMediaItem.mediaId }
+                                ?.let { previousTrack ->
+                                    val index = musicList.indexOf(previousTrack)
+                                    if (index != -1) {
+                                        mediaController?.seekTo(index - 1, 0)
+                                    }
+                                }
+                        }
+                    }
+                }
+            }
+
+            is MusicPlayerAction.CloseMiniPlayer -> closeMiniPlayer()
+
+            is MusicPlayerAction.ToggleMiniPlayerView -> {
+                _musicPlayerViewState.update { it.copy(expandMiniPlayer = !_musicPlayerViewState.value.expandMiniPlayer) }
+            }
+
+            is MusicPlayerAction.StopPlayerIfNeeded -> mediaController?.apply {
+                if (!isPlaying) {
+                    stop()
+                    _musicPlayerViewState.update {
+                        it.copy(
+                            currentlyPlaying = null,
+                            showAudioVisualizer = false
+                        )
+                    }
+                }
+            }
+        }
     }
 
     private fun trackProgress() {
@@ -94,6 +175,42 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
+    override fun onIsPlayingChanged(isPlaying: Boolean) {
+        super.onIsPlayingChanged(isPlaying)
+        _musicPlayerViewState.update { state ->
+            state.copy(
+                isPlaying = isPlaying,
+                showMiniPlayer = if (_musicPlayerViewState.value.showMiniPlayer) true else isPlaying,
+                enablePreviousButton = mediaController?.hasPreviousMediaItem() ?: false,
+                enableNextButton = mediaController?.hasNextMediaItem() ?: false
+            )
+        }
+
+        if (_musicPlayerViewState.value.currentlyPlaying == null && isPlaying) {
+            getMusicTrack(id = mediaController?.currentMediaItem?.mediaId)?.let { newTrack ->
+                _musicPlayerViewState.update {
+                    it.copy(
+                        currentlyPlaying = newTrack,
+                        showAudioVisualizer = true
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+        super.onMediaItemTransition(mediaItem, reason)
+
+        val newMediaItem = mediaItem ?: return
+        getMusicTrack(id = newMediaItem.mediaId)?.let { newTrack ->
+            _musicPlayerViewState.update {
+                it.copy(
+                    currentlyPlaying = newTrack,
+                    showAudioVisualizer = true
+                )
+            }
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -103,134 +220,42 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
 
             release()
         }
-
         mediaController = null
         sessionToken = null
     }
 
-    override fun onIsPlayingChanged(isPlaying: Boolean) {
-        super.onIsPlayingChanged(isPlaying)
-
-        _musicPlayerViewState.update { state ->
-            state.copy(
-                isPlaying = isPlaying,
-                showMiniPlayer = if (_musicPlayerViewState.value.showMiniPlayer) true else isPlaying,
-                enablePreviousButton = mediaController?.hasPreviousMediaItem() ?: false,
-                enableNextButton = mediaController?.hasNextMediaItem() ?: false
-            )
+    private fun pause(fromMusicPlayerView: Boolean) {
+        mediaController?.apply {
+            if (isPlaying) {
+                pause()
+                if (fromMusicPlayerView) {
+                    _musicPlayerViewState.update { state ->
+                        state.copy(
+                            isPlaying = isPlaying,
+                            showMiniPlayer = false,
+                            showAudioVisualizer = false
+                        )
+                    }
+                } else {
+                    _musicPlayerViewState.update { state ->
+                        state.copy(
+                            isPlaying = isPlaying,
+                        )
+                    }
+                }
+            }
         }
     }
 
-    override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-        super.onMediaItemTransition(mediaItem, reason)
+    private fun currentPlayingMediaItem(): MediaItem? = mediaController?.currentMediaItem
 
-        val newMediaItem = mediaItem ?: return
-        musicList.asSequence().filter { it.id == newMediaItem.mediaId }
-            .firstOrNull()?.let { newTrack ->
-                _musicPlayerViewState.update { it.copy(currentlyPlaying = newTrack, showAudioVisualizer = true) }
-            }
+    private fun getMusicTrack(id: String?): MusicTrack? {
 
-    }
+        if (id.isNullOrBlank())
+            return null
 
-    fun performAction(action: MusicPlayerAction) {
-
-        when (action) {
-            is MusicPlayerAction.ChangeMusicTrack -> {
-                val index = musicList.indexOf(action.track)
-                _musicPlayerViewState.update { it.copy(currentlyPlaying = action.track, showAudioVisualizer = false) }
-                mediaController?.apply {
-                    seekTo(index, 0)
-                    play()
-                }
-            }
-
-            is MusicPlayerAction.Pause -> {
-                mediaController?.apply {
-                    if (isPlaying) {
-                        pause()
-                        if (action.fromMusicPlayerView) {
-                            _musicPlayerViewState.update { state ->
-                                state.copy(
-                                    isPlaying = isPlaying,
-//                                    showPauseButton = false,
-//                                    showPlayButton = true,
-                                    showMiniPlayer = false,
-                                    showAudioVisualizer = false
-                                )
-                            }
-                        } else {
-                            _musicPlayerViewState.update { state ->
-                                state.copy(
-                                    isPlaying = isPlaying,
-//                                    showPauseButton = false,
-//                                    showPlayButton = true
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            is MusicPlayerAction.Play -> {
-                mediaController?.apply {
-                    if (!isPlaying) {
-                        play()
-                        _musicPlayerViewState.update { state ->
-                            state.copy(
-//                                showPauseButton = true,
-//                                showPlayButton = false,
-                                isPlaying = isPlaying,
-                                showMiniPlayer = true
-                            )
-                        }
-                    }
-                }
-            }
-
-            MusicPlayerAction.Next -> {
-                mediaController?.let { player ->
-                    if (player.hasNextMediaItem()) {
-                        mediaController?.currentMediaItem?.let { currentMediaItem ->
-                            musicList.asSequence().filter { it.id == currentMediaItem.mediaId }
-                                .firstOrNull()?.let { newTrack ->
-                                    val index = musicList.indexOf(newTrack)
-                                    if (index != -1) {
-                                        mediaController?.seekTo(index + 1, 0)
-                                    }
-                                }
-                        }
-                    }
-                }
-            }
-
-            MusicPlayerAction.Previous -> {
-                mediaController?.let { player ->
-                    if (player.hasPreviousMediaItem()) {
-                        mediaController?.currentMediaItem?.let { currentMediaItem ->
-                            musicList.asSequence().filter { it.id == currentMediaItem.mediaId }
-                                .firstOrNull()?.let { previousTrack ->
-                                    val index = musicList.indexOf(previousTrack)
-                                    if (index != -1) {
-                                        mediaController?.seekTo(index - 1, 0)
-                                    }
-                                }
-                        }
-                    }
-                }
-            }
-
-            MusicPlayerAction.CloseMiniPlayer -> closeMiniPlayer()
-
-            is MusicPlayerAction.ToggleMiniPlayerView -> {
-                _musicPlayerViewState.update { it.copy(expandMiniPlayer = !_musicPlayerViewState.value.expandMiniPlayer) }
-            }
-
-            is MusicPlayerAction.StopPlayerIfNeeded -> mediaController?.apply {
-                if (!isPlaying) {
-                    stop()
-                    _musicPlayerViewState.update { it.copy(currentlyPlaying = null, showAudioVisualizer = false) }
-                }
-            }
+        return currentPlayingMediaItem()?.mediaId?.let { mediaID ->
+            musicList.firstOrNull { it.id == mediaID }
         }
     }
 
