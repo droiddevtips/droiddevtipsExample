@@ -236,20 +236,6 @@ fun MiniPlayer(
                     }
                 }
             }
-
-            IconButton(
-                modifier = Modifier
-                    .size(15.dp)
-                    .align(alignment = Alignment.TopEnd),
-                onClick = {
-                    onViewAction(MusicPlayerAction.CloseMiniPlayer)
-                }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.close),
-                    modifier = Modifier.size(15.dp),
-                    contentDescription = null
-                )
-            }
         }
     }
 }

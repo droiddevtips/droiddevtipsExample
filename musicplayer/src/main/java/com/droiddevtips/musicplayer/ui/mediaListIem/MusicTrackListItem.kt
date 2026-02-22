@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -82,21 +83,26 @@ fun MusicTrackListItem(
                 }
             }
 
-            Row(modifier = Modifier
-                .width(50.dp)
-                .height(50.dp)
+            Row(
+                modifier = Modifier
+                    .width(50.dp)
+                    .height(50.dp)
             ) {
                 if (currentlyPlaying == musicTrack.id && showAudioVisualizer) {
                     AudioVisualizer(
                         modifier = Modifier
-                            .fillMaxWidth().align(alignment = Alignment.Bottom)
+                            .fillMaxWidth()
+                            .align(alignment = Alignment.Bottom)
                             .height(20.dp)
                     )
                 }
             }
         }
 
-        HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
+        HorizontalDivider(
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        )
     }
 }
 
