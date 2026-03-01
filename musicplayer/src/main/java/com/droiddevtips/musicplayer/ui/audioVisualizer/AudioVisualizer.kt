@@ -31,7 +31,7 @@ fun AudioVisualizer(
     barCount: Int = 3,
     barColor: Color = MaterialTheme.colorScheme.primary
 ) {
-    val infiniteTransition = rememberInfiniteTransition(label = "visualizer")
+    val infiniteTransition = rememberInfiniteTransition()
 
     val randomHeights = List(barCount) { index ->
         infiniteTransition.animateFloat(

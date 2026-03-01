@@ -327,6 +327,51 @@ class MusicPlayerViewModel(application: Application) : AndroidViewModel(applicat
             thumbnail = R.mipmap.epic_hero_thumb,
             thumbnailLarge = R.drawable.epic_hero_thumb_large,
             credit = "Music powered by BreakingCopyright"
+        ),
+        MusicTrack(
+            id = "7",
+            song = "Dawn",
+            composer = "Sappheiros",
+            songFile = R.raw.dawn,
+            thumbnail = R.mipmap.dawn_thumb,
+            thumbnailLarge = R.drawable.dawn_thumb_large,
+            credit = "Music powered by BreakingCopyright"
+        ),
+        MusicTrack(
+            id = "8",
+            song = "Truth",
+            composer = "Sappheiros",
+            songFile = R.raw.truth,
+            thumbnail = R.mipmap.truth_thumb,
+            thumbnailLarge = R.drawable.truth_thumb_large,
+            credit = "Music powered by BreakingCopyright"
+        ),
+        MusicTrack(
+            id = "9",
+            song = "Fire And Thunder",
+            composer = "Cjbeards",
+            songFile = R.raw.fire_and_thunder,
+            thumbnail = R.mipmap.fire_and_thunder_cjbeards_thumb,
+            thumbnailLarge = R.drawable.fire_and_thunder_cjbeards_thumb_large,
+            credit = "Music powered by BreakingCopyright"
+        ),
+        MusicTrack(
+            id = "10",
+            song = "The Travelling Symphony",
+            composer = "Savfk",
+            songFile = R.raw.the_travelling_symphony,
+            thumbnail = R.mipmap.the_travelling_symphony_savfk_thumb,
+            thumbnailLarge = R.drawable.the_travelling_symphony_savfk_large,
+            credit = "Music powered by BreakingCopyright"
+        ),
+        MusicTrack(
+            id = "11",
+            song = "Fragments",
+            composer = "AERØHEAD",
+            songFile = R.raw.fragments,
+            thumbnail = R.mipmap.fragments_aerohead_thumb,
+            thumbnailLarge = R.drawable.fragments_aerohead_thumb_large,
+            credit = "Music powered by BreakingCopyright"
         )
     )
 }
