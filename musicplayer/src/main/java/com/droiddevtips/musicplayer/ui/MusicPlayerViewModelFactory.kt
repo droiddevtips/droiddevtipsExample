@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.droiddevtips.musicplayer.ui
 
 import android.app.Application
