@@ -1,6 +1,7 @@
 package com.droiddevtips.musicplayer.ui.mainView.data
 
 /**
+ * The music player action sealed interface
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */

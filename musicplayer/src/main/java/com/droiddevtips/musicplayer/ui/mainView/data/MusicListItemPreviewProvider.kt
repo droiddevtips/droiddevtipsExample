@@ -4,6 +4,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.droiddevtips.musicplayer.R
 
 /**
+ * The music list item preview provider
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */

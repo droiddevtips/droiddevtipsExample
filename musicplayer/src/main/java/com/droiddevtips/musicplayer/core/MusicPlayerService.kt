@@ -10,6 +10,7 @@ import androidx.media3.session.MediaSessionService
 import com.droiddevtips.musicplayer.ui.MusicPlayerActivity
 
 /**
+ * The music player service, a subclass of [MediaSessionService]
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */

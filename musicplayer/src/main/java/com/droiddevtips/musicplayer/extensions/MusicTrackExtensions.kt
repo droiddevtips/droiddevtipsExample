@@ -8,6 +8,7 @@ import androidx.media3.common.MediaMetadata.MEDIA_TYPE_MUSIC
 import com.droiddevtips.musicplayer.ui.mainView.data.MusicTrack
 
 /**
+ * The [MusicTrack] extensions
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */

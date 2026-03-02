@@ -12,6 +12,11 @@ import androidx.compose.ui.Modifier
 import com.droiddevtips.musicplayer.ui.mainView.ui.MainMusicPlayerView
 import com.droiddevtips.typography.DroidDevTipsTheme
 
+/**
+ * The app main activity
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 class MusicPlayerActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

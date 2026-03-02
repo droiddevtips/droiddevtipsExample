@@ -9,8 +9,12 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -19,9 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.typography.DroidDevTipsTheme
 
 /**
+ * The audio visualizer with a preview section to try it out
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
@@ -61,6 +68,24 @@ fun AudioVisualizer(
                     .clip(RoundedCornerShape(50))
                     .background(barColor)
             )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewAudioVisualizer() {
+
+    DroidDevTipsTheme {
+        Column(
+            modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Spacer(modifier = Modifier.height(20.dp))
+            Column(modifier = Modifier.height(30.dp)) {
+                AudioVisualizer(modifier = Modifier.height(30.dp))
+            }
         }
     }
 }

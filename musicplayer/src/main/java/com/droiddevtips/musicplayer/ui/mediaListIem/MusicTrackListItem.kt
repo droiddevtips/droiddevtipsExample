@@ -31,6 +31,7 @@ import com.droiddevtips.musicplayer.ui.audioVisualizer.AudioVisualizer
 import com.droiddevtips.typography.extensions.clickableWithPrimaryColorRipple
 
 /**
+ * The music track list item composable
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */

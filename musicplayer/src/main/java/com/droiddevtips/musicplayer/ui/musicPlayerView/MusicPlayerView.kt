@@ -2,7 +2,6 @@
 
 package com.droiddevtips.musicplayer.ui.musicPlayerView
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -44,6 +43,7 @@ import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
 import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerViewState
 
 /**
+ * The music player composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
@@ -56,8 +56,6 @@ fun MusicPlayerView(
 ) {
 
     val musicTrack = viewState.currentlyPlaying ?: return
-
-    Log.i("TAG23","Music player view state: $viewState")
 
     Box(
         modifier = modifier
@@ -132,7 +130,6 @@ fun MusicPlayerView(
                 }
             }
 
-
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
 
                 IconButton(enabled = viewState.enablePreviousButton, onClick = {
@@ -150,7 +147,7 @@ fun MusicPlayerView(
 
                 if (viewState.isPlaying) {
                     IconButton(onClick = {
-                        action(MusicPlayerAction.Pause(fromMusicPlayerView = true))
+                        action(MusicPlayerAction.Pause())
                     }) {
                         Image(
                             painter = painterResource(id = R.drawable.pause_button),

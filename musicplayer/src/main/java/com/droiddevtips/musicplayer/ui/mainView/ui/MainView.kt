@@ -3,22 +3,18 @@
 package com.droiddevtips.musicplayer.ui.mainView.ui
 
 import android.app.Application
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
@@ -31,17 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
-import com.droiddevtips.musicplayer.R
 import com.droiddevtips.musicplayer.ui.MusicPlayerViewModel
 import com.droiddevtips.musicplayer.ui.MusicPlayerViewModelFactory
 import com.droiddevtips.musicplayer.ui.mainView.data.MusicPlayerAction
@@ -50,9 +41,11 @@ import com.droiddevtips.musicplayer.ui.mainView.data.MusicTrack
 import com.droiddevtips.musicplayer.ui.mediaListIem.MusicTrackListItem
 import com.droiddevtips.musicplayer.ui.miniplayer.MiniPlayerContainer
 import com.droiddevtips.musicplayer.ui.musicPlayerView.MusicPlayerView
+import com.droiddevtips.musicplayer.ui.placeholder.MusicPlayerPlaceHolder
 import kotlinx.coroutines.launch
 
 /**
+ * The App main composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
@@ -156,34 +149,6 @@ private fun TrackListView(
                 viewState = viewState,
                 onViewAction = onViewAction
             )
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun MusicPlayerPlaceHolder(modifier: Modifier = Modifier) {
-
-    Box(
-        modifier = modifier
-            .background(color = MaterialTheme.colorScheme.background)
-    ) {
-
-        Column(
-            modifier = Modifier.align(alignment = Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-
-            Image(
-                painter = painterResource(id = R.drawable.no_music_icon),
-                modifier = Modifier
-                    .size(100.dp),
-                contentDescription = null,
-                colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.primary)
-            )
-
-            Text(text = stringResource(id = R.string.placeholder_text))
         }
     }
 }

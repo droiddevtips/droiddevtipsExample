@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.os.Build
 
 /**
+ * The App class, a subclass of [Application]
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
