@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.ApplicationExtension
+import org.gradle.kotlin.dsl.configure
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,7 +8,7 @@ plugins {
     id("kotlin-parcelize")
 }
 
-android {
+extensions.configure<ApplicationExtension> {
     namespace = "com.droiddevtips.musicplayer"
     compileSdk {
         version = release(36)
@@ -34,9 +37,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+
     buildFeatures {
         compose = true
     }
@@ -44,7 +45,13 @@ android {
     lint {
         disable.add("ModifierParameter")
     }
+}
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        freeCompilerArgs.add("-Xcontext-receivers")
+    }
 }
 
 dependencies {
