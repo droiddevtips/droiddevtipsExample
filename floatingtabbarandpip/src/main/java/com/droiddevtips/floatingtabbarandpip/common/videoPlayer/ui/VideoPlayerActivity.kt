@@ -281,7 +281,7 @@ class VideoPlayerActivity : ComponentActivity() {
                 this,
                 remoteViewActionReceiver,
                 filter,
-                RECEIVER_NOT_EXPORTED
+                ContextCompat.RECEIVER_NOT_EXPORTED
             )
         } else {
             registerReceiver(remoteViewActionReceiver, filter, RECEIVER_NOT_EXPORTED)
