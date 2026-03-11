@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":pinchtozoom")
+
+
 include(":musicplayer")
 
 
