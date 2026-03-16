@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Pinch To Zoom</string>
+    <string name="pinch_zoom_in_out">Pinch to zoom in/out</string>
+    <string name="double_tab_zoom_back">Double tab to zoom back out</string>
 </resources>
