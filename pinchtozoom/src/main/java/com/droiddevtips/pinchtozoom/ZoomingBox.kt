@@ -63,16 +63,6 @@ fun ZoomableBox(
                     translationY = animatedOffset.y
                 }
                 .pointerInput(Unit) {
-                    detectTapGestures (
-                        onDoubleTap = {
-                            scope.launch {
-                                scale = 1f
-                                offset = Offset.Zero
-                            }
-                        }
-                    )
-                }
-                .pointerInput(Unit) {
                     detectTransformGestures(panZoomLock = true) { _, pan, zoom, _ ->
 
                         val newScale = (scale * zoom).coerceIn(1f, 5f)
@@ -90,6 +80,16 @@ fun ZoomableBox(
                             y = (offset.y + scaledPan.y).coerceIn(-maxY, maxY)
                         )
                     }
+                }
+                .pointerInput(Unit) {
+                    detectTapGestures (
+                        onDoubleTap = {
+                            scope.launch {
+                                scale = 1f
+                                offset = Offset.Zero
+                            }
+                        }
+                    )
                 }
         ) {
             content()
