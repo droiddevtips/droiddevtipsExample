@@ -25,10 +25,10 @@ import androidx.compose.ui.input.pointer.pointerInput
 import kotlinx.coroutines.launch
 
 /**
+ * The zoomable box composable
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
-
 @Composable
 fun ZoomableBox(
     modifier: Modifier = Modifier,
