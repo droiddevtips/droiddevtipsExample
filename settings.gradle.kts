@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":spotlight")
+
+
 include(":pinchtozoom")
 
 
