@@ -62,7 +62,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         Text(
             text = "Hello $name!",
             modifier = modifier
-                .align(alignment = Alignment.TopEnd)
+                .align(alignment = Alignment.Center)
                 .onGloballyPositioned {
                     showSpotlightInfo.value =
                         SpotlightInfo(bounds = it.boundsInRoot(), text = "Test", type = SpotlightType.Rect())
@@ -73,7 +73,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
         Button(onClick = {
             showSpotlight.value = true
-        }, modifier = Modifier.align(alignment = Alignment.Center).navigationBarsPadding() ,enabled = showSpotlightInfo.value != null) {
+        }, modifier = Modifier.align(alignment = Alignment.BottomCenter).navigationBarsPadding() ,enabled = showSpotlightInfo.value != null) {
             Text(text = "Show Spotlight")
         }
 

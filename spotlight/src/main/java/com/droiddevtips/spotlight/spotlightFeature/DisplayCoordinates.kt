@@ -1,6 +1,7 @@
 package com.droiddevtips.spotlight.spotlightFeature
 
 import androidx.compose.ui.geometry.Offset
+import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.TextCoordinate
 
 /**
  * Created by Melchior Vrolijk
@@ -14,6 +15,5 @@ data class DisplayCoordinates(
     val spotlightBottom: Float = 0f,
     val spotlightItemCenterX: Float = 0f,
     val spotlightItemCenterY: Float = 0f,
-    val lineStartCoordinate: Offset = Offset.Zero,
-    val lineEndCoordinate: Offset = Offset.Zero
+    val textCoordinate: TextCoordinate = TextCoordinate.None,
 )

@@ -19,12 +19,12 @@ class LargestSpacingCalculator(
     private val spotLeft: Float,
     private val spotRight: Float,
     private val containerSize: IntSize
-) : ReadOnlyProperty<Any?, Pair<Offset,Offset>> {
+) : ReadOnlyProperty<Any?, TextCoordinate> {
 
     override fun getValue(
         thisRef: Any?,
         property: KProperty<*>
-    ): Pair<Offset,Offset> {
+    ): TextCoordinate {
 
         val padding = 20f
         val spotTopDist = if (spotTop < 0) 0f else spotTop
@@ -44,10 +44,23 @@ class LargestSpacingCalculator(
            Configuration.ORIENTATION_LANDSCAPE -> {
                if (spotLeftDist == spotRightDist || abs(spotLeftDist - spotRightDist) <= 150f) {
                    // Horizontal center
+                   Log.i("TAG56","Landscape Horizontal center")
 
                    if (spotTopDist == spotBottomDist || abs(spotTopDist - spotBottomDist) <= 150f) {
                        // Vertical center
+                       Log.i("TAG56","Landscape Vertical center")
 
+                       TextCoordinate.LandscapeHorizontalVerticalCenter(
+                           _lineStartCoordinate = Offset(
+                               x = (containerSize.width/2f),
+                               y = spotTop - padding
+                           ),
+                           _lineEndCoordinate = Offset(
+                               x = (containerSize.width/2f),
+                               y = (spotTopDist/2f)
+                           )
+                       )
+                       /*
                        Pair(
                            Offset(
                                x = (containerSize.width/2f),
@@ -58,54 +71,116 @@ class LargestSpacingCalculator(
                                y = (spotTopDist/2f)
                            )
                        )
+                       */
 
                    } else {
                        val longestVerticalSpacing = maxOf(spotTopDist, spotBottomDist)
 
                        when(longestVerticalSpacing) {
 
-                           spotTopDist -> Pair(
-                               Offset(
-                                   x = (containerSize.width/2f),
-                                   y = spotTopDist - padding
-                               ),
-                               Offset(
-                                   x = (containerSize.width/2f),
-                                   y = (spotTopDist/2f)
+                           spotTopDist -> {
+                               Log.i("TAG56","Landscape Top")
+                               TextCoordinate.LandscapeHorizontalCenterTop(
+                                   _lineStartCoordinate = Offset(
+                                       x = (containerSize.width/2f),
+                                       y = spotTopDist - padding
+                                   ),
+                                   _lineEndCoordinate = Offset(
+                                       x = (containerSize.width/2f),
+                                       y = (spotTopDist/2f)
+                                   )
                                )
-                           )
+                               /*
+                               Pair(
+                                   Offset(
+                                       x = (containerSize.width/2f),
+                                       y = spotTopDist - padding
+                                   ),
+                                   Offset(
+                                       x = (containerSize.width/2f),
+                                       y = (spotTopDist/2f)
+                                   )
+                               )
+                               */
+                           }
 
-                           else -> Pair(
-                               Offset(
-                                   x = (containerSize.width/2f),
-                                   y = spotBottom + padding
-                               ),
-                               Offset(
-                                   x = (containerSize.width/2f),
-                                   y = (spotBottomDist/2f)
+                           else -> {
+                               Log.i("TAG56","Landscape Bottom")
+                               TextCoordinate.LandscapeHorizontalCenterBottom(
+                                   _lineStartCoordinate = Offset(
+                                       x = (containerSize.width/2f),
+                                       y = spotBottom + padding
+                                   ),
+                                   _lineEndCoordinate = Offset(
+                                       x = (containerSize.width/2f),
+                                       y = (spotBottomDist/2f)
+                                   )
                                )
-                           )
+                               /*
+                               Pair(
+                                   Offset(
+                                       x = (containerSize.width/2f),
+                                       y = spotBottom + padding
+                                   ),
+                                   Offset(
+                                       x = (containerSize.width/2f),
+                                       y = (spotBottomDist/2f)
+                                   )
+                               )
+                               */
+                           }
                        }
                    }
                } else if (spotTopDist == spotBottomDist) {
                    // Center vertically
-
+                   Log.i("TAG56","Landscape Center vertically")
                    val longestHorizontalSpacing = maxOf(spotLeftDist, spotRightDist)
                    when(longestHorizontalSpacing) {
 
-                       spotLeftDist -> Pair(
-                           Offset(
-                               x =  spotCenterX,
-                               y = (containerSize.height/2f)
-                           ),
-                           Offset(
-                               x = (spotLeftDist/2f),
-                               y = (containerSize.height/2f)
+                       spotLeftDist -> {
+                           Log.i("TAG56","Landscape Left")
+
+                           TextCoordinate.LandscapeVerticalCenterLeft(
+                               _lineStartCoordinate = Offset(
+                                   x =  spotCenterX,
+                                   y = (containerSize.height/2f)
+                               ),
+                               _lineEndCoordinate = Offset(
+                                   x = (spotLeftDist/2f),
+                                   y = (containerSize.height/2f)
+                               )
                            )
-                       )
+
+                           /*
+                           Pair(
+                               Offset(
+                                   x =  spotCenterX,
+                                   y = (containerSize.height/2f)
+                               ),
+                               Offset(
+                                   x = (spotLeftDist/2f),
+                                   y = (containerSize.height/2f)
+                               )
+                           )
+                           */
+                       }
 
                        else -> {
+                           Log.i("TAG56","Landscape Right")
                            val horizontalCoordinate = ((containerSize.width - spotRightDist) + (spotRightDist/2f))
+
+                           TextCoordinate.LandscapeVerticalCenterRight(
+                               _lineStartCoordinate = Offset(
+                                   x = spotRightDist,
+                                   y = spotCenterY + spotRight
+                               ),
+                               _lineEndCoordinate = Offset(
+                                   x = horizontalCoordinate,
+                                   y = (containerSize.height/2f)
+                               )
+                           )
+
+                           /*
                            Pair(
                                Offset(
                                    x = spotRightDist,
@@ -116,6 +191,7 @@ class LargestSpacingCalculator(
                                    y = (containerSize.height/2f)
                                )
                            )
+                           */
                        }
                    }
                } else {
@@ -125,68 +201,130 @@ class LargestSpacingCalculator(
                    when(longestHorizontalSpacing) {
 
                        spotLeftDist -> {
-
+                           Log.i("TAG56","Landscape Left")
                            when(longestVerticalSpacing) {
 
-                               spotTopDist -> Pair(
-                                   Offset(
-                                       x = spotLeft - padding,
-                                       y = spotTop + (abs(spotTop - spotBottom)/2f)
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/2f),
-                                       y = spotTopDist/2f
-                                   )
-                               )
+                               spotTopDist -> {
+                                   Log.i("TAG56","Landscape vertical Top")
 
-                               spotBottomDist -> Pair(
-                                   Offset(
-                                       x = spotLeft - padding,
-                                       y = spotTop + (abs(spotTop - spotBottom)/2f)
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/4f) * 3,
-                                       y = spotBottomDist/2f
+                                   TextCoordinate.LandscapeLeftTop(
+                                       _lineStartCoordinate = Offset(
+                                           x = spotLeft - padding,
+                                           y = spotTop + (abs(spotTop - spotBottom)/2f)
+                                       ),
+                                       _lineEndCoordinate = Offset(
+                                           x = (containerSize.width/2f),
+                                           y = spotTopDist/2f
+                                       )
                                    )
-                               )
 
-                               else -> Pair(
-                                   Offset.Zero,
-                                   Offset.Zero
-                               )
+                                   /*
+                                   Pair(
+                                       Offset(
+                                           x = spotLeft - padding,
+                                           y = spotTop + (abs(spotTop - spotBottom)/2f)
+                                       ),
+                                       Offset(
+                                           x = (containerSize.width/2f),
+                                           y = spotTopDist/2f
+                                       )
+                                   )
+                                   */
+                               }
+
+                               spotBottomDist -> {
+                                   Log.i("TAG56","Landscape vertical Bottom")
+
+                                   TextCoordinate.LandscapeLeftBottom(
+                                       _lineStartCoordinate = Offset(
+                                           x = spotLeft - padding,
+                                           y = spotTop + (abs(spotTop - spotBottom)/2f)
+                                       ),
+                                       _lineEndCoordinate = Offset(
+                                           x = (containerSize.width/4f) * 3,
+                                           y = spotBottomDist/2f
+                                       )
+                                   )
+
+                                   /*
+                                   Pair(
+                                       Offset(
+                                           x = spotLeft - padding,
+                                           y = spotTop + (abs(spotTop - spotBottom)/2f)
+                                       ),
+                                       Offset(
+                                           x = (containerSize.width/4f) * 3,
+                                           y = spotBottomDist/2f
+                                       )
+                                   )
+                                   */
+                               }
+
+                               else -> TextCoordinate.None
                            }
                        }
 
                        else -> {
-
+                           Log.i("TAG56","Landscape Right")
                            when(longestVerticalSpacing) {
 
-                               spotTopDist -> Pair(
-                                   Offset(
-                                       x = spotRight + padding,
-                                       y = spotTop + (abs(spotTop - spotBottom)/2f)
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/3f),
-                                       y = spotTopDist/2f
+                               spotTopDist -> {
+                                   Log.i("TAG56","Landscape vertical Top")
+                                   TextCoordinate.LandscapeRightTop(
+                                       _lineStartCoordinate = Offset(
+                                           x = spotRight + padding,
+                                           y = spotTop + (abs(spotTop - spotBottom)/2f)
+                                       ),
+                                       _lineEndCoordinate = Offset(
+                                           x = (containerSize.width/3f),
+                                           y = spotTopDist/2f
+                                       )
                                    )
-                               )
 
-                               spotBottomDist -> Pair(
-                                   Offset(
-                                       x = spotRight + padding,
-                                       y = spotTopDist + abs(spotTop - spotBottom)/2f
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/3f),
-                                       y = (spotBottomDist/2f)
+                                   /*
+                                   Pair(
+                                       Offset(
+                                           x = spotRight + padding,
+                                           y = spotTop + (abs(spotTop - spotBottom)/2f)
+                                       ),
+                                       Offset(
+                                           x = (containerSize.width/3f),
+                                           y = spotTopDist/2f
+                                       )
                                    )
-                               )
+                                   */
+                               }
 
-                               else -> Pair(
-                                   Offset.Zero,
-                                   Offset.Zero
-                               )
+                               spotBottomDist -> {
+                                   Log.i("TAG56","Landscape vertical Bottom")
+
+                                   TextCoordinate.LandscapeRightBottom(
+                                       _lineStartCoordinate = Offset(
+                                           x = spotRight + padding,
+                                           y = spotTopDist + abs(spotTop - spotBottom)/2f
+                                       ),
+                                       _lineEndCoordinate = Offset(
+                                           x = (containerSize.width/3f),
+                                           y = (spotBottomDist/2f)
+                                       )
+                                   )
+
+
+                                   /*
+                                   Pair(
+                                       Offset(
+                                           x = spotRight + padding,
+                                           y = spotTopDist + abs(spotTop - spotBottom)/2f
+                                       ),
+                                       Offset(
+                                           x = (containerSize.width/3f),
+                                           y = (spotBottomDist/2f)
+                                       )
+                                   )
+                                   */
+                               }
+
+                               else -> TextCoordinate.None
                            }
                        }
                    }
@@ -196,10 +334,23 @@ class LargestSpacingCalculator(
            Configuration.ORIENTATION_PORTRAIT -> {
                if (spotLeftDist == spotRightDist || abs(spotLeftDist - spotRightDist) <= 150f) {
                    // Horizontal center
-
+                   Log.i("TAG56","Portrait Horizontal center")
                    if (spotTopDist == spotBottomDist || abs(spotTopDist - spotBottomDist) <= 150f) {
                        // Vertical center
+                       Log.i("TAG56","Portrait Vertical center")
 
+                       TextCoordinate.PortraitHorizontalVerticalCenter(
+                           _lineStartCoordinate = Offset(
+                               x = spotCenterX, // (abs (spotLeft - spotRight)/2f)
+                               y = spotTop - padding
+                           ),
+                           _lineEndCoordinate = Offset(
+                               x = (containerSize.width/2f),
+                               y = (spotTopDist/2f) + (spotTopDist/4f)
+                           )
+                       )
+
+                       /*
                        Pair(
                            Offset(
                                x = spotCenterX, // (abs (spotLeft - spotRight)/2f)
@@ -210,53 +361,118 @@ class LargestSpacingCalculator(
                                y = (spotTopDist/2f) + (spotTopDist/4f)
                            )
                        )
+                       */
                    } else {
                        val longestVerticalSpacing = maxOf(spotTopDist, spotBottomDist)
 
                        when(longestVerticalSpacing) {
 
-                           spotTopDist -> Pair(
-                               Offset(
-                                   x = spotCenterX,
-                                   y = spotTop - padding
-                               ),
-                               Offset(
-                                   x = (containerSize.width/2f),
-                                   y = (spotTopDist/2f) + (spotTopDist/4f)
-                               )
-                           )
+                           spotTopDist -> {
+                               Log.i("TAG56","Portrait Top")
 
-                           else -> Pair(
-                               Offset(
-                                   x = spotCenterX,
-                                   y = spotBottom + padding
-                               ),
-                               Offset(
-                                   x = (containerSize.width/2f),
-                                   y = (spotBottomDist/3f)
+                               TextCoordinate.PortraitHorizontalCenterTop(
+                                   _lineStartCoordinate = Offset(
+                                       x = spotCenterX,
+                                       y = spotTop - padding
+                                   ),
+                                   _lineEndCoordinate = Offset(
+                                       x = (containerSize.width/2f),
+                                       y = (spotTopDist/2f) + (spotTopDist/4f)
+                                   )
                                )
-                           )
+
+                               /*
+                               Pair(
+                                   Offset(
+                                       x = spotCenterX,
+                                       y = spotTop - padding
+                                   ),
+                                   Offset(
+                                       x = (containerSize.width/2f),
+                                       y = (spotTopDist/2f) + (spotTopDist/4f)
+                                   )
+                               )
+                               */
+                           }
+
+                           else -> {
+                               Log.i("TAG56","Portrait Bottom")
+
+                               TextCoordinate.PortraitHorizontalCenterBottom(
+                                   _lineStartCoordinate = Offset(
+                                       x = spotCenterX,
+                                       y = spotBottom + padding
+                                   ),
+                                   _lineEndCoordinate = Offset(
+                                       x = (containerSize.width/2f),
+                                       y = (spotBottomDist/3f)
+                                   )
+                               )
+
+                               /*
+                               Pair(
+                                   Offset(
+                                       x = spotCenterX,
+                                       y = spotBottom + padding
+                                   ),
+                                   Offset(
+                                       x = (containerSize.width/2f),
+                                       y = (spotBottomDist/3f)
+                                   )
+                               )
+                               */
+                           }
                        }
                    }
                } else if (spotTopDist == spotBottomDist) {
                    // Center vertically
-
+                   Log.i("TAG56","Portrait Center vertically")
                    val longestHorizontalSpacing = maxOf(spotLeftDist, spotRightDist)
                    when(longestHorizontalSpacing) {
 
-                       spotLeftDist -> Pair(
-                           Offset(
-                               x = spotLeft,
-                               y = spotCenterY //(containerSize.height/2).toFloat()
-                           ),
-                           Offset(
-                               x = (spotLeftDist/2f),
-                               y = (containerSize.height/2f)
+                       spotLeftDist -> {
+                           Log.i("TAG56","Portrait Left")
+
+                           TextCoordinate.PortraitVerticalCenterLeft(
+                               _lineStartCoordinate = Offset(
+                                   x = spotLeft,
+                                   y = spotCenterY //(containerSize.height/2).toFloat()
+                               ),
+                               _lineEndCoordinate = Offset(
+                                   x = (spotLeftDist/2f),
+                                   y = (containerSize.height/2f)
+                               )
                            )
-                       )
+
+                           /*
+                           Pair(
+                               Offset(
+                                   x = spotLeft,
+                                   y = spotCenterY //(containerSize.height/2).toFloat()
+                               ),
+                               Offset(
+                                   x = (spotLeftDist/2f),
+                                   y = (containerSize.height/2f)
+                               )
+                           )
+                           */
+                       }
 
                        else -> {
+                           Log.i("TAG56","Portrait right")
                            val horizontalCoordinate = ((containerSize.width - spotRightDist) + (spotRightDist/2f))
+                           TextCoordinate.PortraitVerticalCenterRight(
+                               _lineStartCoordinate = Offset(
+                                   x = spotRight,
+                                   y = spotCenterY
+                               ),
+                               _lineEndCoordinate = Offset(
+                                   x = horizontalCoordinate,
+                                   y = (containerSize.height/2f)
+                               )
+                           )
+
+                           /*
                            Pair(
                                Offset(
                                    x = spotRight,
@@ -267,6 +483,7 @@ class LargestSpacingCalculator(
                                    y = (containerSize.height/2f)
                                )
                            )
+                           */
                        }
                    }
                } else {
@@ -276,75 +493,137 @@ class LargestSpacingCalculator(
                    when(longestHorizontalSpacing) {
 
                        spotLeftDist -> {
-
+                           Log.i("TAG56","Portrait left")
                            when(longestVerticalSpacing) {
 
-                               spotTopDist -> Pair(
-                                   Offset(
-                                       x = spotCenterX,
-                                       y = spotTop - padding
-                                   ),
-                                   Offset(
-                                       x = containerSize.width/2f,
-                                       y = spotTopDist/2f + (spotTopDist/4f)
-                                   )
-                               )
+                               spotTopDist -> {
+                                   Log.i("TAG56","Portrait top")
 
-                               spotBottomDist -> Pair(
-                                   Offset(
-                                       x = spotCenterX,
-                                       y = spotBottom + padding
-                                   ),
-                                   Offset(
-                                       x = containerSize.width/2f,
-                                       y = spotBottom + (spotBottomDist/3f)
+                                   TextCoordinate.PortraitLeftTop(
+                                       _lineStartCoordinate = Offset(
+                                           x = spotCenterX,
+                                           y = spotTop - padding
+                                       ),
+                                       _lineEndCoordinate = Offset(
+                                           x = containerSize.width/2f,
+                                           y = spotTopDist/2f + (spotTopDist/4f)
+                                       )
                                    )
-                               )
 
-                               else -> Pair(
-                                   Offset.Zero,
-                                   Offset.Zero
-                               )
+                                   /*
+                                   Pair(
+                                       Offset(
+                                           x = spotCenterX,
+                                           y = spotTop - padding
+                                       ),
+                                       Offset(
+                                           x = containerSize.width/2f,
+                                           y = spotTopDist/2f + (spotTopDist/4f)
+                                       )
+                                   )
+                                   */
+                               }
+
+                               spotBottomDist -> {
+                                   Log.i("TAG56","Portrait bottom")
+
+                                   TextCoordinate.PortraitLeftBottom(
+                                       _lineStartCoordinate = Offset(
+                                           x = spotCenterX,
+                                           y = spotBottom + padding
+                                       ),
+                                       _lineEndCoordinate = Offset(
+                                           x = containerSize.width/2f,
+                                           y = spotBottom + (spotBottomDist/3f)
+                                       )
+                                   )
+
+                                   /*
+                                   Pair(
+                                       Offset(
+                                           x = spotCenterX,
+                                           y = spotBottom + padding
+                                       ),
+                                       Offset(
+                                           x = containerSize.width/2f,
+                                           y = spotBottom + (spotBottomDist/3f)
+                                       )
+                                   )
+                                   */
+                               }
+
+                               else -> TextCoordinate.None
                            }
                        }
 
                        else -> {
-
+                           Log.i("TAG56","Portrait right")
                            when(longestVerticalSpacing) {
 
-                               spotTopDist -> Pair(
-                                   Offset(
-                                       x = spotCenterX,
-                                       y = spotTop - padding
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/2f),
-                                       y = (containerSize.height/2f) + (spotTopDist/4f)
-                                   )
-                               )
+                               spotTopDist -> {
+                                   Log.i("TAG56","Portrait top")
 
-                               spotBottomDist -> Pair(
-                                   Offset(
-                                       x = spotCenterX,
-                                       y = spotBottom + padding
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/2f),
-                                       y = spotBottom + (spotBottomDist/3f)
+                                   TextCoordinate.PortraitRightTop(
+                                       _lineStartCoordinate = Offset(
+                                           x = spotCenterX,
+                                           y = spotTop - padding
+                                       ),
+                                       _lineEndCoordinate = Offset(
+                                           x = (containerSize.width/2f),
+                                           y = (containerSize.height/2f) + (spotTopDist/4f)
+                                       )
                                    )
-                               )
 
-                               else -> Pair(
-                                   Offset.Zero,
-                                   Offset.Zero
-                               )
+                                   /*
+                                   Pair(
+                                       Offset(
+                                           x = spotCenterX,
+                                           y = spotTop - padding
+                                       ),
+                                       Offset(
+                                           x = (containerSize.width/2f),
+                                           y = (containerSize.height/2f) + (spotTopDist/4f)
+                                       )
+                                   )
+                                   */
+                               }
+
+                               spotBottomDist -> {
+                                   Log.i("TAG56","Portrait bottom")
+
+                                   TextCoordinate.PortraitRightBottom(
+                                       _lineStartCoordinate = Offset(
+                                           x = spotCenterX,
+                                           y = spotBottom + padding
+                                       ),
+                                       _lineEndCoordinate = Offset(
+                                           x = (containerSize.width/2f),
+                                           y = spotBottom + (spotBottomDist/3f)
+                                       )
+                                   )
+
+                                   /*
+                                   Pair(
+                                       Offset(
+                                           x = spotCenterX,
+                                           y = spotBottom + padding
+                                       ),
+                                       Offset(
+                                           x = (containerSize.width/2f),
+                                           y = spotBottom + (spotBottomDist/3f)
+                                       )
+                                   )
+                                   */
+                               }
+
+                               else -> TextCoordinate.None
                            }
                        }
                    }
                }
            }
 
-           else -> Pair(Offset.Zero, Offset.Zero)
+           else -> TextCoordinate.None
        }
     }
 

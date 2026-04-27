@@ -60,8 +60,7 @@ class CoordinateCalculator {
                 spotlightBottom = spotBottom,
                 spotlightItemCenterX = spotCenterX,
                 spotlightItemCenterY = spotCenterY,
-                lineStartCoordinate = lineCoordinates.first,
-                lineEndCoordinate = lineCoordinates.second
+                textCoordinate = lineCoordinates
             )
         }
     }

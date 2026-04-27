@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -33,11 +32,16 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.lerp
+import androidx.compose.ui.unit.sp
 import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.CoordinateCalculator
+import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.TextCoordinateCalculator
 import kotlinx.coroutines.delay
 
 /**
@@ -113,7 +117,9 @@ fun RectSpotlight(
     var overlayRootOffset by remember { mutableStateOf(Offset.Zero) }
     var displayCoordinates by remember { mutableStateOf(DisplayCoordinates()) }
     var containerSize by remember { mutableStateOf(IntSize.Zero) }
-    //var drawLine by remember { mutableStateOf(false) }
+    var showEndDot by remember { mutableStateOf(false) }
+    val textMeasurer = rememberTextMeasurer()
+
     Box(
         Modifier
             .fillMaxSize()
@@ -151,28 +157,6 @@ fun RectSpotlight(
             // shifted (e.g. by status-bar insets above the composable), it corrects
             // the mismatch so the spotlight lands exactly on the target.
             Log.i("TAG45", "Overlay root offset 23: $overlayRootOffset")
-            /*
-            val spotPad =
-                with(density) { 10.dp.toPx() } // adds 20dp of breathing room around the target component's bounds on all four sides
-            val spotLeft =
-                (sportLightInfo.bounds.left) - overlayRootOffset.x - spotPad // canvas-local left edge, then extend 20dp further left (spotlight grows outward)
-            val spotTop = (sportLightInfo.bounds.top) - overlayRootOffset.y - spotPad
-            //(info?.bounds?.top    ?: 0f) = the top edge of the highlighted component, in root coordinates (or 0 if nothing is highlighted)
-            //- overlayRootOffset.y  =  converts from root coordinates to canvas-local coordinates (corrects for any vertical shift of the overlay, e.g. status bar insets)
-            //- spotPad   =  extends the spotlight 20dp upward (smaller y = higher on screen) to add breathing room above the component
-            val spotRight = (sportLightInfo.bounds.right) - overlayRootOffset.x + spotPad
-            val spotBottom = (sportLightInfo.bounds.bottom) - overlayRootOffset.y + spotPad
-//            val spotCenterX = (spotLeft + spotRight) / 2f
-//            val spotCenterY = (spotTop + spotBottom) / 2f
-            // -----------
-
-            */
-
-            // ----- circle ----- \\
-//            val maxOf = maxOf((spotRight - spotLeft), (spotBottom - spotTop))
-//            val circleCenter = Offset(spotCenterX, spotCenterY)
-//            val test = context.pxToDp(maxOf) + (spotPad * 2)
-            // ----- circle ----- \\
 
             Box(
                 Modifier
@@ -222,30 +206,44 @@ fun RectSpotlight(
                     blendMode = BlendMode.Clear
                 )
 
-                val lineEndProgress = lerp(start = displayCoordinates.lineStartCoordinate, stop = displayCoordinates.lineEndCoordinate, fraction = lineProgress.value)
+                val lineEndProgress = lerp(start = displayCoordinates.textCoordinate.lineStartCoordinate, stop = displayCoordinates.textCoordinate.lineEndCoordinate, fraction = lineProgress.value)
                 drawLine(
                     color = Color.White,
-                    start = displayCoordinates.lineStartCoordinate,
+                    start = displayCoordinates.textCoordinate.lineStartCoordinate,
                     end = lineEndProgress,
                     strokeWidth = 2.dp.toPx()
                 )
 
+                if (showEndDot) {
+                    drawCircle(Color.White, radius = 4.dp.toPx(), center = displayCoordinates.textCoordinate.lineEndCoordinate)
 
-                /*
-                drawCircle(
-                    color = Color.Yellow,
-                    radius = 10f,
-                    center = displayCoordinates.lineEndCoordinate,
-                    style = Stroke(width = 2.dp.toPx())
-                )
 
-                drawCircle(
-                    color = Color.Green,
-                    radius = 10f,
-                    center = displayCoordinates.lineStartCoordinate,
-                    style = Stroke(width = 2.dp.toPx())
-                )
-                */
+
+                    // Draw text
+
+                    val textPadding = 150.dp.toPx()
+                    val textLayoutResult = textMeasurer.measure(
+                        text = "Most Space Area Most Space Area Most Space Area Most Space Area",
+                        constraints = Constraints(maxWidth = (size.width.toInt()/2) - textPadding.toInt()),
+                        style = androidx.compose.ui.text.TextStyle(
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    val textCoordinate by TextCoordinateCalculator(textAreaCoordinate = displayCoordinates.textCoordinate, textLayout = textLayoutResult)
+                    
+//                drawText(
+//                    textLayoutResult = textLayoutResult,
+//                    alpha = 1.0f,
+//                    color = Color.White,
+//                    topLeft = Offset(
+//                        x = displayCoordinates.textCoordinate.lineEndCoordinate.x - (textLayoutResult.size.width / 2),
+//                        y = displayCoordinates.textCoordinate.lineEndCoordinate.y
+//                    )
+//                )
+                }
+
             }
 
             // ── Pulsing ring + animated line ──────────────────────────────────
@@ -253,16 +251,6 @@ fun RectSpotlight(
 
             Canvas(Modifier.fillMaxSize()) {
                 // Pulsing rounded-rect border at the spotlight boundary
-
-//                if (showRingPulse.value) {
-//                    drawCircle(
-//                        color = Color.White.copy(alpha = scrimAlpha * ringPulse),
-//                        radius = test,
-//                        center = circleCenter,
-//                        style = Stroke(width = 2.dp.toPx())
-//                    )
-//                }
-
 
                 drawRoundRect(
                     color = rectProperty.strokeColor.copy(alpha = scrimAlpha * ringPulse),
@@ -272,7 +260,6 @@ fun RectSpotlight(
                     style = Stroke(width = rectProperty.strokeWidth.dp.toPx())
                 )
             }
-
         }
     }
 
@@ -283,6 +270,7 @@ fun RectSpotlight(
             targetValue = 1f,
             animationSpec = tween(600, easing = FastOutSlowInEasing)
         )
+        showEndDot = true
     }
 
 }
