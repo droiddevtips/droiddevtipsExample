@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -56,13 +57,14 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     val showSpotlight = remember { mutableStateOf(false) }
 
 
-    Box(modifier = Modifier.fillMaxSize().background(color = Color.Blue)) {
+    Box(modifier = Modifier.fillMaxSize().background(color = Color.Blue)) {  // .statusBarsPadding().navigationBarsPadding()
 
         //    val scope = rememberCoroutineScope()
+        // .padding(top = 18.dp)
         Text(
             text = "Hello $name!",
             modifier = modifier
-                .align(alignment = Alignment.Center)
+                .align(alignment = Alignment.CenterStart).padding(top = 18.dp) // .padding(top = 20.dp)
                 .onGloballyPositioned {
                     showSpotlightInfo.value =
                         SpotlightInfo(bounds = it.boundsInRoot(), text = "Test", type = SpotlightType.Rect())

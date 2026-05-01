@@ -1,6 +1,7 @@
 package com.droiddevtips.spotlight.spotlightFeature
 
 import android.content.Context
+import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
@@ -31,6 +32,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
@@ -66,7 +68,7 @@ fun RectSpotlight(
     val rectProperty = sportLightInfo.type as SpotlightType.Rect
     val context = LocalContext.current
     //val density = LocalDensity.current
-    //val configuration = LocalConfiguration.current
+    val orientation = LocalConfiguration.current.orientation
     //val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     // --- generic ---\\
@@ -113,7 +115,6 @@ fun RectSpotlight(
     // the first appearance.
 
 
-
     var overlayRootOffset by remember { mutableStateOf(Offset.Zero) }
     var displayCoordinates by remember { mutableStateOf(DisplayCoordinates()) }
     var containerSize by remember { mutableStateOf(IntSize.Zero) }
@@ -135,7 +136,8 @@ fun RectSpotlight(
                         overlayRootOffset = coords.positionInRoot()
                     )
                 }
-            }.onSizeChanged {
+            }
+            .onSizeChanged {
                 containerSize = it
                 if (overlayRootOffset != Offset.Zero) {
                     displayCoordinates = CoordinateCalculator.calculate(
@@ -200,13 +202,23 @@ fun RectSpotlight(
 
                 drawRoundRect(
                     color = Color.Transparent,
-                    topLeft = Offset(displayCoordinates.spotlightLeft, displayCoordinates.spotlightTop),
-                    size = Size(displayCoordinates.spotlightRight - displayCoordinates.spotlightLeft, displayCoordinates.spotlightBottom - displayCoordinates.spotlightTop),
+                    topLeft = Offset(
+                        displayCoordinates.spotlightLeft,
+                        displayCoordinates.spotlightTop
+                    ),
+                    size = Size(
+                        displayCoordinates.spotlightRight - displayCoordinates.spotlightLeft,
+                        displayCoordinates.spotlightBottom - displayCoordinates.spotlightTop
+                    ),
                     cornerRadius = CornerRadius(with(density) { rectProperty.radius.dp.toPx() }),
                     blendMode = BlendMode.Clear
                 )
 
-                val lineEndProgress = lerp(start = displayCoordinates.textCoordinate.lineStartCoordinate, stop = displayCoordinates.textCoordinate.lineEndCoordinate, fraction = lineProgress.value)
+                val lineEndProgress = lerp(
+                    start = displayCoordinates.textCoordinate.lineStartCoordinate,
+                    stop = displayCoordinates.textCoordinate.lineEndCoordinate,
+                    fraction = lineProgress.value
+                )
                 drawLine(
                     color = Color.White,
                     start = displayCoordinates.textCoordinate.lineStartCoordinate,
@@ -215,33 +227,44 @@ fun RectSpotlight(
                 )
 
                 if (showEndDot) {
-                    drawCircle(Color.White, radius = 4.dp.toPx(), center = displayCoordinates.textCoordinate.lineEndCoordinate)
-
+                    drawCircle(
+                        Color.White,
+                        radius = 4.dp.toPx(),
+                        center = displayCoordinates.textCoordinate.lineEndCoordinate
+                    )
 
 
                     // Draw text
 
-                    val textPadding = 150.dp.toPx()
+                    val textPortraitPadding = 80.dp.toPx()
+                    val textPadding = 125.dp.toPx()
                     val textLayoutResult = textMeasurer.measure(
                         text = "Most Space Area Most Space Area Most Space Area Most Space Area",
-                        constraints = Constraints(maxWidth = (size.width.toInt()/2) - textPadding.toInt()),
+                        constraints = Constraints(maxWidth = if(orientation == Configuration.ORIENTATION_LANDSCAPE) { (size.width.toInt() / 2) - textPadding.toInt() } else (size.width.toInt() - textPortraitPadding.toInt())),
                         style = androidx.compose.ui.text.TextStyle(
                             color = Color.White,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold
                         )
                     )
-                    val textCoordinate by TextCoordinateCalculator(textAreaCoordinate = displayCoordinates.textCoordinate, textLayout = textLayoutResult)
-                    
-//                drawText(
-//                    textLayoutResult = textLayoutResult,
-//                    alpha = 1.0f,
-//                    color = Color.White,
-//                    topLeft = Offset(
-//                        x = displayCoordinates.textCoordinate.lineEndCoordinate.x - (textLayoutResult.size.width / 2),
-//                        y = displayCoordinates.textCoordinate.lineEndCoordinate.y
-//                    )
-//                )
+                    val textCoordinate by TextCoordinateCalculator(
+                        textAreaCoordinate = displayCoordinates.textCoordinate,
+                        textLayout = textLayoutResult
+                    )
+
+                    Log.i("TAG23", "Text coordinate result -> $textCoordinate")
+
+                    if (textCoordinate != Offset.Zero) {
+                        drawText(
+                            textLayoutResult = textLayoutResult,
+                            alpha = 1.0f,
+                            color = Color.White,
+                            topLeft = Offset(
+                                x = textCoordinate.x,
+                                y = textCoordinate.y
+                            )
+                        )
+                    }
                 }
 
             }
@@ -254,8 +277,14 @@ fun RectSpotlight(
 
                 drawRoundRect(
                     color = rectProperty.strokeColor.copy(alpha = scrimAlpha * ringPulse),
-                    topLeft = Offset(displayCoordinates.spotlightLeft, displayCoordinates.spotlightTop),
-                    size = Size(displayCoordinates.spotlightRight - displayCoordinates.spotlightLeft, displayCoordinates.spotlightBottom - displayCoordinates.spotlightTop),
+                    topLeft = Offset(
+                        displayCoordinates.spotlightLeft,
+                        displayCoordinates.spotlightTop
+                    ),
+                    size = Size(
+                        displayCoordinates.spotlightRight - displayCoordinates.spotlightLeft,
+                        displayCoordinates.spotlightBottom - displayCoordinates.spotlightTop
+                    ),
                     cornerRadius = CornerRadius(with(density) { rectProperty.radius.dp.toPx() }),
                     style = Stroke(width = rectProperty.strokeWidth.dp.toPx())
                 )

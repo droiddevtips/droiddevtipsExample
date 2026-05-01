@@ -37,6 +37,9 @@ class LargestSpacingCalculator(
         val spotCenterY = spotTop + (abs(spotTop - spotBottom)/2f)
         val orientation = getScreenOrientation()
 
+        Log.i("TAG56","Top -> $spotTopDist")
+        Log.i("TAG56","bottom -> $spotBottomDist")
+
         return when(orientation) {
 
            //TODO: Calculate the line start coordinate as well and test it on table as well
@@ -60,19 +63,6 @@ class LargestSpacingCalculator(
                                y = (spotTopDist/2f)
                            )
                        )
-                       /*
-                       Pair(
-                           Offset(
-                               x = (containerSize.width/2f),
-                               y = spotTop - padding
-                           ),
-                           Offset(
-                               x = (containerSize.width/2f),
-                               y = (spotTopDist/2f)
-                           )
-                       )
-                       */
-
                    } else {
                        val longestVerticalSpacing = maxOf(spotTopDist, spotBottomDist)
 
@@ -90,18 +80,6 @@ class LargestSpacingCalculator(
                                        y = (spotTopDist/2f)
                                    )
                                )
-                               /*
-                               Pair(
-                                   Offset(
-                                       x = (containerSize.width/2f),
-                                       y = spotTopDist - padding
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/2f),
-                                       y = (spotTopDist/2f)
-                                   )
-                               )
-                               */
                            }
 
                            else -> {
@@ -116,18 +94,6 @@ class LargestSpacingCalculator(
                                        y = (spotBottomDist/2f)
                                    )
                                )
-                               /*
-                               Pair(
-                                   Offset(
-                                       x = (containerSize.width/2f),
-                                       y = spotBottom + padding
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/2f),
-                                       y = (spotBottomDist/2f)
-                                   )
-                               )
-                               */
                            }
                        }
                    }
@@ -142,27 +108,14 @@ class LargestSpacingCalculator(
 
                            TextCoordinate.LandscapeVerticalCenterLeft(
                                _lineStartCoordinate = Offset(
-                                   x =  spotCenterX,
-                                   y = (containerSize.height/2f)
+                                   x = spotLeft - padding,
+                                   y = spotCenterY
                                ),
                                _lineEndCoordinate = Offset(
-                                   x = (spotLeftDist/2f),
-                                   y = (containerSize.height/2f)
+                                   x = (spotLeftDist/3f)*2,
+                                   y = (containerSize.height/3f)
                                )
                            )
-
-                           /*
-                           Pair(
-                               Offset(
-                                   x =  spotCenterX,
-                                   y = (containerSize.height/2f)
-                               ),
-                               Offset(
-                                   x = (spotLeftDist/2f),
-                                   y = (containerSize.height/2f)
-                               )
-                           )
-                           */
                        }
 
                        else -> {
@@ -171,27 +124,14 @@ class LargestSpacingCalculator(
 
                            TextCoordinate.LandscapeVerticalCenterRight(
                                _lineStartCoordinate = Offset(
-                                   x = spotRightDist,
-                                   y = spotCenterY + spotRight
+                                   x = spotRight + padding,
+                                   y = spotCenterY
                                ),
                                _lineEndCoordinate = Offset(
-                                   x = horizontalCoordinate,
-                                   y = (containerSize.height/2f)
+                                   x = horizontalCoordinate/2f,
+                                   y = (containerSize.height/3f)
                                )
                            )
-
-                           /*
-                           Pair(
-                               Offset(
-                                   x = spotRightDist,
-                                   y = spotCenterY + spotRight
-                               ),
-                               Offset(
-                                   x = horizontalCoordinate,
-                                   y = (containerSize.height/2f)
-                               )
-                           )
-                           */
                        }
                    }
                } else {
@@ -206,6 +146,9 @@ class LargestSpacingCalculator(
 
                                spotTopDist -> {
                                    Log.i("TAG56","Landscape vertical Top")
+                                   Log.i("TAG56","Top -> $spotTopDist")
+                                   Log.i("TAG56","Bottom -> $spotBottomDist")
+                                   Log.i("TAG56","Landscape vertical Top")
 
                                    TextCoordinate.LandscapeLeftTop(
                                        _lineStartCoordinate = Offset(
@@ -217,22 +160,12 @@ class LargestSpacingCalculator(
                                            y = spotTopDist/2f
                                        )
                                    )
-
-                                   /*
-                                   Pair(
-                                       Offset(
-                                           x = spotLeft - padding,
-                                           y = spotTop + (abs(spotTop - spotBottom)/2f)
-                                       ),
-                                       Offset(
-                                           x = (containerSize.width/2f),
-                                           y = spotTopDist/2f
-                                       )
-                                   )
-                                   */
                                }
 
                                spotBottomDist -> {
+                                   Log.i("TAG56","Landscape vertical Bottom")
+                                   Log.i("TAG56","Dis spot top -> ${spotTopDist}")
+                                   Log.i("TAG56","Dis spot bottom -> ${spotBottomDist}")
                                    Log.i("TAG56","Landscape vertical Bottom")
 
                                    TextCoordinate.LandscapeLeftBottom(
@@ -241,23 +174,10 @@ class LargestSpacingCalculator(
                                            y = spotTop + (abs(spotTop - spotBottom)/2f)
                                        ),
                                        _lineEndCoordinate = Offset(
-                                           x = (containerSize.width/4f) * 3,
-                                           y = spotBottomDist/2f
+                                           x = (containerSize.width/3f) * 2,
+                                           y = spotTopDist + (spotBottomDist/2f)
                                        )
                                    )
-
-                                   /*
-                                   Pair(
-                                       Offset(
-                                           x = spotLeft - padding,
-                                           y = spotTop + (abs(spotTop - spotBottom)/2f)
-                                       ),
-                                       Offset(
-                                           x = (containerSize.width/4f) * 3,
-                                           y = spotBottomDist/2f
-                                       )
-                                   )
-                                   */
                                }
 
                                else -> TextCoordinate.None
@@ -270,29 +190,19 @@ class LargestSpacingCalculator(
 
                                spotTopDist -> {
                                    Log.i("TAG56","Landscape vertical Top")
+                                   Log.i("TAG56","Top -> $spotTopDist")
+                                   Log.i("TAG56","Bottom -> $spotBottomDist")
+                                   Log.i("TAG56","Landscape vertical Top")
                                    TextCoordinate.LandscapeRightTop(
                                        _lineStartCoordinate = Offset(
                                            x = spotRight + padding,
                                            y = spotTop + (abs(spotTop - spotBottom)/2f)
                                        ),
                                        _lineEndCoordinate = Offset(
-                                           x = (containerSize.width/3f),
+                                           x = (containerSize.width/2f),
                                            y = spotTopDist/2f
                                        )
                                    )
-
-                                   /*
-                                   Pair(
-                                       Offset(
-                                           x = spotRight + padding,
-                                           y = spotTop + (abs(spotTop - spotBottom)/2f)
-                                       ),
-                                       Offset(
-                                           x = (containerSize.width/3f),
-                                           y = spotTopDist/2f
-                                       )
-                                   )
-                                   */
                                }
 
                                spotBottomDist -> {
@@ -305,23 +215,9 @@ class LargestSpacingCalculator(
                                        ),
                                        _lineEndCoordinate = Offset(
                                            x = (containerSize.width/3f),
-                                           y = (spotBottomDist/2f)
+                                           y = spotTopDist + (spotBottomDist/2f)
                                        )
                                    )
-
-
-                                   /*
-                                   Pair(
-                                       Offset(
-                                           x = spotRight + padding,
-                                           y = spotTopDist + abs(spotTop - spotBottom)/2f
-                                       ),
-                                       Offset(
-                                           x = (containerSize.width/3f),
-                                           y = (spotBottomDist/2f)
-                                       )
-                                   )
-                                   */
                                }
 
                                else -> TextCoordinate.None
@@ -341,7 +237,7 @@ class LargestSpacingCalculator(
 
                        TextCoordinate.PortraitHorizontalVerticalCenter(
                            _lineStartCoordinate = Offset(
-                               x = spotCenterX, // (abs (spotLeft - spotRight)/2f)
+                               x = spotCenterX,
                                y = spotTop - padding
                            ),
                            _lineEndCoordinate = Offset(
@@ -349,19 +245,6 @@ class LargestSpacingCalculator(
                                y = (spotTopDist/2f) + (spotTopDist/4f)
                            )
                        )
-
-                       /*
-                       Pair(
-                           Offset(
-                               x = spotCenterX, // (abs (spotLeft - spotRight)/2f)
-                               y = spotTop - padding
-                           ),
-                           Offset(
-                               x = (containerSize.width/2f),
-                               y = (spotTopDist/2f) + (spotTopDist/4f)
-                           )
-                       )
-                       */
                    } else {
                        val longestVerticalSpacing = maxOf(spotTopDist, spotBottomDist)
 
@@ -380,19 +263,6 @@ class LargestSpacingCalculator(
                                        y = (spotTopDist/2f) + (spotTopDist/4f)
                                    )
                                )
-
-                               /*
-                               Pair(
-                                   Offset(
-                                       x = spotCenterX,
-                                       y = spotTop - padding
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/2f),
-                                       y = (spotTopDist/2f) + (spotTopDist/4f)
-                                   )
-                               )
-                               */
                            }
 
                            else -> {
@@ -408,19 +278,6 @@ class LargestSpacingCalculator(
                                        y = (spotBottomDist/3f)
                                    )
                                )
-
-                               /*
-                               Pair(
-                                   Offset(
-                                       x = spotCenterX,
-                                       y = spotBottom + padding
-                                   ),
-                                   Offset(
-                                       x = (containerSize.width/2f),
-                                       y = (spotBottomDist/3f)
-                                   )
-                               )
-                               */
                            }
                        }
                    }
@@ -435,55 +292,28 @@ class LargestSpacingCalculator(
 
                            TextCoordinate.PortraitVerticalCenterLeft(
                                _lineStartCoordinate = Offset(
-                                   x = spotLeft,
-                                   y = spotCenterY //(containerSize.height/2).toFloat()
+                                   x = spotCenterX,
+                                   y = spotTop - padding
                                ),
                                _lineEndCoordinate = Offset(
-                                   x = (spotLeftDist/2f),
-                                   y = (containerSize.height/2f)
+                                   x = (containerSize.width/2f),
+                                   y = (containerSize.height/3f)
                                )
                            )
-
-                           /*
-                           Pair(
-                               Offset(
-                                   x = spotLeft,
-                                   y = spotCenterY //(containerSize.height/2).toFloat()
-                               ),
-                               Offset(
-                                   x = (spotLeftDist/2f),
-                                   y = (containerSize.height/2f)
-                               )
-                           )
-                           */
                        }
 
                        else -> {
                            Log.i("TAG56","Portrait right")
-                           val horizontalCoordinate = ((containerSize.width - spotRightDist) + (spotRightDist/2f))
                            TextCoordinate.PortraitVerticalCenterRight(
                                _lineStartCoordinate = Offset(
-                                   x = spotRight,
-                                   y = spotCenterY
+                                   x = spotCenterX,
+                                   y = spotTop - padding
                                ),
                                _lineEndCoordinate = Offset(
-                                   x = horizontalCoordinate,
-                                   y = (containerSize.height/2f)
+                                   x = (containerSize.width/2f),
+                                   y = (containerSize.height/3f)
                                )
                            )
-
-                           /*
-                           Pair(
-                               Offset(
-                                   x = spotRight,
-                                   y = spotCenterY
-                               ),
-                               Offset(
-                                   x = horizontalCoordinate,
-                                   y = (containerSize.height/2f)
-                               )
-                           )
-                           */
                        }
                    }
                } else {
@@ -509,19 +339,6 @@ class LargestSpacingCalculator(
                                            y = spotTopDist/2f + (spotTopDist/4f)
                                        )
                                    )
-
-                                   /*
-                                   Pair(
-                                       Offset(
-                                           x = spotCenterX,
-                                           y = spotTop - padding
-                                       ),
-                                       Offset(
-                                           x = containerSize.width/2f,
-                                           y = spotTopDist/2f + (spotTopDist/4f)
-                                       )
-                                   )
-                                   */
                                }
 
                                spotBottomDist -> {
@@ -537,19 +354,6 @@ class LargestSpacingCalculator(
                                            y = spotBottom + (spotBottomDist/3f)
                                        )
                                    )
-
-                                   /*
-                                   Pair(
-                                       Offset(
-                                           x = spotCenterX,
-                                           y = spotBottom + padding
-                                       ),
-                                       Offset(
-                                           x = containerSize.width/2f,
-                                           y = spotBottom + (spotBottomDist/3f)
-                                       )
-                                   )
-                                   */
                                }
 
                                else -> TextCoordinate.None
@@ -573,19 +377,6 @@ class LargestSpacingCalculator(
                                            y = (containerSize.height/2f) + (spotTopDist/4f)
                                        )
                                    )
-
-                                   /*
-                                   Pair(
-                                       Offset(
-                                           x = spotCenterX,
-                                           y = spotTop - padding
-                                       ),
-                                       Offset(
-                                           x = (containerSize.width/2f),
-                                           y = (containerSize.height/2f) + (spotTopDist/4f)
-                                       )
-                                   )
-                                   */
                                }
 
                                spotBottomDist -> {
@@ -601,19 +392,6 @@ class LargestSpacingCalculator(
                                            y = spotBottom + (spotBottomDist/3f)
                                        )
                                    )
-
-                                   /*
-                                   Pair(
-                                       Offset(
-                                           x = spotCenterX,
-                                           y = spotBottom + padding
-                                       ),
-                                       Offset(
-                                           x = (containerSize.width/2f),
-                                           y = spotBottom + (spotBottomDist/3f)
-                                       )
-                                   )
-                                   */
                                }
 
                                else -> TextCoordinate.None
