@@ -51,7 +51,6 @@ fun Spotlight(
     when (spotLightInfo.type) {
         is SpotlightType.Circle -> CircleSpotlight(
             scrimAlpha = scrimAlpha,
-            density = density,
             lineProgress = lineProgress,
             ringPulse = ringPulse,
             sportLightInfo = spotLightInfo,
@@ -59,7 +58,6 @@ fun Spotlight(
         )
 
         is SpotlightType.Rect -> RectSpotlight(
-            density = density,
             ringPulse = ringPulse,
             lineProgress = lineProgress,
             scrimAlpha = scrimAlpha,

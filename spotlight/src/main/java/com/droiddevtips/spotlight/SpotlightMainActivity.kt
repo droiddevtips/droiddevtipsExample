@@ -74,7 +74,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 }
                 .onGloballyPositioned {
                     showSpotlightInfo.value =
-                        SpotlightInfo(bounds = it.boundsInRoot(), text = "Test", type = SpotlightType.Rect())
+                        SpotlightInfo(bounds = it.boundsInRoot(), text = "Most Space Area Most Space Area Most Space Area Most Space Area 123", type = SpotlightType.Circle())
                 }
         )
 

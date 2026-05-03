@@ -34,11 +34,11 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,7 +57,6 @@ fun Context.pxToDp(px: Float): Float {
 
 @Composable
 fun RectSpotlight(
-    density: Density,
     scrimAlpha: Float,
     ringPulse: Float,
     lineProgress: Animatable<Float, AnimationVector1D>,
@@ -67,53 +66,14 @@ fun RectSpotlight(
 
     val rectProperty = sportLightInfo.type as SpotlightType.Rect
     val context = LocalContext.current
-    //val density = LocalDensity.current
+    val density = LocalDensity.current
     val orientation = LocalConfiguration.current.orientation
-    //val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-
-    // --- generic ---\\
-//    val scrimAlpha by animateFloatAsState(
-//        targetValue = 0.85f,
-//        animationSpec = tween(350),
-//        label = "scrim"
-//    )
-    // --- generic ---\\
-
-    /*
-    LaunchedEffect(sportLightInfo) {
-        if (sportLightInfo != null) {
-//            showText = false
-//            lineProgress.snapTo(0f)
-            delay(400)                                          // wait for scrim
-//            lineProgress.animateTo(
-//                targetValue = 1f,
-//                animationSpec = tween(600, easing = FastOutSlowInEasing)
-//            )
-//            showText = true                                     // Phase 3: show text
-        } else {
-//            showText = false
-//            lineProgress.snapTo(0f)
-        }
-    }
-    */
-
-    // Pulsing ring on the spotlight edge
-    // ----- generic ----- \\
-//    val infiniteTransition = rememberInfiniteTransition(label = "ring")
-//    val ringPulse by infiniteTransition.animateFloat(
-//        initialValue = 0.3f,
-//        targetValue = 1f,
-//        animationSpec = infiniteRepeatable(tween(900), RepeatMode.Reverse),
-//        label = "ringPulse"
-//    )
-    // ----- generic ----- \\
 
     // Always track the overlay's own position in root coordinates, even while the
     // overlay is invisible.  This must live OUTSIDE the scrimAlpha guard so the
     // value is ready (non-zero when inside a Scaffold / inset container) before
     // the first visible frame renders — otherwise the spotlight is misaligned on
     // the first appearance.
-
 
     var overlayRootOffset by remember { mutableStateOf(Offset.Zero) }
     var displayCoordinates by remember { mutableStateOf(DisplayCoordinates()) }
@@ -241,7 +201,7 @@ fun RectSpotlight(
                     val textPortraitPadding = 80.dp.toPx()
                     val textPadding = 125.dp.toPx()
                     val textLayoutResult = textMeasurer.measure(
-                        text = "Most Space Area Most Space Area Most Space Area Most Space Area",
+                        text = sportLightInfo.text,
                         constraints = Constraints(maxWidth = if(orientation == Configuration.ORIENTATION_LANDSCAPE) { (size.width.toInt() / 2) - textPadding.toInt() } else (size.width.toInt() - textPortraitPadding.toInt())),
                         style = androidx.compose.ui.text.TextStyle(
                             color = Color.White,
@@ -253,8 +213,6 @@ fun RectSpotlight(
                         textAreaCoordinate = displayCoordinates.textCoordinate,
                         textLayout = textLayoutResult
                     )
-
-                    Log.i("TAG23", "Text coordinate result -> $textCoordinate")
 
                     if (textCoordinate != Offset.Zero) {
                         drawText(
@@ -268,7 +226,6 @@ fun RectSpotlight(
                         )
                     }
                 }
-
             }
 
             // ── Pulsing ring + animated line ──────────────────────────────────
