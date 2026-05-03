@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.spotlight.spotlightFeature.DisplayCoordinates
 import com.droiddevtips.spotlight.spotlightFeature.SpotlightInfo
+import com.droiddevtips.spotlight.spotlightFeature.SpotlightType
 
 /**
  * Created by Melchior Vrolijk
@@ -21,6 +22,7 @@ class CoordinateCalculator {
             density: Density,
             containerSize: IntSize,
             spotlightInfo: SpotlightInfo,
+            spotlightType: SpotlightType,
             overlayRootOffset: Offset = Offset.Zero
         ): DisplayCoordinates {
             // Convert boundsInRoot() → canvas-local by subtracting the overlay's own
@@ -42,15 +44,17 @@ class CoordinateCalculator {
             val spotCenterY = (spotTop + spotBottom) / 2f
 
 
-
             val lineCoordinates by LargestSpacingCalculator(
                 context = context,
                 spotTop = spotTop,
                 spotBottom = spotBottom,
                 spotLeft = spotLeft,
                 spotRight = spotRight,
+                spotlightType = spotlightType,
                 containerSize = containerSize
             )
+
+            Log.i("TAG48", "Line coordinates -> $lineCoordinates")
 
             return DisplayCoordinates(
                 spotlightPadding = spotPad,

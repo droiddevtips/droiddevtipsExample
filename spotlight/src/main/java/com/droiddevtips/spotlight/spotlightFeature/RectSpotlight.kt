@@ -133,6 +133,7 @@ fun RectSpotlight(
                         density = density,
                         spotlightInfo = sportLightInfo,
                         containerSize = containerSize,
+                        spotlightType = SpotlightType.Rect(),
                         overlayRootOffset = coords.positionInRoot()
                     )
                 }
@@ -145,6 +146,7 @@ fun RectSpotlight(
                         density = density,
                         spotlightInfo = sportLightInfo,
                         containerSize = it,
+                        spotlightType = SpotlightType.Rect(),
                         overlayRootOffset = overlayRootOffset
                     )
                 }

@@ -81,10 +81,10 @@
       </SelectionState>
       <SelectionState runConfigName="spotlight">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-04-27T20:19:32.979096Z">
+        <DropdownSelection timestamp="2026-05-02T13:27:09.671068Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=R52Y707QM7V" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=ce0417146d21cc370c" />
             </handle>
           </Target>
         </DropdownSelection>
@@ -92,12 +92,17 @@
           <targets>
             <Target type="DEFAULT_BOOT">
               <handle>
-                <DeviceId pluginId="PhysicalDevice" identifier="serial=RZCX41YFNYX" />
+                <DeviceId pluginId="PhysicalDevice" identifier="serial=RF8M222C6VY" />
               </handle>
             </Target>
             <Target type="DEFAULT_BOOT">
               <handle>
                 <DeviceId pluginId="PhysicalDevice" identifier="serial=R52Y707QM7V" />
+              </handle>
+            </Target>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="PhysicalDevice" identifier="serial=RZCX41YFNYX" />
               </handle>
             </Target>
           </targets>

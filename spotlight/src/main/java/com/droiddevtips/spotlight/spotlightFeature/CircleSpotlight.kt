@@ -1,8 +1,10 @@
 package com.droiddevtips.spotlight.spotlightFeature
 
+import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
@@ -20,6 +22,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.lerp
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.CompositingStrategy
@@ -28,13 +31,24 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.CoordinateCalculator
+import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.TextCoordinateCalculator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  * Created by Melchior Vrolijk
@@ -52,14 +66,15 @@ fun CircleSpotlight(
 ) {
 
     val rectProperty = sportLightInfo.type as SpotlightType.Circle
-
+    val density = LocalDensity.current
     //val configuration = LocalConfiguration.current
     //val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     val context = LocalContext.current
+    val orientation = LocalConfiguration.current.orientation
 
     // --- Circle ---- \\
-    val animateCircle = remember { mutableStateOf(false) }
-    val showRingPulse = remember { mutableStateOf(false) }
+    val animateCircle = remember { mutableStateOf(true) }
+//    val showRingPulse = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     // --- Circle ---- \\
 
@@ -97,6 +112,8 @@ fun CircleSpotlight(
     var overlayRootOffset by remember { mutableStateOf(Offset.Zero) }
     var displayCoordinates by remember { mutableStateOf(DisplayCoordinates()) }
     var containerSize by remember { mutableStateOf(IntSize.Zero) }
+    var showEndDot by remember { mutableStateOf(false) }
+    val textMeasurer = rememberTextMeasurer()
     Box(
         Modifier
             .fillMaxSize()
@@ -109,6 +126,7 @@ fun CircleSpotlight(
                         density = density,
                         spotlightInfo = sportLightInfo,
                         containerSize = containerSize,
+                        spotlightType = SpotlightType.Circle(),
                         overlayRootOffset = coords.positionInRoot()
                     )
                 }
@@ -123,6 +141,7 @@ fun CircleSpotlight(
                         density = density,
                         spotlightInfo = sportLightInfo,
                         containerSize = it,
+                        spotlightType = SpotlightType.Circle(),
                         overlayRootOffset = overlayRootOffset
                     )
                 }
@@ -170,8 +189,24 @@ fun CircleSpotlight(
                 displayCoordinates.spotlightItemCenterX,
                 displayCoordinates.spotlightItemCenterY
             )
-            val test = context.pxToDp(maxOf) + (displayCoordinates.spotlightPadding * 2)
+
+            val horizontal = abs(displayCoordinates.spotlightLeft - displayCoordinates.spotlightRight)
+            val vertical = abs(displayCoordinates.spotlightTop - displayCoordinates.spotlightBottom)
+            val maxOf2 = maxOf(horizontal, vertical)
+            Log.i("TAG78","Horizontal -> $horizontal")
+            Log.i("TAG78","Vertical -> $vertical")
+            Log.i("TAG78","Max of -> $maxOf2")
+
+            density
+            //val test = with(density) { 414f.toDp() }
+//            val test = context.pxToDp(maxOf) + (displayCoordinates.spotlightPadding * 2)
+            //val test = context.pxToDp(maxOf2) + displayCoordinates.spotlightPadding
             // ----- circle ----- \\
+            /*
+            // Radius based on text diagonal so circle always fits
+        val radius = (sqrt(textWidth.pow(2) + textHeight.pow(2)) / 2f) + 16f
+            */
+            val test = (sqrt(horizontal.pow(2) + vertical.pow(2)) / 2f)
 
             Box(
                 Modifier
@@ -206,13 +241,6 @@ fun CircleSpotlight(
             val circleRadius by animateFloatAsState(
                 targetValue = if (animateCircle.value) test else 0f,
                 animationSpec = tween(550),
-                finishedListener = {
-                    Log.i("TAG32", "Circle finished -> $it")
-                    scope.launch {
-                        delay(500)
-                        showRingPulse.value = true
-                    }
-                },
                 label = "scrim"
             )
 
@@ -240,17 +268,70 @@ fun CircleSpotlight(
             Canvas(Modifier.fillMaxSize()) {
                 // Pulsing rounded-rect border at the spotlight boundary
 
-                if (showRingPulse.value) {
+                drawCircle(
+                    color = Color.White.copy(alpha = scrimAlpha * ringPulse),
+                    radius = circleRadius,
+                    center = circleCenter,
+                    style = Stroke(width = 2.dp.toPx())
+                )
+
+
+                val lineEndProgress = lerp(
+                    start = displayCoordinates.textCoordinate.lineStartCoordinate,
+                    stop = displayCoordinates.textCoordinate.lineEndCoordinate,
+                    fraction = lineProgress.value
+                )
+
+                Log.i("TAG46","\n\nLine start -> ${displayCoordinates.textCoordinate.lineStartCoordinate}")
+                Log.i("TAG46","Line end -> ${displayCoordinates.textCoordinate.lineEndCoordinate}\n\n")
+
+                drawLine(
+                    color = Color.White,
+                    start = displayCoordinates.textCoordinate.lineStartCoordinate,
+                    end = lineEndProgress,
+                    strokeWidth = 2.dp.toPx()
+                )
+
+                if (showEndDot) {
                     drawCircle(
-                        color = Color.White.copy(alpha = scrimAlpha * ringPulse),
-                        radius = test,
-                        center = circleCenter,
-                        style = Stroke(width = 2.dp.toPx())
+                        Color.White,
+                        radius = 4.dp.toPx(),
+                        center = displayCoordinates.textCoordinate.lineEndCoordinate
                     )
+
+
+                    // Draw text
+
+                    val textPortraitPadding = 80.dp.toPx()
+                    val textPadding = 125.dp.toPx()
+                    val textLayoutResult = textMeasurer.measure(
+                        text = "Most Space Area Most Space Area Most Space Area Most Space Area",
+                        constraints = Constraints(maxWidth = if(orientation == Configuration.ORIENTATION_LANDSCAPE) { (size.width.toInt() / 2) - textPadding.toInt() } else (size.width.toInt() - textPortraitPadding.toInt())),
+                        style = androidx.compose.ui.text.TextStyle(
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    val textCoordinate by TextCoordinateCalculator(
+                        textAreaCoordinate = displayCoordinates.textCoordinate,
+                        textLayout = textLayoutResult
+                    )
+
+                    Log.i("TAG23", "Text coordinate result -> $textCoordinate")
+
+                    if (textCoordinate != Offset.Zero) {
+                        drawText(
+                            textLayoutResult = textLayoutResult,
+                            alpha = 1.0f,
+                            color = Color.White,
+                            topLeft = Offset(
+                                x = textCoordinate.x,
+                                y = textCoordinate.y
+                            )
+                        )
+                    }
                 }
-
-
-
 
             }
         }
@@ -258,5 +339,12 @@ fun CircleSpotlight(
 
     LaunchedEffect(Unit) {
         animateCircle.value = true
+        lineProgress.snapTo(0f)
+        delay(400)
+        lineProgress.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(600, easing = FastOutSlowInEasing)
+        )
+        showEndDot = true
     }
 }

@@ -1,6 +1,7 @@
 package com.droiddevtips.spotlight
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.spotlight.spotlightFeature.Spotlight
@@ -64,7 +66,12 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         Text(
             text = "Hello $name!",
             modifier = modifier
-                .align(alignment = Alignment.CenterStart).padding(top = 18.dp) // .padding(top = 20.dp)
+                .align(alignment = Alignment.BottomEnd) // .padding(top = 20.dp) // .padding(top = 18.dp)
+                .onSizeChanged {
+                    Log.i("TAG78","")
+                    Log.i("TAG78","${it.width} - ${it.height}")
+                    Log.i("TAG78","")
+                }
                 .onGloballyPositioned {
                     showSpotlightInfo.value =
                         SpotlightInfo(bounds = it.boundsInRoot(), text = "Test", type = SpotlightType.Rect())
@@ -75,7 +82,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
         Button(onClick = {
             showSpotlight.value = true
-        }, modifier = Modifier.align(alignment = Alignment.BottomCenter).navigationBarsPadding() ,enabled = showSpotlightInfo.value != null) {
+        }, modifier = Modifier.align(alignment = Alignment.Center).navigationBarsPadding() ,enabled = showSpotlightInfo.value != null) {
             Text(text = "Show Spotlight")
         }
 

@@ -9,8 +9,6 @@ import androidx.compose.ui.geometry.Offset
 sealed class TextCoordinate(val lineStartCoordinate: Offset, val lineEndCoordinate: Offset) {
 
     data class PortraitRightBottom(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
-//    data class PortraitBottomCenter(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
-//    data class PortraitLeftVerticalBottom(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class PortraitRightTop(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class PortraitLeftBottom(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class PortraitLeftTop(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
@@ -19,14 +17,10 @@ sealed class TextCoordinate(val lineStartCoordinate: Offset, val lineEndCoordina
     data class PortraitHorizontalVerticalCenter(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class PortraitHorizontalCenterTop(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class PortraitHorizontalCenterBottom(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
-
     data class LandscapeRightBottom(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
-//    data class LandscapeBottomCenter(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
-//    data class LandscapeLeftVerticalBottom(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class LandscapeRightTop(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class LandscapeLeftBottom(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class LandscapeLeftTop(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
-
     data class LandscapeVerticalCenterLeft(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class LandscapeVerticalCenterRight(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class LandscapeHorizontalVerticalCenter(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)

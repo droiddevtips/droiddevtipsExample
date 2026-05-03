@@ -14,5 +14,5 @@ sealed class SpotlightType {
         val overlayColor: Color = Color.Black
     ) : SpotlightType()
 
-    data class Circle(val overlayColor: Color = Color.Black) : SpotlightType()
+    data class Circle(val overlayColor: Color = Color.Black, val radius: Float = 0f) : SpotlightType()
 }
