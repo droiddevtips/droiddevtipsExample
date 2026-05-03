@@ -29,17 +29,18 @@ fun Spotlight(
     if (spotLightInfo == null)
         return
 
-    val density = LocalDensity.current
-
     val scrimAlpha by animateFloatAsState(
         targetValue = 0.85f,
         animationSpec = tween(350),
         label = "scrim"
     )
 
-    // Pulsing ring on the spotlight edge
+    // Pulsing ring on the spotlight edge.
+    // Not read with `by` — keep it as State<Float> so the value is only
+    // consumed inside the Canvas draw phase, preventing recomposition on
+    // every animation frame.
     val infiniteTransition = rememberInfiniteTransition(label = "ring")
-    val ringPulse by infiniteTransition.animateFloat(
+    val ringPulseState = infiniteTransition.animateFloat(
         initialValue = 0.3f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(900), RepeatMode.Reverse),
@@ -52,13 +53,13 @@ fun Spotlight(
         is SpotlightType.Circle -> CircleSpotlight(
             scrimAlpha = scrimAlpha,
             lineProgress = lineProgress,
-            ringPulse = ringPulse,
+            ringPulse = { ringPulseState.value }, // Lambda to prevent infinite recomposition
             sportLightInfo = spotLightInfo,
             onDismiss = onDismiss
         )
 
         is SpotlightType.Rect -> RectSpotlight(
-            ringPulse = ringPulse,
+            ringPulse = { ringPulseState.value }, // Lambda to prevent infinite recomposition
             lineProgress = lineProgress,
             scrimAlpha = scrimAlpha,
             sportLightInfo =  spotLightInfo,

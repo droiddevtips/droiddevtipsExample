@@ -18,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
@@ -45,6 +46,8 @@ import androidx.compose.ui.unit.sp
 import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.CoordinateCalculator
 import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.TextCoordinateCalculator
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Created by Melchior Vrolijk
@@ -58,7 +61,7 @@ fun Context.pxToDp(px: Float): Float {
 @Composable
 fun RectSpotlight(
     scrimAlpha: Float,
-    ringPulse: Float,
+    ringPulse: () -> Float,
     lineProgress: Animatable<Float, AnimationVector1D>,
     sportLightInfo: SpotlightInfo,
     onDismiss: () -> Unit
@@ -79,7 +82,9 @@ fun RectSpotlight(
     var displayCoordinates by remember { mutableStateOf(DisplayCoordinates()) }
     var containerSize by remember { mutableStateOf(IntSize.Zero) }
     var showEndDot by remember { mutableStateOf(false) }
+    var animationCompleted by remember { mutableStateOf(false) }
     val textMeasurer = rememberTextMeasurer()
+    val scope = rememberCoroutineScope()
 
     Box(
         Modifier
@@ -128,7 +133,10 @@ fun RectSpotlight(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null
-                    ) { onDismiss() }
+                    ) {
+                        if (animationCompleted)
+                            onDismiss()
+                    }
             )
 
             // ── Black scrim with transparent circular hole ────────────────────
@@ -225,6 +233,11 @@ fun RectSpotlight(
                             )
                         )
                     }
+
+                    scope.launch {
+                        delay(1.seconds)
+                        animationCompleted = true
+                    }
                 }
             }
 
@@ -235,7 +248,7 @@ fun RectSpotlight(
                 // Pulsing rounded-rect border at the spotlight boundary
 
                 drawRoundRect(
-                    color = rectProperty.strokeColor.copy(alpha = scrimAlpha * ringPulse),
+                    color = rectProperty.strokeColor.copy(alpha = scrimAlpha * ringPulse()),
                     topLeft = Offset(
                         displayCoordinates.spotlightLeft,
                         displayCoordinates.spotlightTop

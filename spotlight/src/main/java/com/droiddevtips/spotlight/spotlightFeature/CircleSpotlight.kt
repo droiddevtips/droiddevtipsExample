@@ -18,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -43,9 +44,11 @@ import androidx.compose.ui.unit.sp
 import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.CoordinateCalculator
 import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.TextCoordinateCalculator
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Created by Melchior Vrolijk
@@ -56,7 +59,7 @@ import kotlin.math.sqrt
 fun CircleSpotlight(
     scrimAlpha: Float,
     lineProgress: Animatable<Float, AnimationVector1D>,
-    ringPulse: Float,
+    ringPulse: () -> Float,
     sportLightInfo: SpotlightInfo,
     onDismiss: () -> Unit
 ) {
@@ -77,7 +80,10 @@ fun CircleSpotlight(
     var displayCoordinates by remember { mutableStateOf(DisplayCoordinates()) }
     var containerSize by remember { mutableStateOf(IntSize.Zero) }
     var showEndDot by remember { mutableStateOf(false) }
+    var animationCompleted by remember { mutableStateOf(false) }
     val textMeasurer = rememberTextMeasurer()
+    val scope = rememberCoroutineScope()
+
     Box(
         Modifier
             .fillMaxSize()
@@ -137,7 +143,10 @@ fun CircleSpotlight(
                     .clickable(
                         interactionSource = remember { MutableInteractionSource() },
                         indication = null
-                    ) { onDismiss() }
+                    ) {
+                        if (animationCompleted)
+                            onDismiss()
+                    }
             )
 
             // ── Black scrim with transparent circular hole ────────────────────
@@ -192,12 +201,12 @@ fun CircleSpotlight(
             Canvas(Modifier.fillMaxSize()) {
                 // Pulsing rounded-rect border at the spotlight boundary
 
-//                drawCircle(
-//                    color = Color.White.copy(alpha = scrimAlpha * ringPulse),
-//                    radius = circleRadius,
-//                    center = circleCenter,
-//                    style = Stroke(width = 2.dp.toPx())
-//                )
+                drawCircle(
+                    color = Color.White.copy(alpha = scrimAlpha * ringPulse()),
+                    radius = circleRadius,
+                    center = circleCenter,
+                    style = Stroke(width = 2.dp.toPx())
+                )
 
 
                 val lineEndProgress = lerp(
@@ -250,10 +259,13 @@ fun CircleSpotlight(
                             )
                         )
                     }
+
+                    scope.launch {
+                        delay(1.seconds)
+                        animationCompleted = true
+                    }
                 }
-
             }
-
         }
     }
 
