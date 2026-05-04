@@ -81,10 +81,10 @@
       </SelectionState>
       <SelectionState runConfigName="spotlight">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-05-02T13:27:09.671068Z">
+        <DropdownSelection timestamp="2026-05-04T18:53:20.739420Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=ce0417146d21cc370c" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=R52Y707QM7V" />
             </handle>
           </Target>
         </DropdownSelection>

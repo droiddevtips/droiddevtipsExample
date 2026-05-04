@@ -78,7 +78,7 @@ class SpotlightMainActivity : ComponentActivity() {
 
                 if (activeSpotlight.value != null) {
                     Spotlight(activeSpotlight.value) {
-                        SpotlightManager.performAction(action = SpotlightViewModelAction.OnDismissSpotlight)
+                        SpotlightManager.performAction(action = SpotlightManagerAction.OnDismissSpotlight)
                     }
                 }
             }
@@ -87,7 +87,7 @@ class SpotlightMainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun TopBar(viewAction: (SpotlightViewModelAction) -> Unit) {
+private fun TopBar(viewAction: (SpotlightManagerAction) -> Unit) {
 
     val context = LocalContext.current
 
@@ -99,7 +99,7 @@ private fun TopBar(viewAction: (SpotlightViewModelAction) -> Unit) {
             Toast.makeText(context, "Search icon clicked", Toast.LENGTH_SHORT).show()
         }, modifier = Modifier.observeSpotlightView(id = "search_button") { id, rect ->
             viewAction(
-                SpotlightViewModelAction.AddSpotlightInfo(
+                SpotlightManagerAction.AddSpotlightInfo(
                     SpotlightInfo(
                         id = id,
                         bounds = rect,
@@ -119,7 +119,7 @@ private fun TopBar(viewAction: (SpotlightViewModelAction) -> Unit) {
             Toast.makeText(context, "Refresh icon clicked", Toast.LENGTH_SHORT).show()
         }, modifier = Modifier.observeSpotlightView(id = "refresh_button") { id, rect ->
             viewAction(
-                SpotlightViewModelAction.AddSpotlightInfo(
+                SpotlightManagerAction.AddSpotlightInfo(
                     SpotlightInfo(
                         id = id,
                         bounds = rect,

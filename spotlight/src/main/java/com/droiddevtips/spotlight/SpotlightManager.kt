@@ -67,11 +67,11 @@ object SpotlightManager {
         }
     }
 
-    fun performAction(action: SpotlightViewModelAction) {
+    fun performAction(action: SpotlightManagerAction) {
 
         when (action) {
 
-            is SpotlightViewModelAction.AddSpotlightInfo -> {
+            is SpotlightManagerAction.AddSpotlightInfo -> {
                 Log.i(
                     "TAG92",
                     "\n\nAction add -> ${action.spotlightInfo.id} -> spotlights: ${
@@ -93,7 +93,7 @@ object SpotlightManager {
                 }
             }
 
-            is SpotlightViewModelAction.OnDismissSpotlight -> {
+            is SpotlightManagerAction.OnDismissSpotlight -> {
                 Log.i("TAG90", "On Dismiss Spotlight!!")
                 _activeSpotlight.update { null }
                 tryContinueWithQueue()
