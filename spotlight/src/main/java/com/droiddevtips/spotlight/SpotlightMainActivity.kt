@@ -10,14 +10,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,6 +28,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -45,6 +46,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.droiddevtips.spotlight.spotlightFeature.Spotlight
 import com.droiddevtips.spotlight.spotlightFeature.SpotlightInfo
 import com.droiddevtips.spotlight.spotlightFeature.SpotlightType
@@ -58,10 +60,13 @@ class SpotlightMainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DroidDevTipsTheme {
+
+                val activeSpotlight = SpotlightManager.activeSpotlight.collectAsStateWithLifecycle()
+
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
-                        TopBar()
+                        TopBar(SpotlightManager::performAction)
                     }
                 ) { innerPadding ->
                     NewsScreen(
@@ -70,13 +75,19 @@ class SpotlightMainActivity : ComponentActivity() {
                             .padding(innerPadding)
                     )
                 }
+
+                if (activeSpotlight.value != null) {
+                    Spotlight(activeSpotlight.value) {
+                        SpotlightManager.performAction(action = SpotlightViewModelAction.OnDismissSpotlight)
+                    }
+                }
             }
         }
     }
 }
 
 @Composable
-private fun TopBar() {
+private fun TopBar(viewAction: (SpotlightViewModelAction) -> Unit) {
 
     val context = LocalContext.current
 
@@ -86,6 +97,17 @@ private fun TopBar() {
 
         IconButton(onClick = {
             Toast.makeText(context, "Search icon clicked", Toast.LENGTH_SHORT).show()
+        }, modifier = Modifier.observeSpotlightView(id = "search_button") { id, rect ->
+            viewAction(
+                SpotlightViewModelAction.AddSpotlightInfo(
+                    SpotlightInfo(
+                        id = id,
+                        bounds = rect,
+                        text = "The search button to search for news",
+                        type = SpotlightType.Circle()
+                    )
+                )
+            )
         }) {
             Icon(
                 painter = painterResource(R.drawable.search_icon),
@@ -95,6 +117,18 @@ private fun TopBar() {
 
         IconButton(onClick = {
             Toast.makeText(context, "Refresh icon clicked", Toast.LENGTH_SHORT).show()
+        }, modifier = Modifier.observeSpotlightView(id = "refresh_button") { id, rect ->
+            viewAction(
+                SpotlightViewModelAction.AddSpotlightInfo(
+                    SpotlightInfo(
+                        id = id,
+                        bounds = rect,
+                        text = "The refresh button to refresh news list",
+                        type = SpotlightType.Rect()
+                    )
+                )
+            )
+
         }) {
             Icon(
                 painter = painterResource(R.drawable.refresh_icon),
@@ -140,7 +174,7 @@ fun ListItemView(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(all = 16.dp)
+                .padding(all = 25.dp)
                 .clickableWithPrimaryColorRipple(onClick = onClicked),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(space = 16.dp)
@@ -149,15 +183,21 @@ fun ListItemView(
             Image(
                 painter = painterResource(R.drawable.news_icon),
                 contentDescription = null,
-                modifier = Modifier.size(50.dp).clip(shape = RoundedCornerShape(8.dp))
+                modifier = Modifier
+                    .size(50.dp)
+                    .clip(shape = RoundedCornerShape(8.dp))
             )
 
-            Text(text = "News list item $item")
+            Column(
+                modifier = Modifier.height(50.dp),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "News list item $item", style = MaterialTheme.typography.titleMedium)
+                Text(text = "News item $item content", style = MaterialTheme.typography.bodySmall)
+            }
 
         }
     }
-
-
 }
 
 @Composable
@@ -187,6 +227,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 .onGloballyPositioned {
                     showSpotlightInfo.value =
                         SpotlightInfo(
+                            id = "test",
                             bounds = it.boundsInRoot(),
                             text = "Most Space Area Most Space Area Most Space Area Most Space Area 123",
                             type = SpotlightType.Circle()
@@ -226,11 +267,3 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
 
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    DroidDevTipsExamplesTheme {
-//        Greeting("Android")
-//    }
-//}
