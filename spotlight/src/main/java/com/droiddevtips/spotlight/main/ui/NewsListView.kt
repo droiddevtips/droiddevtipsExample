@@ -1,4 +1,4 @@
-package com.droiddevtips.spotlight.main
+package com.droiddevtips.spotlight.main.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.spotlight.main.data.NewsItem
 
 /**
  * The news list composable view

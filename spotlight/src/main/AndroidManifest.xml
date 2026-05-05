@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DroidDevTipsExamples">
         <activity
-            android:name=".main.SpotlightMainActivity"
+            android:name=".main.ui.SpotlightMainActivity"
             android:exported="true"
             android:theme="@style/Theme.DroidDevTipsExamples">
             <intent-filter>

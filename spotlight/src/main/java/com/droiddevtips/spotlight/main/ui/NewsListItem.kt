@@ -1,4 +1,4 @@
-package com.droiddevtips.spotlight.main
+package com.droiddevtips.spotlight.main.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.spotlight.main.data.NewsItem
 
 /**
  * The news list item composable view

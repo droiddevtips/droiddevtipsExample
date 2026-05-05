@@ -1,10 +1,11 @@
-package com.droiddevtips.spotlight.main
+package com.droiddevtips.spotlight.main.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 
 /**
+ * The spotlight view model factory
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */

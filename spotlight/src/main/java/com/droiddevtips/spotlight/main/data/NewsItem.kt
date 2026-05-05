@@ -1,4 +1,4 @@
-package com.droiddevtips.spotlight.main
+package com.droiddevtips.spotlight.main.data
 
 import android.os.Parcelable
 import androidx.annotation.DrawableRes

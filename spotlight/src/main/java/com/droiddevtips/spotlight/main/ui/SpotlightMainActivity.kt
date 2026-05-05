@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 
-package com.droiddevtips.spotlight.main
+package com.droiddevtips.spotlight.main.ui
 
 import android.os.Bundle
 import android.widget.Toast
@@ -28,20 +28,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.spotlight.R
-import com.droiddevtips.spotlight.spotlight.domain.SpotlightManager
-import com.droiddevtips.spotlight.spotlight.data.SpotlightManagerAction
-import com.droiddevtips.spotlight.main.SpotlightViewModelFactory
 import com.droiddevtips.spotlight.extensions.observeSpotlightView
-import com.droiddevtips.spotlight.spotlight.ui.Spotlight
+import com.droiddevtips.spotlight.main.data.NewsItem
 import com.droiddevtips.spotlight.spotlight.data.SpotlightInfo
+import com.droiddevtips.spotlight.spotlight.data.SpotlightManagerAction
 import com.droiddevtips.spotlight.spotlight.data.SpotlightType
+import com.droiddevtips.spotlight.spotlight.domain.SpotlightManager
+import com.droiddevtips.spotlight.spotlight.ui.Spotlight
 import com.droiddevtips.typography.DroidDevTipsTheme
 import kotlinx.coroutines.launch
 
+/**
+ * This is the spotlight main activity
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 class SpotlightMainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

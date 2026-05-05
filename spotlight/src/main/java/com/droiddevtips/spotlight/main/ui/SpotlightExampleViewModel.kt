@@ -1,10 +1,9 @@
-package com.droiddevtips.spotlight.main
+package com.droiddevtips.spotlight.main.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.droiddevtips.spotlight.main.NewsItem
 import com.droiddevtips.spotlight.R
-import com.droiddevtips.spotlight.main.SpotlightExampleViewState
+import com.droiddevtips.spotlight.main.data.NewsItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

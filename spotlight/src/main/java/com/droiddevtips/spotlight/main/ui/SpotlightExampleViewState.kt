@@ -1,6 +1,7 @@
-package com.droiddevtips.spotlight.main
+package com.droiddevtips.spotlight.main.ui
 
 import android.os.Parcelable
+import com.droiddevtips.spotlight.main.data.NewsItem
 import kotlinx.parcelize.Parcelize
 
 /**
