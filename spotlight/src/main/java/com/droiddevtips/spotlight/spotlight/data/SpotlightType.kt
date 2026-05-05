@@ -11,9 +11,9 @@ sealed class SpotlightType {
     data class Rect(
         val radius: Int = 16,
         val strokeWidth: Int = 2,
-        val strokeColor: Color = Color.Companion.White,
-        val overlayColor: Color = Color.Companion.Black
+        val strokeColor: Color = Color.White,
+        val overlayColor: Color = Color.Black
     ) : SpotlightType()
 
-    data class Circle(val overlayColor: Color = Color.Companion.Black, val radius: Float = 0f) : SpotlightType()
+    data class Circle(val overlayColor: Color = Color.Black, val radius: Float = 0f) : SpotlightType()
 }
