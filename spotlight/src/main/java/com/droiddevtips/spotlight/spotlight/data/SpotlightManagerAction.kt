@@ -1,8 +1,7 @@
-package com.droiddevtips.spotlight
-
-import com.droiddevtips.spotlight.spotlightFeature.SpotlightInfo
+package com.droiddevtips.spotlight.spotlight.data
 
 /**
+ * The spotlight manager action interface
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */

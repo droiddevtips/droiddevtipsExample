@@ -1,4 +1,4 @@
-package com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator
+package com.droiddevtips.spotlight.spotlight.domain
 
 import android.content.Context
 import android.util.Log
@@ -6,11 +6,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.droiddevtips.spotlight.spotlightFeature.DisplayCoordinates
-import com.droiddevtips.spotlight.spotlightFeature.SpotlightInfo
-import com.droiddevtips.spotlight.spotlightFeature.SpotlightType
+import com.droiddevtips.spotlight.spotlight.data.DisplayCoordinates
+import com.droiddevtips.spotlight.spotlight.data.SpotlightInfo
+import com.droiddevtips.spotlight.spotlight.data.SpotlightType
 
 /**
+ * The coordinate calculator
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
@@ -23,7 +24,7 @@ class CoordinateCalculator {
             containerSize: IntSize,
             spotlightInfo: SpotlightInfo,
             spotlightType: SpotlightType,
-            overlayRootOffset: Offset = Offset.Zero
+            overlayRootOffset: Offset = Offset.Companion.Zero
         ): DisplayCoordinates {
             // Convert boundsInRoot() → canvas-local by subtracting the overlay's own
             // root offset. When the overlay is at (0,0) this is a no-op; when it is

@@ -1,8 +1,7 @@
-package com.droiddevtips.spotlight.spotlightFeature
+package com.droiddevtips.spotlight.spotlight.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
@@ -12,13 +11,14 @@ import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalDensity
+import com.droiddevtips.spotlight.spotlight.data.SpotlightInfo
+import com.droiddevtips.spotlight.spotlight.data.SpotlightType
 
 /**
+ * The spotlight composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
-
 @SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun Spotlight(
@@ -62,10 +62,8 @@ fun Spotlight(
             ringPulse = { ringPulseState.value }, // Lambda to prevent infinite recomposition
             lineProgress = lineProgress,
             scrimAlpha = scrimAlpha,
-            sportLightInfo =  spotLightInfo,
+            sportLightInfo = spotLightInfo,
             onDismiss = onDismiss
         )
     }
-
-
 }

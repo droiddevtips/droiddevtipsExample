@@ -1,7 +1,8 @@
-package com.droiddevtips.spotlight
+package com.droiddevtips.spotlight.spotlight.domain
 
 import android.util.Log
-import com.droiddevtips.spotlight.spotlightFeature.SpotlightInfo
+import com.droiddevtips.spotlight.spotlight.data.SpotlightManagerAction
+import com.droiddevtips.spotlight.spotlight.data.SpotlightInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
+ * The spotlight manager object, a singleton object.
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */

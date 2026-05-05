@@ -1,4 +1,4 @@
-package com.droiddevtips.spotlight.spotlightFeature
+package com.droiddevtips.spotlight.spotlight.ui
 
 import android.content.res.Configuration
 import android.util.Log
@@ -34,6 +34,7 @@ import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -41,8 +42,11 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.CoordinateCalculator
-import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.TextCoordinateCalculator
+import com.droiddevtips.spotlight.spotlight.data.DisplayCoordinates
+import com.droiddevtips.spotlight.spotlight.data.SpotlightInfo
+import com.droiddevtips.spotlight.spotlight.data.SpotlightType
+import com.droiddevtips.spotlight.spotlight.domain.CoordinateCalculator
+import com.droiddevtips.spotlight.spotlight.domain.TextCoordinateCalculator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -51,10 +55,10 @@ import kotlin.math.sqrt
 import kotlin.time.Duration.Companion.seconds
 
 /**
+ * The circle spotlight composable view
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
-
 @Composable
 fun CircleSpotlight(
     scrimAlpha: Float,
@@ -237,7 +241,7 @@ fun CircleSpotlight(
                     val textLayoutResult = textMeasurer.measure(
                         text = sportLightInfo.text,
                         constraints = Constraints(maxWidth = if(orientation == Configuration.ORIENTATION_LANDSCAPE) { (size.width.toInt() / 2) - textPadding.toInt() } else (size.width.toInt() - textPortraitPadding.toInt())),
-                        style = androidx.compose.ui.text.TextStyle(
+                        style = TextStyle(
                             color = Color.White,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold

@@ -1,17 +1,20 @@
-package com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator
+package com.droiddevtips.spotlight.spotlight.domain
 
 import android.content.Context
 import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.IntSize
-import com.droiddevtips.spotlight.spotlightFeature.SpotlightType
+import com.droiddevtips.spotlight.delegates.ReadOnlyProperty
+import com.droiddevtips.spotlight.spotlight.data.TextCoordinate
+import com.droiddevtips.spotlight.spotlight.data.SpotlightType
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 import kotlin.reflect.KProperty
 
 /**
+ * The largest spacing calculator delegate, a sub class of [ReadOnlyProperty].
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
@@ -25,7 +28,7 @@ class LargestSpacingCalculator(
     private val spotlightType: SpotlightType,
 ) : ReadOnlyProperty<Any?, TextCoordinate> {
 
-    private var spotCenter: Offset = Offset.Zero
+    private var spotCenter: Offset = Offset.Companion.Zero
     private var spotWidth: Float = 0f
     private var spotHeight: Float = 0f
     private var radius: Float = 20f

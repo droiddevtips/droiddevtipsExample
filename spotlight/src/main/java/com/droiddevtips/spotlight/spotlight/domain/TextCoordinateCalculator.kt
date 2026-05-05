@@ -1,11 +1,14 @@
-package com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator
+package com.droiddevtips.spotlight.spotlight.domain
 
 import android.util.Log
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.TextLayoutResult
+import com.droiddevtips.spotlight.delegates.ReadOnlyProperty
+import com.droiddevtips.spotlight.spotlight.data.TextCoordinate
 import kotlin.reflect.KProperty
 
 /**
+ * The text coordinates calculator delegates, a subclass of [ReadOnlyProperty].
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
@@ -42,17 +45,17 @@ class TextCoordinateCalculator(
             is TextCoordinate.PortraitRightTop -> getCenterTopCoordinate()
             is TextCoordinate.PortraitVerticalCenterLeft -> getCenterTopCoordinate()
             is TextCoordinate.PortraitVerticalCenterRight -> getCenterTopCoordinate()
-            TextCoordinate.None -> Offset.Zero
+            TextCoordinate.None -> Offset.Companion.Zero
         }
     }
 
     private fun getCenterBottomCoordinate(): Offset = Offset(
-        x = textAreaCoordinate.lineEndCoordinate.x - (textLayout.size.width/2),
+        x = textAreaCoordinate.lineEndCoordinate.x - (textLayout.size.width / 2),
         y = textAreaCoordinate.lineEndCoordinate.y + textPadding
     )
 
     private fun getCenterTopCoordinate(): Offset = Offset(
-        x = textAreaCoordinate.lineEndCoordinate.x - (textLayout.size.width/2),
+        x = textAreaCoordinate.lineEndCoordinate.x - (textLayout.size.width / 2),
         y = (textAreaCoordinate.lineEndCoordinate.y - textPadding) - textLayout.size.height
     )
 }

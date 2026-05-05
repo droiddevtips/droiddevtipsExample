@@ -1,9 +1,7 @@
-package com.droiddevtips.spotlight.spotlightFeature
-
-import androidx.compose.ui.geometry.Offset
-import com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator.TextCoordinate
+package com.droiddevtips.spotlight.spotlight.data
 
 /**
+ * The display coordinates data model
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */

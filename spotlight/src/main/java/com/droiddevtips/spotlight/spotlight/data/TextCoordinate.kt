@@ -1,8 +1,9 @@
-package com.droiddevtips.spotlight.spotlightFeature.coordinateCalculator
+package com.droiddevtips.spotlight.spotlight.data
 
 import androidx.compose.ui.geometry.Offset
 
 /**
+ * The text coordinate sealed classes
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
@@ -26,6 +27,6 @@ sealed class TextCoordinate(val lineStartCoordinate: Offset, val lineEndCoordina
     data class LandscapeHorizontalVerticalCenter(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class LandscapeHorizontalCenterTop(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
     data class LandscapeHorizontalCenterBottom(private val _lineStartCoordinate: Offset, private val _lineEndCoordinate: Offset) : TextCoordinate(_lineStartCoordinate, _lineEndCoordinate)
-    data object None : TextCoordinate(Offset.Zero, Offset.Zero)
+    data object None : TextCoordinate(Offset.Companion.Zero, Offset.Companion.Zero)
 
 }

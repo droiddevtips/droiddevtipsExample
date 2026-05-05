@@ -27,6 +27,3 @@ fun Modifier.clickableWithPrimaryColorRipple(radius: Dp = Dp.Unspecified, onClic
         onClick = onClick
     )
 }
-
-// MaterialTheme.colorScheme.primary
-// .copy(alpha = if (isSystemInDarkTheme()) 0.15f else 0.58f)
