@@ -161,7 +161,7 @@ private fun NewsScreen(modifier: Modifier = Modifier) {
         },
         detailPane = {
             AnimatedPane {
-                val newsItem = navigator.currentDestination?.contentKey ?: NewsItem()
+                val newsItem = navigator.currentDestination?.contentKey
                 NewsDetailView(newsItem = newsItem, modifier = Modifier.fillMaxSize())
             }
         }
