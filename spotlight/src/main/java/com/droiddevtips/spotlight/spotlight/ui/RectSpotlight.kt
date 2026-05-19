@@ -1,7 +1,6 @@
 package com.droiddevtips.spotlight.spotlight.ui
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -60,7 +59,7 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun RectSpotlight(
     scrimAlpha: Float,
-    ringPulse: () -> Float,
+    rectBorderPulse: () -> Float,
     lineProgress: Animatable<Float, AnimationVector1D>,
     sportLightInfo: SpotlightInfo,
     onDismiss: () -> Unit
@@ -70,12 +69,6 @@ fun RectSpotlight(
     val context = LocalContext.current
     val density = LocalDensity.current
     val orientation = LocalConfiguration.current.orientation
-
-    // Always track the overlay's own position in root coordinates, even while the
-    // overlay is invisible.  This must live OUTSIDE the scrimAlpha guard so the
-    // value is ready (non-zero when inside a Scaffold / inset container) before
-    // the first visible frame renders — otherwise the spotlight is misaligned on
-    // the first appearance.
 
     var overlayRootOffset by remember { mutableStateOf(Offset.Zero) }
     var displayCoordinates by remember { mutableStateOf(DisplayCoordinates()) }
@@ -119,13 +112,6 @@ fun RectSpotlight(
 
     if (scrimAlpha > 0f) {
         Box(modifier = Modifier.fillMaxSize()) {
-
-            // Convert boundsInRoot() → canvas-local by subtracting the overlay's own
-            // root offset. When the overlay is at (0,0) this is a no-op; when it is
-            // shifted (e.g. by status-bar insets above the composable), it corrects
-            // the mismatch so the spotlight lands exactly on the target.
-            Log.i("TAG45", "Overlay root offset 23: $overlayRootOffset")
-
             Box(
                 Modifier
                     .fillMaxSize()
@@ -138,27 +124,6 @@ fun RectSpotlight(
                     }
             )
 
-            // ── Black scrim with transparent circular hole ────────────────────
-            //
-            //   Rendered to an off-screen buffer (CompositingStrategy.Offscreen) so
-            //   BlendMode.Clear can punch a true alpha hole through the black rectangle,
-            //   revealing the composable content underneath the Canvas layer.
-            // ────────────────────────────────────────────────────────────────
-
-//            The two canvases are separated because of BlendMode.Clear — that's the key constraint.
-//
-//            First Canvas (with graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }):
-//            - Draws the black scrim
-//                    - Punches a transparent hole using BlendMode.Clear
-//                    - BlendMode.Clear only works correctly inside an offscreen buffer. Without it, Clear would erase pixels on the actual screen rather than just within the layer, producing wrong results.
-//
-//            Second Canvas (plain, no offscreen layer):
-//            - Draws the pulsing white border ring and the animated line
-//            - These use normal BlendMode.SrcOver (the default) — no offscreen buffer needed
-//            - If you put these inside the offscreen layer, BlendMode.Clear from the hole would interact with them incorrectly, potentially erasing parts of the ring/line too
-//
-//            In short: the hole-punching technique requires isolation in its own offscreen layer, and anything drawn after it that shouldn't be affected by Clear must live in a separate Canvas on top.
-
             Canvas(
                 Modifier
                     .fillMaxSize()
@@ -168,7 +133,6 @@ fun RectSpotlight(
                 drawRect(rectProperty.overlayColor.copy(alpha = scrimAlpha))
 
                 // Transparent rounded-rect hole at the component's position
-
                 drawRoundRect(
                     color = Color.Transparent,
                     topLeft = Offset(
@@ -202,14 +166,15 @@ fun RectSpotlight(
                         center = displayCoordinates.textCoordinate.lineEndCoordinate
                     )
 
-
-                    // Draw text
-
                     val textPortraitPadding = 80.dp.toPx()
                     val textPadding = 125.dp.toPx()
                     val textLayoutResult = textMeasurer.measure(
                         text = sportLightInfo.text,
-                        constraints = Constraints(maxWidth = if(orientation == Configuration.ORIENTATION_LANDSCAPE) { (size.width.toInt() / 2) - textPadding.toInt() } else (size.width.toInt() - textPortraitPadding.toInt())),
+                        constraints = Constraints(
+                            maxWidth = if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                                (size.width.toInt() / 2) - textPadding.toInt()
+                            } else (size.width.toInt() - textPortraitPadding.toInt())
+                        ),
                         style = TextStyle(
                             color = Color.White,
                             fontSize = 16.sp,
@@ -241,13 +206,11 @@ fun RectSpotlight(
             }
 
             // ── Pulsing ring + animated line ──────────────────────────────────
-
-
             Canvas(Modifier.fillMaxSize()) {
-                // Pulsing rounded-rect border at the spotlight boundary
 
+                // Pulsing rounded-rect border at the spotlight boundary
                 drawRoundRect(
-                    color = rectProperty.strokeColor.copy(alpha = scrimAlpha * ringPulse()),
+                    color = rectProperty.strokeColor.copy(alpha = scrimAlpha * rectBorderPulse()),
                     topLeft = Offset(
                         displayCoordinates.spotlightLeft,
                         displayCoordinates.spotlightTop
@@ -272,5 +235,4 @@ fun RectSpotlight(
         )
         showEndDot = true
     }
-
 }

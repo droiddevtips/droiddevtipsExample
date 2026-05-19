@@ -12,8 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.droiddevtips.spotlight.R
+import com.droiddevtips.spotlight.common.SpotlightResDrawable
+import com.droiddevtips.spotlight.common.SpotlightResString
 
 /**
  * The 'no article selected' composable view
@@ -29,13 +31,16 @@ fun NoArticleSelectedPlaceholder(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(16.dp, alignment = Alignment.CenterVertically)
     ) {
         Icon(
-            painter = painterResource(R.drawable.unknown_news),
+            painter = painterResource(SpotlightResDrawable.unknown_news),
             contentDescription = null,
             modifier = Modifier
                 .size(200.dp)
                 .clip(RoundedCornerShape(8.dp))
         )
 
-        Text(text = "No article selected", style = MaterialTheme.typography.titleLarge)
+        Text(
+            text = stringResource(id = SpotlightResString.no_article_selected),
+            style = MaterialTheme.typography.titleLarge
+        )
     }
 }

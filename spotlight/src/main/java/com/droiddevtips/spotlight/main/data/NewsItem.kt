@@ -2,7 +2,7 @@ package com.droiddevtips.spotlight.main.data
 
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
-import com.droiddevtips.spotlight.R
+import com.droiddevtips.spotlight.common.SpotlightResDrawable
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class NewsItem(
-    @field:DrawableRes val icon: Int = R.drawable.news_icon,
-    val title: String = "No title found",
-    val subtitle: String = "No subtitle found"
+    @field:DrawableRes val icon: Int = SpotlightResDrawable.news_icon,
+    val title: String,
+    val subtitle: String
 ) : Parcelable

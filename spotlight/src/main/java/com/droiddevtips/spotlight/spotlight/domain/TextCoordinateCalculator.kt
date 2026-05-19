@@ -1,6 +1,5 @@
 package com.droiddevtips.spotlight.spotlight.domain
 
-import android.util.Log
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.TextLayoutResult
 import com.droiddevtips.spotlight.delegates.ReadOnlyProperty
@@ -24,8 +23,6 @@ class TextCoordinateCalculator(
         property: KProperty<*>
     ): Offset {
 
-        Log.i("TAG23", "\nTextCoordinate -> $textAreaCoordinate\nText layout Result -> $textLayout\n")
-
         return when(textAreaCoordinate) {
             is TextCoordinate.LandscapeHorizontalCenterBottom -> getCenterBottomCoordinate()
             is TextCoordinate.LandscapeHorizontalCenterTop -> getCenterTopCoordinate()
@@ -45,7 +42,7 @@ class TextCoordinateCalculator(
             is TextCoordinate.PortraitRightTop -> getCenterTopCoordinate()
             is TextCoordinate.PortraitVerticalCenterLeft -> getCenterTopCoordinate()
             is TextCoordinate.PortraitVerticalCenterRight -> getCenterTopCoordinate()
-            TextCoordinate.None -> Offset.Companion.Zero
+            TextCoordinate.None -> Offset.Zero
         }
     }
 

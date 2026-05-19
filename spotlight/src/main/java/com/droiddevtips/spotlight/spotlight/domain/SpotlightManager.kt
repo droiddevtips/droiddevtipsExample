@@ -1,8 +1,7 @@
 package com.droiddevtips.spotlight.spotlight.domain
 
-import android.util.Log
-import com.droiddevtips.spotlight.spotlight.data.SpotlightManagerAction
 import com.droiddevtips.spotlight.spotlight.data.SpotlightInfo
+import com.droiddevtips.spotlight.spotlight.data.SpotlightManagerAction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,25 +40,14 @@ object SpotlightManager {
 
                 if (activeSpotlight != null) return@collect
 
-                val nextSpotlightID = queue.firstOrNull() //?: return@collect
-                Log.i("TAG92", "Next spotlight ID: $nextSpotlightID")
-                if (nextSpotlightID == null)
-                    return@collect
-
-                val nextSpotLightInfo = positions[nextSpotlightID] //?: return@collect
-                Log.i("TAG92", "Next spotlight Info: $nextSpotLightInfo")
-                if (nextSpotLightInfo == null)
-                    return@collect
-
-                Log.i("TAG92", "Continue with queue....... ${queue.joinToString(separator = ",")}")
+                val nextSpotlightID = queue.firstOrNull() ?: return@collect
+                val nextSpotLightInfo = positions[nextSpotlightID] ?: return@collect
 
                 _spotlightQueue.update {
                     ArrayDeque(it).also { queue ->
                         queue.removeFirst()
                     }
                 }
-                Log.i("TAG92", "Spotlight queue -> ${_spotlightQueue.value.joinToString(separator = ",")}")
-                Log.i("TAG92", "Active spotlight -> ${_activeSpotlight.value}")
 
                 idsShown.update { it + nextSpotlightID }
                 _activeSpotlight.update {
@@ -74,13 +62,6 @@ object SpotlightManager {
         when (action) {
 
             is SpotlightManagerAction.AddSpotlightInfo -> {
-                Log.i(
-                    "TAG92",
-                    "\n\nAction add -> ${action.spotlightInfo.id} -> spotlights: ${
-                        _spotlightQueue.value.joinToString(separator = ",")
-                    }"
-                )
-
                 spotlightsPositions.update { currentSpotlightMap ->
                     if (currentSpotlightMap[action.spotlightInfo.id] == action.spotlightInfo)
                         currentSpotlightMap
@@ -96,7 +77,6 @@ object SpotlightManager {
             }
 
             is SpotlightManagerAction.OnDismissSpotlight -> {
-                Log.i("TAG90", "On Dismiss Spotlight!!")
                 _activeSpotlight.update { null }
                 tryContinueWithQueue()
             }
