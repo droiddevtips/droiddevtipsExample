@@ -10,13 +10,15 @@ plugins {
 extensions.configure<ApplicationExtension> {
     namespace = "com.droiddevtips.musicplayer"
     compileSdk {
-        version = release(36)
+        version = release(libs.versions.releaseVersion.get().toInt()) {
+            minorApiLevel = libs.versions.minorApiLevel.get().toInt()
+        }
     }
 
     defaultConfig {
         applicationId = "com.droiddevtips.musicplayer"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetVersion.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -33,8 +35,8 @@ extensions.configure<ApplicationExtension> {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
     }
 
     buildFeatures {

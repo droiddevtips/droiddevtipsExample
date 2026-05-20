@@ -8,12 +8,16 @@ plugins {
 
 extensions.configure<ApplicationExtension> {
     namespace = "com.droiddevtips.examples"
-    compileSdk = 36
+    compileSdk {
+        version = release(libs.versions.releaseVersion.get().toInt()) {
+            minorApiLevel = libs.versions.minorApiLevel.get().toInt()
+        }
+    }
 
     defaultConfig {
         applicationId = "com.droiddevtips.examples"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetVersion.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -30,8 +34,8 @@ extensions.configure<ApplicationExtension> {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
     }
     buildFeatures {
         compose = true

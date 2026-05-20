@@ -7,10 +7,14 @@ plugins {
 
 extensions.configure<LibraryExtension> {
     namespace = "com.droiddevtips.appwindowsizeandorientationdetector"
-    compileSdk = 36
+    compileSdk {
+        version = release(libs.versions.releaseVersion.get().toInt()) {
+            minorApiLevel = libs.versions.minorApiLevel.get().toInt()
+        }
+    }
 
     defaultConfig {
-        minSdk = 21
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -26,8 +30,8 @@ extensions.configure<LibraryExtension> {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
     }
     buildFeatures {
         compose = true
