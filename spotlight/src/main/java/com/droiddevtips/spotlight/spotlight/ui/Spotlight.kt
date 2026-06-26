@@ -36,7 +36,7 @@ fun Spotlight(
     )
 
     val infiniteTransition = rememberInfiniteTransition(label = "shapeBorder")
-    val shapeBorderPulseState = infiniteTransition.animateFloat(
+    val shapeBorderPulseState = infiniteTransition.animateFloat( // <--- instead of val shapeBorderPulseState by infiniteTransition.animateFloat(...
         initialValue = 0.3f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(900), RepeatMode.Reverse),
