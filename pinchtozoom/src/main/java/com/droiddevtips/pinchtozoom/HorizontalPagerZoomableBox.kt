@@ -179,14 +179,16 @@ fun HorizontalPagerZoomableBox(
                                     if (pastTouchSlop && panChange != Offset.Zero) {
                                         event.changes.forEach { it.consume() }
 
+                                        val scalePan = panChange * scale
+
                                         val extraWidth = (scale - 1) * constraints.maxWidth
                                         val extraHeight = (scale - 1) * constraints.maxHeight
                                         val maxX = extraWidth / 2f
                                         val maxY = extraHeight / 2f
 
                                         offset = Offset(
-                                            x = (offset.x + panChange.x).coerceIn(-maxX, maxX),
-                                            y = (offset.y + panChange.y).coerceIn(-maxY, maxY)
+                                            x = (offset.x + scalePan.x).coerceIn(-maxX, maxX),
+                                            y = (offset.y + scalePan.y).coerceIn(-maxY, maxY)
                                         )
                                     }
                                 }
