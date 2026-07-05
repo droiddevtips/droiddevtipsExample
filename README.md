@@ -5,7 +5,7 @@ This repository contains a collection of simple and practical Android code examp
 Whether you’re a beginner learning the basics or an experienced developer looking for quick reference implementations, this repo serves as a handy resource for common Android patterns and best practices.
 
 ## 🚀 Features
-- My goal is to offer practical tips when creating Android apps.
+- My goal is to offer practical tips when building Android apps.
 
 ## 📦 Installation
 
