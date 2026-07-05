@@ -1,14 +1,9 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":visibilitychanged")
 include(":spotlight")
-
-
 include(":pinchtozoom")
-
-
 include(":musicplayer")
-
-
 include(":app")
 include(":admobnextgenads")
 include(":droidDevTipsTheme")

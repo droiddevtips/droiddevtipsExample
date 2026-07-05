@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/musicplayer" />
             <option value="$PROJECT_DIR$/pinchtozoom" />
             <option value="$PROJECT_DIR$/spotlight" />
+            <option value="$PROJECT_DIR$/visibilitychanged" />
           </set>
         </option>
       </GradleProjectSettings>
