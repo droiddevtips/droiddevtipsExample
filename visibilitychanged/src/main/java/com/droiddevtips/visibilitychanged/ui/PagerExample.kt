@@ -1,4 +1,4 @@
-package com.droiddevtips.visibilitychanged
+package com.droiddevtips.visibilitychanged.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +21,8 @@ import androidx.compose.ui.layout.onVisibilityChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.visibilitychanged.R
+import com.droiddevtips.visibilitychanged.data.TabRoute
 
 @Composable
 fun PagerExample(

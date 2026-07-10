@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DroidDevTipsExamples">
         <activity
-            android:name=".VisibilityChangedMainActivity"
+            android:name=".ui.VisibilityChangedMainActivity"
             android:exported="true"
             android:theme="@style/Theme.DroidDevTipsExamples"
             android:windowSoftInputMode="adjustResize">

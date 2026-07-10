@@ -1,4 +1,4 @@
-package com.droiddevtips.visibilitychanged
+package com.droiddevtips.visibilitychanged.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.typography.DroidDevTipsTheme
+import com.droiddevtips.visibilitychanged.data.TabRoute
 
 class VisibilityChangedMainActivity : ComponentActivity() {
 
