@@ -15,10 +15,10 @@
       </SelectionState>
       <SelectionState runConfigName="admobnextgenads">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-06-29T17:39:24.903510Z">
+        <DropdownSelection timestamp="2026-07-10T22:46:48.602303Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/melchiorvrolijk/.android/avd/Pixel_8_Pro_API_VanillaIceCream.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=RF8M222C6VY" />
             </handle>
           </Target>
         </DropdownSelection>

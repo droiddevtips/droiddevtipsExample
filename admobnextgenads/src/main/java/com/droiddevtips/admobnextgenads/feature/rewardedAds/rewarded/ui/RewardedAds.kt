@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -32,6 +33,7 @@ fun RewardedAd(modifier: Modifier = Modifier) {
 
     val navController = rememberNavController()
     val context = LocalContext.current
+    val noSufficientCreditText = stringResource(AppString.no_sufficient_credit)
     val dataStateKey = "data"
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -52,7 +54,7 @@ fun RewardedAd(modifier: Modifier = Modifier) {
                             return@RewardedAdsArticleListView
 
                         if (it.premium && viewState.value.credit == 0) {
-                            Toast.makeText(context, context.getString(AppString.no_sufficient_credit), Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, noSufficientCreditText, Toast.LENGTH_LONG).show()
                             return@RewardedAdsArticleListView
                         }
 
