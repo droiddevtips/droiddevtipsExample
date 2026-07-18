@@ -1,4 +1,4 @@
-package com.droiddevtips.visibilitychanged.ui
+package com.droiddevtips.visibilitychanged.ui.topBar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.visibilitychanged.R
-
+/**
+ * Displays the title text within the top app bar of a [Scaffold].
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun TopBarText(visibleTabText: String, modifier: Modifier = Modifier) {
 

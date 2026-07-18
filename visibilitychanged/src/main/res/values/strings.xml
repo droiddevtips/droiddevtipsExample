@@ -6,4 +6,8 @@
     <string name="page_visible">Page %1$d</string>
     <string name="page_nr_visible">Page %1$d visible</string>
     <string name="swipe_between_pages">&lt;------- swipe between pages -------&gt;</string>
+    <string name="list_item_title">Item %1$d %2$s</string>
+    <string name="dummy_ad_view_title">Dummy Ads at index %1$d</string>
+    <string name="dummy_ad_view_impression_toast_message">Ads impression for Ad at index: %1$d</string>
+
 </resources>

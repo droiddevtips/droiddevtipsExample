@@ -1,4 +1,4 @@
-package com.droiddevtips.visibilitychanged.ui
+package com.droiddevtips.visibilitychanged.ui.navigationBar
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
@@ -9,6 +9,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.material3.NavigationBarItem
 import com.droiddevtips.visibilitychanged.data.TabRoute
 
+/**
+ * A custom navigation bar item that displays an icon and label, and reflects
+ * its selected/unselected state with the appropriate styling.
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun RowScope.CustomNavigationBarItem(
     tabItem: TabRoute,

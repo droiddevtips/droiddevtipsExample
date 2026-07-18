@@ -21,7 +21,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.droiddevtips.typography.DroidDevTipsTheme
 import com.droiddevtips.visibilitychanged.data.TabRoute
+import com.droiddevtips.visibilitychanged.ui.listExample.ui.ListExample
+import com.droiddevtips.visibilitychanged.ui.navigationBar.CustomNavigationBarItem
+import com.droiddevtips.visibilitychanged.ui.pagerExample.PagerExample
+import com.droiddevtips.visibilitychanged.ui.topBar.TopBarText
 
+/**
+ * Demonstrates the onVisibilityChanged API in Jetpack Compose by observing
+ * when Composables become visible or hidden during scrolling.
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 class VisibilityChangedMainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.droiddevtips.visibilitychanged.ui
+package com.droiddevtips.visibilitychanged.ui.pagerExample
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,8 +22,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.visibilitychanged.R
+import com.droiddevtips.visibilitychanged.data.AppString
 import com.droiddevtips.visibilitychanged.data.TabRoute
 
+/**
+ * A [HorizontalPager] wrapper that emits visibility events for the
+ * currently settled page.
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun PagerExample(
     modifier: Modifier = Modifier,
@@ -52,14 +59,14 @@ fun PagerExample(
                     }
             ) {
                 Text(
-                    text = stringResource(id = R.string.page_visible,(page + 1)), // "Page ${page + 1}"
+                    text = stringResource(id = AppString.page_visible,(page + 1)),
                     modifier = Modifier.align(alignment = Alignment.Center)
                 )
             }
         }
 
         Text(
-            text = stringResource(id = R.string.swipe_between_pages),
+            text = stringResource(id = AppString.swipe_between_pages),
             modifier = Modifier.align(alignment = Alignment.TopCenter)
         )
 
@@ -72,7 +79,7 @@ fun PagerExample(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(id = R.string.page_nr_visible,(visiblePageIndex.intValue + 1)), // "Page ${visiblePageIndex.intValue + 1} visible"
+                text = stringResource(id = AppString.page_nr_visible,(visiblePageIndex.intValue + 1)),
                 modifier = Modifier.padding(all = 8.dp),
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
